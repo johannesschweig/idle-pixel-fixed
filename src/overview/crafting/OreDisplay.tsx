@@ -1,5 +1,5 @@
 import IPimg from "../../util/IPimg";
-import React, { MouseEvent } from "react";
+import { MouseEvent } from "react";
 import { sendMessage } from "../../util/websocket/useWebsocket";
 import { useNumberItemObserver } from "../setItems/useSetItemsObserver";
 import { Smelting } from "./CraftingOverview";

@@ -16,7 +16,6 @@ const OverviewBox = ({ width, height, children, ...style }: PropsWithChildren<Pr
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        borderRadius: "30px",
         backgroundColor: "#b1d6dc",
         border: "10px solid #b1d6dc",
         boxSizing: "content-box",

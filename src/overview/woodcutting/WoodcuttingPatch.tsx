@@ -1,6 +1,5 @@
 import IPimg from "../../util/IPimg";
 import { useTooltip } from "../../util/tooltip/useTooltip";
-import React from "react";
 
 interface Props {
   type: string;
@@ -25,7 +24,6 @@ const WoodcuttingPatch = ({ type, stage, timer, shiny, plotClick }: Props) => {
         flexDirection: "column",
         alignItems: "center",
         backgroundImage: `url(${get_image("images/background_grass.png")}`,
-        borderRadius: "20px",
         height: "120px",
         width: "100px",
         cursor: stage === 4 ? "pointer" : "default",

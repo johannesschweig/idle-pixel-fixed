@@ -1,7 +1,7 @@
 import IPimg from "../../util/IPimg";
 import { BrewingView } from "./BrewingOverview";
 import { sendMessage } from "../../util/websocket/useWebsocket";
-import React, { MouseEvent } from "react";
+import { MouseEvent } from "react";
 import { useNumberItemObserver } from "../setItems/useSetItemsObserver";
 import { updateTimer } from "../../util/domOperations";
 import { POTIONS } from "./potions";

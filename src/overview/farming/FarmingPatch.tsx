@@ -41,7 +41,6 @@ const FarmingPatch = ({
         flexDirection: "column",
         alignItems: "center",
         backgroundImage: `url(${get_image("images/background_grass.png")}`,
-        borderRadius: "20px",
         height: "120px",
         width: "100px",
         cursor: stage === 4 ? "pointer" : "default",

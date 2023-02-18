@@ -72,7 +72,6 @@ const OverviewPanel = () => {
       style={{
         display: "flex",
         gap: "15px",
-        justifyContent: "space-around",
       }}
     >
       <div
@@ -80,14 +79,12 @@ const OverviewPanel = () => {
           display: "flex",
           flexDirection: "column",
           gap: "15px",
-          width: settings.showInOverview ? "75%" : "100%",
         }}
       >
         <div
           style={{
             display: "flex",
             gap: "15px",
-            justifyContent: "space-around",
           }}
         >
           <div
