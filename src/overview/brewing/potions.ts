@@ -66,6 +66,10 @@ export const POTIONS: Record<string, PotionData> = {
     level: 30,
     ...getData("heat_potion")
   },
+  bait_potion: {
+    level: 33,
+    ...getData("bait_potion")
+  },
   bone_potion: {
     level: 35,
     ...getData("bone_potion")

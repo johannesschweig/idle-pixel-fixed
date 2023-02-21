@@ -45,7 +45,7 @@ const BrewingOverview = ({}: Props) => {
   };
 
   const viewSelectorStyle = (selectorView: BrewingView): CSSProperties => ({
-    opacity: view === selectorView ? 0.3 : 1,
+    opacity: view === selectorView ? 1 : 0.3,
   });
 
   const blockPopup = useMemo(

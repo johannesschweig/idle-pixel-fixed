@@ -28,7 +28,7 @@ const WoodcuttingOverview = () => {
   );
 
   const [oil] = useNumberItemObserver("oil", id);
-  const [action, setAction] = useState(LogAction.OVEN);
+  const [action, setAction] = useState(LogAction.FOUNDRY);
 
   const actionStyle = (selectorAction: LogAction): CSSProperties => ({
     opacity: action === selectorAction ? 1 : 0.3,

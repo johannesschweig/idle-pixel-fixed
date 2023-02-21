@@ -35,6 +35,7 @@ export const useBrewingIngredientsObserver = (
   );
   const [moonstone, setMoonstone] = useNumberItemObserver(`moonstone`, hookId);
   const [titanium, setTitanium] = useNumberItemObserver(`titanium`, hookId);
+  const [seaweed, setSeaweed] = useNumberItemObserver(`seaweed`, hookId);
 
   return {
     dotted_green_leaf: {
@@ -80,6 +81,10 @@ export const useBrewingIngredientsObserver = (
     titanium: {
       value: titanium,
       setValue: setTitanium,
+    },
+    seaweed: {
+      value: seaweed,
+      setValue: setSeaweed,
     },
   };
 };
