@@ -84,7 +84,7 @@ const FarmingOverview = () => {
         <div
           style={{
             display: "flex",
-            justifyContent: "flex-start",
+            justifyContent: "flex-end",
             flexWrap: "wrap",
             overflowY: "auto",
             height: "120px",

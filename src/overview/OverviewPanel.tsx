@@ -6,6 +6,7 @@ import { useSetItemsObserver } from "./setItems/useSetItemsObserver";
 import WoodcuttingOverview from "./woodcutting/WoodcuttingOverview";
 import CraftingOverview from "./crafting/CraftingOverview";
 import MiningOverview from "./mining/MiningOverview";
+import InventionOverview from "./invention/InventionOverview";
 import { useLocalStorage } from "../util/localstorage/useLocalStorage";
 import {
   ActivityLogItem,
@@ -97,6 +98,7 @@ const OverviewPanel = () => {
           >
             <WoodcuttingOverview />
             <FarmingOverview />
+            <InventionOverview />
           </div>
           <div
             style={{
