@@ -48,7 +48,7 @@ const CraftingOverview = () => {
     setOreAmountAt(smelting.amountAt);
     setOreAmountSet(smelting.amountSet);
   };
-
+// CONVERT_STARDUST=bronze_bar~2010
   return (
     <OverviewBox height={250} width={400}>
       <div

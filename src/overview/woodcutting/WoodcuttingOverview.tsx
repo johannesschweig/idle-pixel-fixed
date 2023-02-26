@@ -19,7 +19,7 @@ const WoodcuttingOverview = () => {
   const patches =
     3 + Math.sign(Number(Items.getItem("donor_tree_patches_timestamp"))) * 2;
 
-  const logs: string[] = keysOf(Cooking.LOG_HEAT_MAP);
+  const wood: string[] = keysOf(Cooking.LOG_HEAT_MAP);
   const patchData = useTreePatchesObserver(id);
 
   const finishedPatches = patchData.reduce(
@@ -28,6 +28,13 @@ const WoodcuttingOverview = () => {
   );
 
   const [oil] = useNumberItemObserver("oil", id);
+  const [logs] = useNumberItemObserver('logs', id)
+  const [oak_logs] = useNumberItemObserver('oak_logs', id)
+  const [willow_logs] = useNumberItemObserver('willow_logs', id)
+  const [maple_logs] = useNumberItemObserver('maple_logs', id)
+  const [stardust_logs] = useNumberItemObserver('stardust_logs', id)
+  const [pine_logs] = useNumberItemObserver('pine_logs', id)
+  const [redwood_logs] = useNumberItemObserver('redwood_logs', id)
   const [action, setAction] = useState(LogAction.FOUNDRY);
 
   const actionStyle = (selectorAction: LogAction): CSSProperties => ({
@@ -57,6 +64,17 @@ const WoodcuttingOverview = () => {
         break
     }
   };
+  const getHeat = () => {
+    const heat = logs * (Cooking.LOG_HEAT_MAP['logs'] + 1) +
+      oak_logs * (Cooking.LOG_HEAT_MAP['oak_logs'] + 1) +
+      willow_logs * (Cooking.LOG_HEAT_MAP['willow_logs'] + 1) +
+      maple_logs * (Cooking.LOG_HEAT_MAP['maple_logs'] + 1) +
+      stardust_logs * (Cooking.LOG_HEAT_MAP['stardust_logs'] + 1) +
+      pine_logs * (Cooking.LOG_HEAT_MAP['pine_logs'] + 1) +
+      redwood_logs * (Cooking.LOG_HEAT_MAP['redwood_logs'] + 1)
+
+    return heat
+  }
 // ADD_HEAT=logs~1 ADD_HEAT=oak_logs~1
   return (
     <OverviewBox height={250} width={550} justifyContent={"space-between"}>
@@ -72,7 +90,7 @@ const WoodcuttingOverview = () => {
             gap: "10px",
           }}>
           <IPimg
-            name={"iron_oven"}
+            name={Cooking.getOven()}
             size={30}
             onClick={() => setAction(LogAction.OVEN)}
             style={actionStyle(LogAction.OVEN)}/>
@@ -81,6 +99,13 @@ const WoodcuttingOverview = () => {
             size={30}
             onClick={() => setAction(LogAction.FOUNDRY)}
             style={actionStyle(LogAction.FOUNDRY)}/> 
+          <span
+            style={{
+              opacity: getHeat() >= 6000 ? 1 : 0.7,
+              color: getHeat() >= 6000 ? 'red' : 'black',
+              fontSize: 14,
+            }}>
+            {getHeat()} heat</span>
         </div>
         <div
           style={{
@@ -94,7 +119,7 @@ const WoodcuttingOverview = () => {
             flexWrap: "wrap",
           }}
         >
-          {logs.map((log) => (
+          {wood.map((log) => (
             <LogDisplay
               log={log}
               key={log}

@@ -24,10 +24,8 @@ const InventionOverview = () => {
     sendMessage("CLEANSE_EVIL_BLOOD", "evil_blood", evil_blood)
   }
 
-// CLEANSE_EVIL_BLOOD=evil_blood~5
-// GRIND=blood_chicken_foot~1
   return (
-    <OverviewBox height={250} width={550} justifyContent={"space-between"}>
+    <OverviewBox height={160} width={550} justifyContent={"space-between"}>
       <div
         style={{
           display: "flex",
@@ -53,7 +51,7 @@ const InventionOverview = () => {
             style={{
               justifyContent: "center",
               cursor: "pointer",
-              opacity: evil_blood > 0 ? 1 : 0.3
+              opacity: evil_blood > 0 ? 1 : 0
             }}
             onClick={() => evilBloodClick()}/>
         </div>
