@@ -101,7 +101,7 @@ const WoodcuttingOverview = () => {
             style={actionStyle(LogAction.FOUNDRY)}/> 
           <span
             style={{
-              opacity: getHeat() >= 6000 ? 1 : 0.7,
+              opacity: getHeat() >= 6000 ? 1 : 0.5,
               color: getHeat() >= 6000 ? 'red' : 'black',
               fontSize: 14,
             }}>
