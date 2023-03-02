@@ -5,6 +5,7 @@ import { MACHINES } from "./machines";
 import OverviewBox from "../OverviewBox";
 import { useState } from "react";
 import LabeledIPimg from "../../util/LabeledIPimg";
+import ObservedLabeledIPimg from "../../util/ObservedLabeledIPimg";
 import { sendMessage } from "../../util/websocket/useWebsocket";
 
 const id = "MiningOverview";
@@ -15,15 +16,11 @@ const MiningOverview = () => {
 
   const [miningXp] = useNumberItemObserver("mining_xp", id);
   const miningLevel = get_level(miningXp);
-  const [smallStardustPrisms] = useNumberItemObserver("small_stardust_prism", id)
-  const [mediumStardustPrisms] = useNumberItemObserver("medium_stardust_prism", id)
-  const [largeStardustPrisms] = useNumberItemObserver("large_stardust_prism", id)
-  const [hugeStardustPrisms] = useNumberItemObserver("huge_stardust_prism", id)
+  const STARDUST_PRISMS = ["small", "medium", "large", "huge"].map(e => e + "")
+  const GEODES = ["grey", "blue", "green", "red", "cyan", "ancient"].map(c => c + "_geode")
+  // TODO minerals
 
   const changeOilOut = (change: number) => setOilOut(oilOut + change);
-  const prismClick = (type: string, amount: number) => {
-    sendMessage("SMASH_STARDUST_PRISM", type, amount);
-  }
 // SMASH_STARDUST_PRISM=small_stardust_prism~1 small medium
 // CRACK_GEODE=blue_geode~1 grey blue green red cyan ancient
   return (
@@ -33,7 +30,12 @@ const MiningOverview = () => {
         display: "flex"
       }}>
         <IPimg name={"oil"} size={30} style={{}} />
-        <span>{`${oilIn-oilOut}`}</span>
+        <span
+          style={{
+            color: oilIn > oilOut ? "black" : "red"
+          }}>
+            {`${oilIn>oilOut ? "+" : ""}${oilIn-oilOut}`}
+          </span>
       </div>
       <div
         style={{
@@ -56,26 +58,19 @@ const MiningOverview = () => {
         style={{
           display: "flex"
         }}>
-          { smallStardustPrisms > 0 && <LabeledIPimg 
-            name={"small_stardust_prism"}
-            size={30}
-            label={smallStardustPrisms}
-            onClick={() => prismClick("small_stardust_prism", smallStardustPrisms)} /> }
-          { mediumStardustPrisms > 0 && <LabeledIPimg 
-            name={"medium_stardust_prism"}
-            size={30}
-            label={mediumStardustPrisms}
-            onClick={() => prismClick("medium_stardust_prism", mediumStardustPrisms)} /> }
-          { largeStardustPrisms > 0 && <LabeledIPimg 
-            name={"large_stardust_prism"}
-            size={30}
-            label={largeStardustPrisms}
-            onClick={() => prismClick("large_stardust_prism", largeStardustPrisms)} /> }
-          { hugeStardustPrisms > 0 && <LabeledIPimg 
-            name={"huge_stardust_prism"}
-            size={30}
-            label={hugeStardustPrisms}
-            onClick={() => prismClick("huge_stardust_prism", hugeStardustPrisms)} /> }
+          {STARDUST_PRISMS.map((prism) => (
+            <ObservedLabeledIPimg 
+              label={prism}
+              action={"SMASH_STARDUST_PRISM"}
+              size={30} />
+          ))}
+          {GEODES.map((geode) => (
+            <ObservedLabeledIPimg 
+              label={geode}
+              action={"CRACK_GEODE"}
+              size={30} />
+          ))}
+
       </div>
     </OverviewBox>
   );
