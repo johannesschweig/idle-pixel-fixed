@@ -16,13 +16,11 @@ const MiningOverview = () => {
 
   const [miningXp] = useNumberItemObserver("mining_xp", id);
   const miningLevel = get_level(miningXp);
-  const STARDUST_PRISMS = ["small", "medium", "large", "huge"].map(e => e + "")
+  const STARDUST_PRISMS = ["small", "medium", "large", "huge"].map(e => e + "_stardust_prism")
   const GEODES = ["grey", "blue", "green", "red", "cyan", "ancient"].map(c => c + "_geode")
-  // TODO minerals
+  const MINERALS = ["blue_marble", "amethyst", "sea_crystal", "dense_marble", "fluorite", "clear_marble", "jade", "lime_quartz", "opal", "purple_quartz", "amber", "smooth_pearl", "sulfer", "topaz", "tanzanite", "magnesium", "frozen", "blood"].map(c => c + "_mineral")
 
   const changeOilOut = (change: number) => setOilOut(oilOut + change);
-// SMASH_STARDUST_PRISM=small_stardust_prism~1 small medium
-// CRACK_GEODE=blue_geode~1 grey blue green red cyan ancient
   return (
     <OverviewBox height={250} width={400}>
       <div
@@ -32,7 +30,7 @@ const MiningOverview = () => {
         <IPimg name={"oil"} size={30} style={{}} />
         <span
           style={{
-            color: oilIn > oilOut ? "black" : "red"
+            color: oilIn >= oilOut ? "black" : "red"
           }}>
             {`${oilIn>oilOut ? "+" : ""}${oilIn-oilOut}`}
           </span>
@@ -68,6 +66,12 @@ const MiningOverview = () => {
             <ObservedLabeledIPimg 
               label={geode}
               action={"CRACK_GEODE"}
+              size={30} />
+          ))}
+          {MINERALS.map((mineral) => (
+            <ObservedLabeledIPimg 
+              label={mineral}
+              action={"MINERAL_XP"}
               size={30} />
           ))}
 
