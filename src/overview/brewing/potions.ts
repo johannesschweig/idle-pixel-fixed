@@ -94,4 +94,40 @@ export const POTIONS: Record<string, PotionData> = {
     level: 60,
     ...getData("titanium_potion")
   },
+  blue_orb_potion: {
+    level: 60,
+    ...getData("blue_orb_potion")
+  },
+  geode_potion: {
+    level: 62,
+    ...getData("geode_potion")
+  },
+  stone_converter_potion: {
+    level: 65,
+    ...getData("stone_converter_potion")
+  },
+  rain_potion: {
+    level: 68,
+    ...getData("rain_potion")
+  },
+  combat_loot_potion: {
+    level: 70,
+    ...getData("combat_loot_potion")
+  },
+  rotten_potion: {
+    level: 75,
+    ...getData("rotten_potion")
+  },
+  merchant_speed_potion: {
+    level: 78,
+    ...getData("merchant_speed_potion")
+  },
+  green_orb_potion: {
+    level: 80,
+    ...getData("green_orb_potion")
+  },
+  ancient_potion: {
+    level: 80,
+    ...getData("ancient_potion")
+  },
 };

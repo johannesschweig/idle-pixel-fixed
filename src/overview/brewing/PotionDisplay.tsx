@@ -16,6 +16,7 @@ interface Props {
   favorite: boolean;
   brewingLevel: number;
   brewingIngredients: Record<string, BrewingIngredient>;
+  selected: boolean;
 }
 
 const PotionDisplay = ({
@@ -25,6 +26,7 @@ const PotionDisplay = ({
   favorite,
   brewingLevel,
   brewingIngredients,
+  selected,
 }: Props) => {
   const [amount, setAmount] = useNumberItemObserver(
     potionName,
@@ -139,14 +141,18 @@ const PotionDisplay = ({
           justifyContent: "center",
           height: "70px",
           opacity: favorite ? 1 : 0.5,
+          border: selected ? "1px solid red" : "none",
         }}
       >
         <IPimg
           role="button"
-          name={"stardust"}
-          onClick={toggle}
+          name={
+            view === BrewingView.FAVORITE
+            ? "stardust"
+            : "brewing_kit"
+          }
           style={{
-            visibility: view === BrewingView.FAVORITE ? "visible" : "hidden",
+            visibility: view !== BrewingView.DRINK ? "visible" : "hidden",
           }}
           size={20}
         />
@@ -173,19 +179,6 @@ const PotionDisplay = ({
         >
           {amount}
         </span>
-        {view === BrewingView.BREW && (
-          <span
-            style={{
-              fontSize: "25px",
-              fontWeight: "500",
-              position: "absolute",
-              margin: "0 0 40px 25px",
-              height: "30px",
-            }}
-          >
-            +
-          </span>
-        )}
       </div>
       {isDrinkable && <DrinkToolTip />}
       <BrewToolTip />

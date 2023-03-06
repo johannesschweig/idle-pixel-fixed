@@ -6,7 +6,7 @@ import IPimg from "../../util/IPimg";
 import { POTIONS } from "./potions";
 import { useTooltip } from "../../util/tooltip/useTooltip";
 import OverviewBox from "../OverviewBox";
-import { useNumberItemObserver } from "../setItems/useSetItemsObserver";
+import { useNumberItemObserver, useItemObserver } from "../setItems/useSetItemsObserver";
 import { useBrewingIngredientsObserver } from "./useBrewingIngredientsObserver";
 import {
   replaceWebSocketMessage,
@@ -36,6 +36,7 @@ const BrewingOverview = ({}: Props) => {
   );
 
   const [brewingXp] = useNumberItemObserver("brewing_xp", id);
+  const [brewingXpMixerSelected] = useItemObserver("brewing_xp_mixer_selected", id)
 
   const toggle = (potionName: string) => () => {
     setFavorites((favs) => {
@@ -133,6 +134,7 @@ const BrewingOverview = ({}: Props) => {
                 view={view}
                 favorite={favorites.includes(potion)}
                 brewingIngredients={brewingIngredients}
+                selected={brewingXpMixerSelected === potion}
               />
             )
           )}

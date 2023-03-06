@@ -52,7 +52,12 @@ const FarmingPatch = ({
     >
       {!["none", "0"].includes(seed) ? (
         <>
-          <div style={{ height: "100px", width: "100px" }}>
+          <div
+            style={{
+              height: "100px",
+              width: "100px",
+              opacity: stage === 4 ? 1 : 0.5,
+            }}>
             {shiny ? (
               <img
                 src={get_image(`images/shiny.gif`)}
@@ -80,6 +85,7 @@ const FarmingPatch = ({
           <span
             style={{
               color: "white",
+              opacity: stage === 4 ? 1 : 0.5,
             }}
           >
             {stage === 4 ? "READY" : timer > 0 ? format_time(timer) : ""}

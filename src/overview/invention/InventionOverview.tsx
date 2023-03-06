@@ -1,5 +1,6 @@
 import OverviewBox from "../OverviewBox";
 import LabeledIPimg from "../../util/LabeledIPimg";
+import ObservedLabeledIPimg from "../../util/ObservedLabeledIPimg";
 import { sendMessage } from "../../util/websocket/useWebsocket";
 import { useNumberItemObserver } from "../setItems/useSetItemsObserver";
 import { LIMBS } from "./limbs"
@@ -16,6 +17,7 @@ const InventionOverview = () => {
 
   const [evil_blood, setEvilBlood] = useNumberItemObserver("evil_blood", id);
   const [cleansed_blood, setCleansedBlood] = useNumberItemObserver("cleansed_blood", id);
+
   const limbClick = (limb: string, amount: number) => {
     sendMessage("GRIND", limb, amount)
   }
@@ -76,6 +78,11 @@ const InventionOverview = () => {
                 key={limb}
               />
             ))}
+            <ObservedLabeledIPimg
+              label="stinger"
+              action="INVENTION_DISASSEMBLE"
+              size={30}
+            />
         </div>
       </div>
     </OverviewBox>

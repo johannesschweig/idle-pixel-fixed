@@ -23,10 +23,18 @@ export const useBrewingIngredientsObserver = (
     `strange_leaf`,
     hookId
   );
+  const [strangerLeaf, setStrangerLeaf] = useNumberItemObserver( `stranger_leaf`, hookId);
   const [goldLeaf, setGoldLeaf] = useNumberItemObserver(`gold_leaf`, hookId);
+  const [crystalLeaf, setCrystalLeaf] = useNumberItemObserver(`crystal_leaf`, hookId);
   const [bones, setBones] = useNumberItemObserver(`bones`, hookId);
+  const [stone, setStone] = useNumberItemObserver(`stone`, hookId);
+  const [titanium, setTitanium] = useNumberItemObserver(`titanium`, hookId);
   const [promethium, setPromethium] = useNumberItemObserver(
     `promethium`,
+    hookId
+  );
+  const [ancientOre, setAncientOre] = useNumberItemObserver(
+    `ancient`,
     hookId
   );
   const [rocketFuel, setRocketFuel] = useNumberItemObserver(
@@ -34,8 +42,14 @@ export const useBrewingIngredientsObserver = (
     hookId
   );
   const [moonstone, setMoonstone] = useNumberItemObserver(`moonstone`, hookId);
-  const [titanium, setTitanium] = useNumberItemObserver(`titanium`, hookId);
   const [seaweed, setSeaweed] = useNumberItemObserver(`seaweed`, hookId);
+  const [blueShootingStar, setBlueShottingStar] = useNumberItemObserver(`blueShootingStar`, hookId);
+  const [greenShootingStar, setGreenShottingStar] = useNumberItemObserver(`greenShootingStar`, hookId);
+  const [maggots, setMaggots] = useNumberItemObserver(`maggots`, hookId);
+  const [fruitSkin, setFruitSkin] = useNumberItemObserver(`fruitSkin`, hookId);
+  const [superBait, setSuperBait] = useNumberItemObserver(`superBait`, hookId);
+
+
 
   return {
     dotted_green_leaf: {
@@ -58,9 +72,21 @@ export const useBrewingIngredientsObserver = (
       value: strangeLeaf,
       setValue: setStrangeLeaf,
     },
+    stranger_leaf: {
+      value: strangerLeaf,
+      setValue: setStrangerLeaf,
+    },
     gold_leaf: {
       value: goldLeaf,
       setValue: setGoldLeaf,
+    },
+    crystal_leaf: {
+      value: crystalLeaf,
+      setValue: setCrystalLeaf,
+    },
+    stone: {
+      value: stone,
+      setValue: setStone,
     },
     bones: {
       value: bones,
@@ -69,6 +95,10 @@ export const useBrewingIngredientsObserver = (
     promethium: {
       value: promethium,
       setValue: setPromethium,
+    },
+    ancient_ore: {
+      value: ancientOre,
+      setValue: setAncientOre,
     },
     rocket_fuel: {
       value: rocketFuel,
@@ -86,5 +116,25 @@ export const useBrewingIngredientsObserver = (
       value: seaweed,
       setValue: setSeaweed,
     },
+    blue_shooting_star: {
+      value: blueShootingStar,
+      setValue: setBlueShottingStar,
+    },
+    green_shooting_star: {
+      value: greenShootingStar,
+      setValue: setGreenShottingStar,
+    },
+    maggots: {
+      value: maggots,
+      setValue: setMaggots,
+    },
+    fruit_skin: {
+      value: fruitSkin,
+      setValue: setFruitSkin,
+    },
+    super_bait: {
+      value: superBait,
+      setValue: setSuperBait,
+    }
   };
 };

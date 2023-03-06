@@ -35,7 +35,8 @@ const WoodcuttingOverview = () => {
   const [stardust_logs] = useNumberItemObserver('stardust_logs', id)
   const [pine_logs] = useNumberItemObserver('pine_logs', id)
   const [redwood_logs] = useNumberItemObserver('redwood_logs', id)
-  const [action, setAction] = useState(LogAction.FOUNDRY);
+  const [action, setAction] = useState(LogAction.OVEN);
+  const [foundryAmount] = useNumberItemObserver('foundry_amount', id)
 
   const actionStyle = (selectorAction: LogAction): CSSProperties => ({
     opacity: action === selectorAction ? 1 : 0.3,
@@ -59,8 +60,10 @@ const WoodcuttingOverview = () => {
         sendMessage("ADD_HEAT", log, amount);
         break
       case LogAction.FOUNDRY:
-        amount = Math.min(amount, 100, Math.floor(oil/10))
-        sendMessage("FOUNDRY", log, amount);
+        if (foundryAmount === 0) {
+          amount = Math.min(amount, 100, Math.floor(oil/10))
+          sendMessage("FOUNDRY", log, amount);
+        }
         break
     }
   };
@@ -75,7 +78,7 @@ const WoodcuttingOverview = () => {
 
     return heat
   }
-// ADD_HEAT=logs~1 ADD_HEAT=oak_logs~1
+
   return (
     <OverviewBox height={250} width={550} justifyContent={"space-between"}>
       <div 
@@ -124,6 +127,7 @@ const WoodcuttingOverview = () => {
               log={log}
               key={log}
               logClick={(log: string, amount: number) => logClick(log, amount)}
+              disabled={action === LogAction.FOUNDRY && foundryAmount > 0}
             />
           ))}
         </div>

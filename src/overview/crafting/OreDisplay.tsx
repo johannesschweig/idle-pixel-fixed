@@ -15,6 +15,7 @@ interface Props {
   ore: string;
   disabled: boolean;
   setSmelting: (smelting: Smelting) => void;
+  view: string,
   oil: number;
   setOil: (oil: number) => void;
   charcoal: number;
@@ -27,6 +28,7 @@ const OreDisplay = ({
   ore,
   disabled,
   setSmelting,
+  view,
   oil,
   setOil,
   charcoal,
@@ -55,28 +57,32 @@ const OreDisplay = ({
   };
 
   const onClick = (event: MouseEvent) => {
-    let making = getSmeltable();
-    if (event.ctrlKey) {
-      making = Math.min(5, making);
-    } else if (event.shiftKey) {
-      making = Math.floor(making / 2);
-    }
-    if (making > 0) {
-      setSmelting({
-        type: ore,
-        amountAt: 0,
-        amountSet: making,
-      });
-      if(amount === making){
-        hideTooltip();
+    if (view === "SMELTING") {
+      let making = getSmeltable();
+      if (event.ctrlKey) {
+        making = Math.min(5, making);
+      } else if (event.shiftKey) {
+        making = Math.floor(making / 2);
       }
-      setAmount(amount - making);
-      setOil(oil - making * oilPerBar);
-      setCharcoal(charcoal - making * charcoalPerBar);
-      setLava(lava - making * lavaPerBar);
-      updateTextContentById("notification-furnace-label", `0/${making}`);
-      showElementById("notification-furnace");
-      sendMessage("SMELT", ore, making);
+      if (making > 0) {
+        setSmelting({
+          type: ore,
+          amountAt: 0,
+          amountSet: making,
+        });
+        if(amount === making){
+          hideTooltip();
+        }
+        setAmount(amount - making);
+        setOil(oil - making * oilPerBar);
+        setCharcoal(charcoal - making * charcoalPerBar);
+        setLava(lava - making * lavaPerBar);
+        updateTextContentById("notification-furnace-label", `0/${making}`);
+        showElementById("notification-furnace");
+        sendMessage("SMELT", ore, making);
+      }
+    } else {
+      sendMessage("CONVERT_STARDUST", ore, amount)
     }
   };
 

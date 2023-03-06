@@ -7,6 +7,7 @@ import {
 import BarDisplay from "./BarDisplay";
 import OverviewBox from "../OverviewBox";
 import { formatNumber } from "../../util/numberUtils";
+import { useState } from "react";
 
 const ORES = ["copper", "iron", "silver", "gold", "promethium", "titanium"];
 const BARS = [
@@ -17,6 +18,10 @@ const BARS = [
   "promethium_bar",
   "titanium_bar",
 ];
+export enum CraftingView {
+  SMELTING = "SMELTING",
+  CONVERTING = "CONVERTING",
+}
 
 const oreToBar = (ore: string) =>
   ore === "copper" ? "bronze_bar" : `${ore}_bar`;
@@ -26,9 +31,10 @@ export interface Smelting {
   amountAt: number;
   amountSet: number;
 }
-
+// CRAFT=wooden_arrows~1
 const id = "CraftingOverview";
 const CraftingOverview = () => {
+  const [view, setView] = useState(CraftingView.SMELTING);
   const furnace = Furnace.getFurnace();
   const [oreType, setOreType] = useItemObserver("furnace_ore_type", id);
   const [oreAmountAt, setOreAmountAt] = useNumberItemObserver(
@@ -88,7 +94,18 @@ const CraftingOverview = () => {
             width: "150px",
           }}
         >
-          <IPimg name={furnace} size={50} />
+          { view === CraftingView.SMELTING &&
+            <IPimg
+              name={furnace}
+              size={50}
+              onClick={() => setView(CraftingView.CONVERTING)}
+              /> }
+          { view === CraftingView.CONVERTING &&
+            <IPimg
+              name={"stardust"}
+              size={50}
+              onClick={() => setView(CraftingView.SMELTING)}
+              /> }
           <div
             style={{
               display: "flex",
@@ -155,6 +172,7 @@ const CraftingOverview = () => {
             ore={ore}
             disabled={oreType !== "none"}
             setSmelting={setSmelting}
+            view={view}
             oil={oil}
             setOil={setOil}
             charcoal={charcoal}

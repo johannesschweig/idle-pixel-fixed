@@ -1,9 +1,5 @@
 import IPimg from "../../util/IPimg";
 import { useNumberItemObserver } from "../setItems/useSetItemsObserver";
-import { useTooltip } from "../../util/tooltip/useTooltip";
-import React from "react";
-import LabeledIPimg from "../../util/LabeledIPimg";
-import { formatMinutes } from "../../util/timeUtils";
 
 interface Props {
   limb: string;
@@ -26,46 +22,6 @@ const LimbDisplay = ({
   const onClick = () => {
     limbClick(limb, amount)
   };
-
-  // const [limbProps, LimbTooltip, hideTooltip] = useTooltip(
-  //   <div
-  //     style={{
-  //       display: "flex",
-  //       flexDirection: "column",
-  //       minWidth: "300px",
-  //       alignItems: "center",
-  //     }}
-  //   >
-  //     <span>
-  //       {canPlant ? "Plant" : "Can't Plant"} {Items.get_pretty_item_name(limb)}
-  //     </span>
-  //     <span>Time: {formatMinutes(time)}</span>
-  //     <span>
-  //       Level:{" "}
-  //       <span style={{ color: farmingLevel < level ? "red" : "unset" }}>
-  //         {level}
-  //       </span>
-  //     </span>
-  //     {stopsDying > 0 && (
-  //       <span>
-  //         Stops Dying:{" "}
-  //         <span
-  //           style={{ color: farmingLevel < stopsDying ? "yellow" : "unset" }}
-  //         >
-  //           {stopsDying}
-  //         </span>
-  //       </span>
-  //     )}
-  //     {bonemealCost > 0 && (
-  //       <LabeledIPimg
-  //         size={30}
-  //         name={"bonemeal"}
-  //         label={bonemealCost}
-  //         style={{ color: bonemeal < bonemealCost ? "red" : "unset" }}
-  //       />
-  //     )}
-  //   </div>
-  // );
 
   return amount > 0 ? (
     <>

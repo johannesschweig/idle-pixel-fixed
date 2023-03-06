@@ -34,7 +34,13 @@ const WoodcuttingPatch = ({ type, stage, timer, shiny, plotClick }: Props) => {
       }}
     >
       {!["none", "0"].includes(type) ? (
-        <>
+        <div
+          style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              opacity: stage === 4 ? 1 : 0.5,
+          }}>
           {shiny ? (
             <img
               src={get_image(`images/shiny.gif`)}
@@ -60,7 +66,7 @@ const WoodcuttingPatch = ({ type, stage, timer, shiny, plotClick }: Props) => {
             {stage === 4 ? "READY" : format_time(timer)}
           </span>
           <PatchTooltip />
-        </>
+        </div>
       ) : null}
     </div>
   );

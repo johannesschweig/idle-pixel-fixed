@@ -120,4 +120,10 @@ export const SEEDS: Record<string, SeedData> = {
     time: 19 * 60,
     bonemealCost: 200,
   },
+  bone_tree_seeds: {
+    level: 80,
+    stopsDying: 88,
+    time: 18 * 60,
+    bonemealCost: 0
+  },
 };

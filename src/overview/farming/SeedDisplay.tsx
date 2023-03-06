@@ -94,7 +94,7 @@ const SeedDisplay = ({
     <>
       <div
         style={{
-          display: "flex",
+          display: farmingLevel >= level ? "flex" : "none",
           flexDirection: "column",
           gap: "5px",
           width: "50px",

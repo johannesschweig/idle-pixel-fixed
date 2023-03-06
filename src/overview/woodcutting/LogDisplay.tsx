@@ -4,12 +4,14 @@ import { useNumberItemObserver } from "../setItems/useSetItemsObserver";
 interface Props {
   log: string;
   logClick: (log: string, amount: number) => void;
+  disabled: boolean;
 }
 
 const id = "LogDisplay";
 const LogDisplay = ({
   log,
-  logClick
+  logClick,
+  disabled
 }: Props) => {
   const [amount] = useNumberItemObserver(log, id);
 
@@ -24,7 +26,8 @@ const LogDisplay = ({
         flexDirection: "column",
         width: "50px",
         alignItems: "center",
-        cursor: "pointer",
+        cursor: disabled ? "auto" : "pointer",
+        opacity: disabled ? 0.5 : 1,
       }}
     >
       <IPimg

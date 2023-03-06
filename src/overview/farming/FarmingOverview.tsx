@@ -18,6 +18,7 @@ const FarmingOverview = () => {
 
   const [bonemeal, setBonemeal] = useNumberItemObserver("bonemeal", id);
   const [farmingXp] = useNumberItemObserver("farming_xp", id);
+  const [water, setWater] = useNumberItemObserver("water", id);
 
   const patches =
     3 + Math.sign(Number(Items.getItem("donor_farm_patches_timestamp"))) * 2;
@@ -52,6 +53,10 @@ const FarmingOverview = () => {
       setStage(0);
     }
   };
+
+  const wateringCanClick = () => {
+    sendMessage("USE_WATERING_CAN")
+  }
 
   return (
     <OverviewBox height={250} width={550} justifyContent={"space-between"}>
@@ -114,6 +119,18 @@ const FarmingOverview = () => {
           gap: "10px",
         }}
       >
+      { (water === 100) && 
+        <LabeledIPimg
+          name={"watering_can"}
+          label={water}
+          size={30}
+          style={{
+            justifyContent: "center",
+            cursor: "pointer",
+            color: water === 100 ? "darkgreen" : "black",
+          }}
+          onClick={() => wateringCanClick()}
+        /> }
         {Array(patches)
           .fill(null)
           .map((v, i) => (
