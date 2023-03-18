@@ -48,6 +48,7 @@ const CraftingOverview = () => {
   const [oil, setOil] = useNumberItemObserver("oil", id);
   const [charcoal, setCharcoal] = useNumberItemObserver("charcoal", id);
   const [lava, setLava] = useNumberItemObserver("lava", id);
+  const [craftingXp] = useNumberItemObserver("crafting_xp", id);
 
   const setSmelting = (smelting: Smelting) => {
     setOreType(smelting.type);
@@ -56,7 +57,11 @@ const CraftingOverview = () => {
   };
 // CONVERT_STARDUST=bronze_bar~2010
   return (
-    <OverviewBox height={250} width={400}>
+    <OverviewBox
+      height={250}
+      width={400}
+      xp={craftingXp}
+    >
       <div
         style={{
           display: "flex",

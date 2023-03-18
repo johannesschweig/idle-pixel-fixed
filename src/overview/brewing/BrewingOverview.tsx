@@ -71,14 +71,16 @@ const BrewingOverview = ({}: Props) => {
     <OverviewBox
       height={250}
       width={300}
-      flexDirection={"row"}
+      flexDirection={"column"}
       alignItems={"stretch"}
+      xp={brewingXp}
     >
       <div
         style={{
           display: "flex",
           width: `100%`,
           flexDirection: "row",
+          overflowY: "auto",
         }}
       >
         <div

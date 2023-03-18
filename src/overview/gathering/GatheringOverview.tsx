@@ -1,4 +1,4 @@
-import { useItemObserver } from "../setItems/useSetItemsObserver";
+import { useItemObserver, useNumberItemObserver } from "../setItems/useSetItemsObserver";
 import GatheringBagDisplay from "./GatheringBagDisplay";
 import { sendMessage } from "../../util/websocket/useWebsocket";
 import OverviewBox from "../OverviewBox";
@@ -17,6 +17,7 @@ const GatheringOverview = () => {
     "current_gathering_area",
     id
   );
+  const [gatheringXp] = useNumberItemObserver("gathering_xp", id)
 
   const selectArea = (area: string) => {
     setCurrentGatheringArea(area);
@@ -24,7 +25,12 @@ const GatheringOverview = () => {
   };
 
   return (
-    <OverviewBox height={250} width={300} justifyContent={"space-between"}>
+    <OverviewBox
+      height={250}
+      width={300}
+      justifyContent={"space-between"}
+      xp={gatheringXp}
+    >
       <div
         style={{
           display: "flex",

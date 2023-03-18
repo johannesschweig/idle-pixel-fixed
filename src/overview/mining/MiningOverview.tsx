@@ -22,7 +22,11 @@ const MiningOverview = () => {
 
   const changeOilOut = (change: number) => setOilOut(oilOut + change);
   return (
-    <OverviewBox height={250} width={400}>
+    <OverviewBox
+      height={250}
+      width={400}
+      xp={miningXp}
+    >
       <div
       style={{
         display: "flex"

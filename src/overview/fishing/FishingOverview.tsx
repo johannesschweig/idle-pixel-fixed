@@ -13,6 +13,7 @@ const FishingOverview = () => {
   const [bait] = useNumberItemObserver("bait", id)
   const [superBait] = useNumberItemObserver("super_bait", id)
   const [maggots] = useNumberItemObserver("maggots", id)
+  const [fishingXp] = useNumberItemObserver("fishing_xp", id)
 
 
   const clickBoat = (boat: string) => {
@@ -51,7 +52,11 @@ const FishingOverview = () => {
   }
 
   return (
-    <OverviewBox height={160} width={300}>
+    <OverviewBox
+      height={160}
+      width={300}
+      xp={fishingXp}
+    >
       <div
         style={{
           display: "flex",

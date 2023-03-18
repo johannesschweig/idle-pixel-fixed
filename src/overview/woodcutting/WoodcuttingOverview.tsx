@@ -37,6 +37,7 @@ const WoodcuttingOverview = () => {
   const [redwood_logs] = useNumberItemObserver('redwood_logs', id)
   const [action, setAction] = useState(LogAction.OVEN);
   const [foundryAmount] = useNumberItemObserver('foundry_amount', id)
+  const [woddcuttingXp] = useNumberItemObserver("woodcutting_xp", id);
 
   const actionStyle = (selectorAction: LogAction): CSSProperties => ({
     opacity: action === selectorAction ? 1 : 0.3,
@@ -80,7 +81,12 @@ const WoodcuttingOverview = () => {
   }
 
   return (
-    <OverviewBox height={250} width={550} justifyContent={"space-between"}>
+    <OverviewBox
+      height={250}
+      width={550}
+      justifyContent={"space-between"}
+      xp={woddcuttingXp}
+    >
       <div 
         style={{
           display: "flex",

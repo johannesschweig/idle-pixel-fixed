@@ -16,7 +16,8 @@ const InventionOverview = () => {
   const limbs = Object.keys(LIMBS);
 
   const [evil_blood, setEvilBlood] = useNumberItemObserver("evil_blood", id);
-  const [cleansed_blood, setCleansedBlood] = useNumberItemObserver("cleansed_blood", id);
+  const [cleansed_blood] = useNumberItemObserver("cleansed_blood", id);
+  const [inventionXp] = useNumberItemObserver("invention_xp", id);
 
   const limbClick = (limb: string, amount: number) => {
     sendMessage("GRIND", limb, amount)
@@ -27,7 +28,12 @@ const InventionOverview = () => {
   }
 
   return (
-    <OverviewBox height={160} width={550} justifyContent={"space-between"}>
+    <OverviewBox
+      height={160}
+      width={550}
+      justifyContent={"space-between"}
+      xp={inventionXp}
+    >
       <div
         style={{
           display: "flex",
