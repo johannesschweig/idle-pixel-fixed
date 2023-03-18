@@ -37,6 +37,7 @@ const BrewingOverview = ({}: Props) => {
 
   const [brewingXp] = useNumberItemObserver("brewing_xp", id);
   const [brewingXpMixerSelected] = useItemObserver("brewing_xp_mixer_selected", id)
+  const [brewingXpMixerUsed] = useNumberItemObserver("brewing_xp_mixer_used", id)
 
   const toggle = (potionName: string) => () => {
     setFavorites((favs) => {
@@ -134,7 +135,7 @@ const BrewingOverview = ({}: Props) => {
                 view={view}
                 favorite={favorites.includes(potion)}
                 brewingIngredients={brewingIngredients}
-                selected={brewingXpMixerSelected === potion}
+                selected={(brewingXpMixerSelected === potion) && (brewingXpMixerUsed != 5)}
               />
             )
           )}
