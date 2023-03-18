@@ -50,6 +50,7 @@ const WoodcuttingPatch = ({ type, stage, timer, shiny, plotClick }: Props) => {
                 position: "absolute",
                 height: "100px",
                 width: "100px",
+                pointerEvents: "none",
               }}
             />
           ) : null}

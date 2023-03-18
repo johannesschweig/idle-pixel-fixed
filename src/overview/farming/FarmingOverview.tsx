@@ -18,7 +18,7 @@ const FarmingOverview = () => {
 
   const [bonemeal, setBonemeal] = useNumberItemObserver("bonemeal", id);
   const [farmingXp] = useNumberItemObserver("farming_xp", id);
-  const [water, setWater] = useNumberItemObserver("water", id);
+  const [water] = useNumberItemObserver("water", id);
 
   const patches =
     3 + Math.sign(Number(Items.getItem("donor_farm_patches_timestamp"))) * 2;

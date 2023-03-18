@@ -114,7 +114,7 @@ const SeedDisplay = ({
         />
         <span>{amount}</span>
       </div>
-      {nextPlot > 0 && <SeedTooltip />}
+      <SeedTooltip />
     </>
   ) : null;
 };
