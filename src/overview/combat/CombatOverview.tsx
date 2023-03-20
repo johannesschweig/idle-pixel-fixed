@@ -31,19 +31,25 @@ const CombatOverview = () => {
     }, 1000)
     setTimeout(() => {
       sendMessage('SPELL', 'reflect')
-    }, 2500)
+    }, 3000)
     setTimeout(() => {
       sendMessage('SPELL', 'fire')
     }, 3000)
     setTimeout(() => {
       sendMessage('PRESET_LOAD', 2, 1)
-    }, 4500)
+    }, 6000)
 
-    while(monsterHp > 0) {
-      if (hp < maxHp - 3 && healCooldown === 0) {
-        sendMessage('SPELL', "heal")
-      }
-    }
+    // setTimeout(() => {
+    //   while (monsterHp > 0) {
+    //     setTimeout(() => {
+    //       console.log('checking heal')
+    //       if (hp < maxHp - 3 && healCooldown === 0) {
+    //         console.log('HEAL')
+    //         sendMessage('SPELL', "heal")
+    //       }
+    //     }, 500)
+    //   }
+    // }, 3000)
   }
 
   return (
@@ -51,36 +57,47 @@ const CombatOverview = () => {
       height={160}
       width={400}
       xp={archeryXp}
+      display={'block'}
     >
-      <LabeledIPimg
-        name={'wooden_arrows'}
-        label={woodenArrows}
-        size={20}
-        onClick={() => sendMessage('CRAFT', 'wooden_arrows', 3)}
+      <div
         style={{
-          cursor: "pointer"
-        }}
-      />
-      { fightPoints >= 1000 && <IPimg
-        name={'blood_moon'}
-        size={30}
-        onClick={() => startCombat()}
-        style={{
-          cursor: "pointer"
-        }}
-      />}
-      <div>
+          display: 'grid',
+          gap: '10px',
+          gridTemplateColumns: '1fr 1fr 1fr',
+          marginTop: '20px',
+          justifyItems: 'center',
+        }}>
+        <LabeledIPimg
+          name={'wooden_arrows'}
+          label={woodenArrows}
+          size={20}
+          onClick={() => sendMessage('CRAFT', 'wooden_arrows', 3)}
+          style={{
+            cursor: "pointer",
+          }}
+        />
+        {fightPoints >= 1000 && <LabeledIPimg
+          name={'blood_moon'}
+          label={'Blood Forest'}
+          size={50}
+          onClick={() => startCombat()}
+          style={{
+            cursor: "pointer",
+          }}
+        />}
+      </div>
+      {/* <div>
         <div>{hp}/{maxHp} HP</div>
         <div>{monsterName}: {monsterHp} HP</div>
-        {/* <IPimg
+        <IPimg
           name={'blood_moon'}
           size={30}
           onClick={() => startCombat()}
           style={{
             cursor: "pointer"
           }}
-        /> */}
-      </div>
+        /> 
+      </div> */}
 
     </OverviewBox>
   );

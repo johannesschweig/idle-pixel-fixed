@@ -12,6 +12,7 @@ import {
   replaceWebSocketMessage,
   useWebsocket,
 } from "../../util/websocket/useWebsocket";
+import { sendMessage } from "../../util/websocket/useWebsocket";
 
 interface Props {}
 
@@ -38,6 +39,7 @@ const BrewingOverview = ({}: Props) => {
   const [brewingXp] = useNumberItemObserver("brewing_xp", id);
   const [brewingXpMixerSelected] = useItemObserver("brewing_xp_mixer_selected", id)
   const [brewingXpMixerUsed] = useNumberItemObserver("brewing_xp_mixer_used", id)
+  const [brewingXpMixerTimer] = useNumberItemObserver("stardust_brewing_xp_mixer_timer", id)
 
   const toggle = (potionName: string) => () => {
     setFavorites((favs) => {
@@ -118,6 +120,23 @@ const BrewingOverview = ({}: Props) => {
             style={viewSelectorStyle(BrewingView.FAVORITE)}
             {...viewProps}
           />
+          <span
+            onClick={() => {
+              if (brewingXpMixerTimer === 0) {
+                sendMessage('REROLL_BREWING_XP_MIXER')
+              }
+            }}
+            style={{
+              fontSize: "12px",
+              color: brewingXpMixerTimer === 0 ? 'black' : 'grey',
+              cursor: 'pointer',
+            }}>
+              {
+                brewingXpMixerTimer === 0
+                ? "Reroll"
+                : new Date(brewingXpMixerTimer * 1000).toISOString().substring(11, 16)
+              }
+            </span>
         </div>
         <div
           style={{
