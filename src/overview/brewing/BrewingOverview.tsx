@@ -136,6 +136,8 @@ const BrewingOverview = ({}: Props) => {
                 ? "Reroll"
                 : new Date(brewingXpMixerTimer * 1000).toISOString().substring(11, 16)
               }
+              <br/>
+              {brewingXpMixerUsed} / 5
             </span>
         </div>
         <div

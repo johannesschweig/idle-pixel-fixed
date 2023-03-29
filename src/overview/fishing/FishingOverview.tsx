@@ -1,6 +1,7 @@
 import OverviewBox from "../OverviewBox";
-import { useNumberItemObserver } from "../setItems/useSetItemsObserver";
+import { useNumberItemObserver, useItemObserver } from "../setItems/useSetItemsObserver";
 import LabeledIPimg from "../../util/LabeledIPimg";
+import ObservedLabeledIPimg from "../../util/ObservedLabeledIPimg";
 import { sendMessage } from "../../util/websocket/useWebsocket";
 
 const id = "FishingOverview";
@@ -14,6 +15,8 @@ const FishingOverview = () => {
   const [superBait] = useNumberItemObserver("super_bait", id)
   const [maggots] = useNumberItemObserver("maggots", id)
   const [fishingXp] = useNumberItemObserver("fishing_xp", id)
+  const [cooksBookTimer] = useNumberItemObserver("cooks_book_timer", id)
+  const [cooksBookItem] = useItemObserver("cooks_book_item", id)
 
 
   const clickBoat = (boat: string) => {
@@ -47,10 +50,16 @@ const FishingOverview = () => {
     return {
       cursor: "pointer",
       fontSize: "12px",
-      color: timer > 1 ? "grey" : "black"
+      color: timer > 1 ? "grey" : "black",
+      backgroundColor: timer === 1 ? "deepskyblue" : "transparent",
     }
   }
-
+  const FISH = [
+    "shrimp", "anchovy", "sardine", "crab", "piranha", "salmon", "trout", "pike", "eel", "tuna", "swordfish", "manta_ray", "shark", "whale", "small_stardust_fish", "medium_stardust_fish", "large_stardust_fish"
+  ].map(fish => "cooked_" + fish )
+  const FOOD = [ "banana", "orange", "egg", "maple_syrup", "chocolate"].concat(FISH)
+// CONSUME=apple~177
+// COOK=raw_shark~3
   return (
     <OverviewBox
       height={160}
@@ -63,24 +72,24 @@ const FishingOverview = () => {
           gap: "10px",
         }}
       >
-        <LabeledIPimg
+        {/* <LabeledIPimg
           name="row_boat"
           label={rowBoatTimer > 1 ? "Fishing" : rowBoatTimer === 1 ? "Collect" : ""}
           size={50}
           onClick={() => clickBoat("row_boat")}
-          style={boatStyle(rowBoatTimer)} />
-        <LabeledIPimg
+          style={boatStyle(rowBoatTimer)} /> */}
+        { canoeBoatTimer <= 1 && <LabeledIPimg
           name="canoe_boat"
-          label={canoeBoatTimer > 1 ? "Fishing" : canoeBoatTimer === 1 ? "Collect" : ""}
+          label={canoeBoatTimer === 1 ? "Collect" : "Send out"}
           size={50}
           onClick={() => clickBoat("canoe_boat")}
-          style={boatStyle(canoeBoatTimer)} />
-        <LabeledIPimg
+          style={boatStyle(canoeBoatTimer)} /> }
+        { stardustBoatTimer <= 1 && <LabeledIPimg
           name="stardust_boat"
-          label={stardustBoatTimer > 1 ? "Fishing" : stardustBoatTimer === 1 ? "Collect" : ""}
+          label={stardustBoatTimer === 1 ? "Collect" : "Send out"}
           size={50}
           onClick={() => clickBoat("stardust_boat")}
-          style={boatStyle(stardustBoatTimer)} />
+          style={boatStyle(stardustBoatTimer)} /> }
         {aquariumTimer === 0 &&
           <LabeledIPimg
             name="aquarium"
@@ -92,6 +101,30 @@ const FishingOverview = () => {
             }}
           />
         }
+        { cooksBookTimer === 1 && <LabeledIPimg
+          name={cooksBookItem}
+          label={"Collect"}
+          size={50}
+          onClick={() => sendMessage("COOKS_BOOK_READY")}
+          style={{
+            cursor: "pointer",
+            backgroundColor: "lightyellow",
+          }} /> }
+        { cooksBookTimer === 0 && <LabeledIPimg
+          name={"cooks_book"}
+          label={"Make coconut stew"}
+          size={50}
+          onClick={() => sendMessage("COOKS_BOOK", "coconut_stew")}
+          style={{
+            cursor: "pointer",
+          }} /> }
+        {FOOD.map((food) => (
+          <ObservedLabeledIPimg
+            label={food}
+            size={30}
+            action={"CONSUME"}
+          />
+        ))}
       </div>
     </OverviewBox>
   );

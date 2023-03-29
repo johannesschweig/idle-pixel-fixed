@@ -17,12 +17,8 @@ const id = "CombatOverview";
 const CombatOverview = () => {
   const [archeryXp] = useNumberItemObserver('archery_xp', id)
   const [woodenArrows] = useNumberItemObserver('wooden_arrows', id)
-  const [hp] = useNumberItemObserver('hp', id)
-  const [maxHp] = useNumberItemObserver('max_hp', id)
-  const [monsterHp] = useNumberItemObserver('monster_hp', id)
-  const [monsterName] = useItemObserver('monster_name', id)
+  const [energy] = useNumberItemObserver('energy', id)
   const [fightPoints] = useNumberItemObserver('fight_points', id)
-  const [healCooldown] = useNumberItemObserver('heal_cooldown', id)
 
   const startCombat = () => {
     sendMessage('START_FIGHT', 'blood_field')
@@ -38,18 +34,6 @@ const CombatOverview = () => {
     setTimeout(() => {
       sendMessage('PRESET_LOAD', 2, 1)
     }, 6000)
-
-    // setTimeout(() => {
-    //   while (monsterHp > 0) {
-    //     setTimeout(() => {
-    //       console.log('checking heal')
-    //       if (hp < maxHp - 3 && healCooldown === 0) {
-    //         console.log('HEAL')
-    //         sendMessage('SPELL', "heal")
-    //       }
-    //     }, 500)
-    //   }
-    // }, 3000)
   }
 
   return (
@@ -76,7 +60,7 @@ const CombatOverview = () => {
             cursor: "pointer",
           }}
         />
-        {fightPoints >= 1000 && <LabeledIPimg
+        {fightPoints >= 1000 && energy >= 2000 && <LabeledIPimg
           name={'blood_moon'}
           label={'Blood Forest'}
           size={50}
@@ -86,19 +70,6 @@ const CombatOverview = () => {
           }}
         />}
       </div>
-      {/* <div>
-        <div>{hp}/{maxHp} HP</div>
-        <div>{monsterName}: {monsterHp} HP</div>
-        <IPimg
-          name={'blood_moon'}
-          size={30}
-          onClick={() => startCombat()}
-          style={{
-            cursor: "pointer"
-          }}
-        /> 
-      </div> */}
-
     </OverviewBox>
   );
 };
