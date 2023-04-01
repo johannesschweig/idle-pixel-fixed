@@ -100,7 +100,7 @@ const OverviewPanel = () => {
           >
             <WoodcuttingOverview />
             <FarmingOverview />
-            <InventionOverview />
+            <CombatOverview />
           </div>
           <div
             style={{
@@ -113,7 +113,7 @@ const OverviewPanel = () => {
           >
             <BrewingOverview />
             <GatheringOverview />
-            <FishingOverview />
+            <InventionOverview />
           </div>
           <div
             style={{
@@ -126,7 +126,7 @@ const OverviewPanel = () => {
           >
             <CraftingOverview />
             <MiningOverview />
-            <CombatOverview />
+            <FishingOverview />
           </div>
         </div>
       </div>

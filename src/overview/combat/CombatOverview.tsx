@@ -38,8 +38,8 @@ const CombatOverview = () => {
 
   return (
     <OverviewBox
-      height={160}
-      width={400}
+      height={250}
+      width={550}
       xp={archeryXp}
       display={'block'}
     >

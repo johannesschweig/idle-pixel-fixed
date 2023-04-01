@@ -57,13 +57,13 @@ const FishingOverview = () => {
   const FISH = [
     "shrimp", "anchovy", "sardine", "crab", "piranha", "salmon", "trout", "pike", "eel", "tuna", "swordfish", "manta_ray", "shark", "whale", "small_stardust_fish", "medium_stardust_fish", "large_stardust_fish"
   ].map(fish => "cooked_" + fish )
-  const FOOD = [ "banana", "orange", "egg", "maple_syrup", "chocolate"].concat(FISH)
+  const FOOD = [ "banana", "orange", "egg", "maple_syrup", "chocolate", "cheese", "honey", "apple", "coconut_stew"].concat(FISH)
 // CONSUME=apple~177
 // COOK=raw_shark~3
   return (
     <OverviewBox
-      height={160}
-      width={300}
+      height={250}
+      width={400}
       xp={fishingXp}
     >
       <div
