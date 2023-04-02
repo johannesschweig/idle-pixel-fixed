@@ -19,6 +19,7 @@ const FarmingOverview = () => {
   const [bonemeal, setBonemeal] = useNumberItemObserver("bonemeal", id);
   const [farmingXp] = useNumberItemObserver("farming_xp", id);
   const [water] = useNumberItemObserver("water", id);
+  const [wateringCanActive] = useNumberItemObserver("watering_can_active", id);
 
   const patches =
     3 + Math.sign(Number(Items.getItem("donor_farm_patches_timestamp"))) * 2;
@@ -124,7 +125,7 @@ const FarmingOverview = () => {
           gap: "10px",
         }}
       >
-      { (water === 100) && 
+      { (water === 100 || wateringCanActive === 1) && 
         <LabeledIPimg
           name={"watering_can"}
           label={water}
