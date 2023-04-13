@@ -6,7 +6,7 @@ interface Props {
 }
 
 const BarDisplay = ({ bar }: Props) => {
-  const [amount, setAmount] = useNumberItemObserver(bar, "BarDisplay");
+  const [amount] = useNumberItemObserver(bar, "BarDisplay");
 
   return (
     <div

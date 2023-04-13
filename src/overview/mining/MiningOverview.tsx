@@ -1,5 +1,5 @@
 import IPimg from "../../util/IPimg";
-import { useNumberItemObserver } from "../setItems/useSetItemsObserver";
+import { useItemObserver, useNumberItemObserver } from "../setItems/useSetItemsObserver";
 import MachineDisplay from "./MachineDisplay";
 import { MACHINES } from "./machines";
 import OverviewBox from "../OverviewBox";
@@ -12,6 +12,10 @@ const id = "MiningOverview";
 const MiningOverview = () => {
   const [oilIn] = useNumberItemObserver("oil_in", id);
   const [oilOut, setOilOut] = useNumberItemObserver("oil_out", id);
+  const [rocketDistanceRequired] = useNumberItemObserver("rocket_distance_required", id);
+  const [rocketKm] = useNumberItemObserver("rocket_km", id);
+  const [rocketStatus] = useItemObserver("rocket_status", id)
+
   // const [oilOut, setOilOut] = useState(Items.getItem("oil_out"));
 
   const [miningXp] = useNumberItemObserver("mining_xp", id);
@@ -21,6 +25,19 @@ const MiningOverview = () => {
   const MINERALS = ["blue_marble", "amethyst", "sea_crystal", "dense_marble", "fluorite", "clear_marble", "jade", "lime_quartz", "opal", "purple_quartz", "amber", "smooth_pearl", "sulfer", "topaz", "tanzanite", "magnesium", "frozen", "blood"].map(c => c + "_mineral")
 
   const changeOilOut = (change: number) => setOilOut(oilOut + change);
+  const clickRocket = () => {
+    if (rocketKm === rocketDistanceRequired) { // arrived
+      sendMessage("ROCKET_COLLECT")
+    }
+  }
+  const getRocketLabel = () : string => {
+    if (rocketStatus === "to_moon") {
+      return `${Math.round(rocketKm/rocketDistanceRequired * 100)}%`
+    } else { // way back
+      return `${100 - Math.round(rocketKm/rocketDistanceRequired * 100)}%`
+    }
+  }
+// ROCKET_COLLECT / CLICKS_ROCKET=0 / CLICKS_ROCKET=1
   return (
     <OverviewBox
       height={250}
@@ -75,12 +92,21 @@ const MiningOverview = () => {
           {MINERALS.map((mineral) => (
             <ObservedLabeledIPimg 
               label={mineral}
-              action={"MINERAL_XP"}
+              // action={"MINERAL_X"}
+              action={"MINERAL_XP"} // make active agaio
               size={30} />
           ))}
-
+          <LabeledIPimg
+            name={"rocket"}
+            label={getRocketLabel()}
+            size={30}
+            style={{
+              cursor: "pointer",
+            }}
+            onClick={clickRocket}
+          />
       </div>
-    </OverviewBox>
+          </OverviewBox>
   );
 };
 

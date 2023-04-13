@@ -1,4 +1,5 @@
 import IPimg from "../../util/IPimg";
+import ObserveredLabeledIPimg from "../../util/ObservedLabeledIPimg";
 import OreDisplay from "./OreDisplay";
 import {
   useItemObserver,
@@ -69,7 +70,10 @@ const CraftingOverview = () => {
         }}
       >
         {BARS.map((bar) => (
-          <BarDisplay bar={bar} key={bar} />
+          <ObserveredLabeledIPimg
+            label={bar}
+            action={"CONVERT_STARDUST"}
+            size={30} />
         ))}
       </div>
       <div
