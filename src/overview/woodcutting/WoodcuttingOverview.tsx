@@ -79,6 +79,12 @@ const WoodcuttingOverview = () => {
 
     return heat
   }
+  const getLabel = () => {
+    if (foundryAmount > 0) {
+      return `Charring: ${foundryAmount} logs`
+    }
+    return `${getHeat()} heat`
+  }
 
   return (
     <OverviewBox
@@ -114,7 +120,7 @@ const WoodcuttingOverview = () => {
               color: getHeat() >= 6000 ? 'red' : 'black',
               fontSize: 14,
             }}>
-            {getHeat()} heat</span>
+            {getLabel()}</span>
         </div>
         <div
           style={{

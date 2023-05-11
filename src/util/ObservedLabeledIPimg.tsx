@@ -8,6 +8,7 @@ interface Props {
   label: string;
   action: string;
   size?: 10 | 15 | 20 | 25 | 30 | 50 | 100;
+  retain?: number;
 }
 
 const id = "ObservedLabeledIPimg"
@@ -15,22 +16,24 @@ const ObserveredLabeledIPimg = ({
   label,
   action,
   size,
+  retain = 0,
   style,
   ...rest
 }: PropsWithHTMLElementAttributes<Props>) => {
   const [value] = useNumberItemObserver(label, id)
 
   const imgClick = () => {
-    sendMessage(action, label, value);
+    let v = value - retain
+    sendMessage(action, label, v);
   }
 
 
   return (
     <div
       style={{
-        display: "flex"
+        display: value > retain ? "flex" : "none"
       }}>
-      { value > 0 && <LabeledIPimg
+       <LabeledIPimg
         name={label}
         size={size}
         label={value}
@@ -39,7 +42,7 @@ const ObserveredLabeledIPimg = ({
           ...style
         }}
         onClick={() => imgClick()}
-        {...rest}/> }
+        {...rest}/>
     </div>
   );
 };

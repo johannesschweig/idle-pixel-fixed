@@ -23,7 +23,8 @@ const GatheringOverview = () => {
     setCurrentGatheringArea(area);
     sendMessage("GATHERING", area);
   };
-
+// GATHERING_OPEN_UNIQUE=mines~mega_boosters_unclaimed
+// var_mega_boosters_unclaimed: found=1, claimed=0
   return (
     <OverviewBox
       height={250}

@@ -17,7 +17,8 @@ const FishingOverview = () => {
   const [fishingXp] = useNumberItemObserver("fishing_xp", id)
   const [cooksBookTimer] = useNumberItemObserver("cooks_book_timer", id)
   const [cooksBookItem] = useItemObserver("cooks_book_item", id)
-
+  const [coconut] = useNumberItemObserver("coconut", id)
+  const [banana] = useNumberItemObserver("banana", id)
 
   const clickBoat = (boat: string) => {
     let timer
@@ -46,6 +47,14 @@ const FishingOverview = () => {
     }
   }
 
+  const clickCooksBook = () => {
+    if (coconut >= 10) {
+      sendMessage("COOKS_BOOK", "coconut_stew")
+    } else if (banana >= 10) {
+      sendMessage("COOKS_BOOK", "banana_jello")
+    }
+  }
+
   const boatStyle = (timer: number) => {
     return {
       cursor: "pointer",
@@ -54,10 +63,11 @@ const FishingOverview = () => {
       backgroundColor: timer === 1 ? "deepskyblue" : "transparent",
     }
   }
+
   const FISH = [
     "shrimp", "anchovy", "sardine", "crab", "piranha", "salmon", "trout", "pike", "eel", "tuna", "swordfish", "manta_ray", "shark", "whale", "small_stardust_fish", "medium_stardust_fish", "large_stardust_fish"
   ].map(fish => "cooked_" + fish )
-  const FOOD = [ "banana", "orange", "egg", "maple_syrup", "chocolate", "cheese", "honey", "apple", "coconut_stew"].concat(FISH)
+  const FOOD = [ "orange", "egg", "maple_syrup", "chocolate", "cheese", "honey", "coconut_stew", "banana_jello"].concat(FISH)
 // CONSUME=apple~177
 // COOK=raw_shark~3
   return (
@@ -110,11 +120,11 @@ const FishingOverview = () => {
             cursor: "pointer",
             backgroundColor: "lightyellow",
           }} /> }
-        { cooksBookTimer === 0 && <LabeledIPimg
+        { (coconut >= 10  || banana >=10 ) && cooksBookTimer === 0 && <LabeledIPimg
           name={"cooks_book"}
-          label={"Make coconut stew"}
+          label={coconut >= 10 ? "Make coconut stew" : "Make banana jello"}
           size={50}
-          onClick={() => sendMessage("COOKS_BOOK", "coconut_stew")}
+          onClick={() => clickCooksBook()}
           style={{
             cursor: "pointer",
           }} /> }
@@ -125,6 +135,25 @@ const FishingOverview = () => {
             action={"CONSUME"}
           />
         ))}
+        <ObservedLabeledIPimg
+            label={"banana"}
+            size={30}
+            action={"CONSUME"}
+            retain={20}
+          />
+          <ObservedLabeledIPimg
+            label={"apple"}
+            size={30}
+            action={"CONSUME"}
+            retain={2}
+          />
+          <ObservedLabeledIPimg
+            label={"coconut"}
+            size={30}
+            action={"CONSUME"}
+            retain={50}
+          />
+
       </div>
     </OverviewBox>
   );

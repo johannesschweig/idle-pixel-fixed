@@ -15,10 +15,11 @@ import { sendMessage } from "../../util/websocket/useWebsocket";
 // PRESET_LOAD=2~1
 const id = "CombatOverview";
 const CombatOverview = () => {
-  const [archeryXp] = useNumberItemObserver('archery_xp', id)
+  const [magicXp] = useNumberItemObserver('magic_xp', id)
   const [woodenArrows] = useNumberItemObserver('wooden_arrows', id)
   const [energy] = useNumberItemObserver('energy', id)
   const [fightPoints] = useNumberItemObserver('fight_points', id)
+  const [monsterHp] = useNumberItemObserver('monster_hp', id)
 
   const startCombat = () => {
     sendMessage('START_FIGHT', 'blood_field')
@@ -32,7 +33,7 @@ const CombatOverview = () => {
       sendMessage('SPELL', 'fire')
     }, 3000)
     setTimeout(() => {
-      sendMessage('PRESET_LOAD', 2, 1)
+      sendMessage('PRESET_LOAD', 1, 1)
     }, 6000)
   }
 
@@ -40,7 +41,7 @@ const CombatOverview = () => {
     <OverviewBox
       height={250}
       width={550}
-      xp={archeryXp}
+      xp={magicXp}
       display={'block'}
     >
       <div
@@ -51,16 +52,7 @@ const CombatOverview = () => {
           marginTop: '20px',
           justifyItems: 'center',
         }}>
-        <LabeledIPimg
-          name={'wooden_arrows'}
-          label={woodenArrows}
-          size={20}
-          onClick={() => sendMessage('CRAFT', 'wooden_arrows', 3)}
-          style={{
-            cursor: "pointer",
-          }}
-        />
-        {fightPoints >= 1000 && energy >= 2000 && <LabeledIPimg
+        {fightPoints >= 1000 && energy >= 2000 && monsterHp === 0 && <LabeledIPimg
           name={'blood_moon'}
           label={'Blood Forest'}
           size={50}
