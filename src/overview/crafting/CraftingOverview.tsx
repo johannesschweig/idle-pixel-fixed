@@ -10,7 +10,7 @@ import OverviewBox from "../OverviewBox";
 import { formatNumber } from "../../util/numberUtils";
 import { useState } from "react";
 
-const ORES = ["copper", "iron", "silver", "gold", "promethium", "titanium"];
+const ORES = ["copper", "iron", "silver", "gold", "promethium", "titanium", "ancient_ore"];
 const BARS = [
   "bronze_bar",
   "iron_bar",
@@ -18,6 +18,7 @@ const BARS = [
   "gold_bar",
   "promethium_bar",
   "titanium_bar",
+  "ancient_bar",
 ];
 export enum CraftingView {
   SMELTING = "SMELTING",

@@ -20,4 +20,8 @@ export const MACHINES: Record<string, MachineData> = {
     level: 60,
     items: ["gold", "promethium", "titanium"],
   },
+  giant_excavator: {
+    level: 80,
+    items: ["titanium", "ancient_ore"],
+  },
 };

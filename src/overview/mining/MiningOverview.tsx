@@ -7,6 +7,7 @@ import { useState } from "react";
 import LabeledIPimg from "../../util/LabeledIPimg";
 import ObservedLabeledIPimg from "../../util/ObservedLabeledIPimg";
 import { sendMessage } from "../../util/websocket/useWebsocket";
+import { timeSince } from "../../util/timeUtils"
 
 const id = "MiningOverview";
 const MiningOverview = () => {
@@ -39,11 +40,15 @@ const MiningOverview = () => {
     } else if (rocketKm === rocketDistanceRequired) {
       return "Collect"
     } else if (rocketStatus.startsWith("to")) {
-      // return `${Math.round(rocketKm/rocketDistanceRequired * 100)}%`
-      return `${Math.round((rocketDistanceRequired - rocketKm)/speed/360)/10}h`
+      // return `${Math.round((rocketDistanceRequired - rocketKm)/speed/360)/10}h`
+      let date = new Date()
+      date.setSeconds(date.getSeconds() - (rocketDistanceRequired - rocketKm)/speed)
+      return timeSince(date).toString()
     } else { // way back
-      // return `${100 - Math.round(rocketKm/rocketDistanceRequired * 100)}%`
-      return `${Math.round(rocketKm/speed/360)/10}h`
+      let date = new Date()
+      date.setSeconds(date.getSeconds() - rocketKm/speed)
+      return timeSince(date).toString()
+
     }
   }
 // ROCKET_COLLECT / moon: CLICKS_ROCKET=1 / sun: CLICKS_ROCKET=2
