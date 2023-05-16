@@ -13,6 +13,7 @@ import {
   useWebsocket,
 } from "../../util/websocket/useWebsocket";
 import { sendMessage } from "../../util/websocket/useWebsocket";
+import { formatTime } from "../../util/timeUtils"
 
 interface Props {}
 
@@ -134,7 +135,8 @@ const BrewingOverview = ({}: Props) => {
               {
                 brewingXpMixerTimer === 0
                 ? "Reroll"
-                : new Date(brewingXpMixerTimer * 1000).toISOString().substring(11, 16)
+                // : new Date(brewingXpMixerTimer * 1000).toISOString().substring(11, 16)
+                : formatTime(brewingXpMixerTimer)
               }
               <br/>
               {brewingXpMixerUsed} / 5

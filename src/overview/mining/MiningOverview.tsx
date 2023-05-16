@@ -7,7 +7,7 @@ import { useState } from "react";
 import LabeledIPimg from "../../util/LabeledIPimg";
 import ObservedLabeledIPimg from "../../util/ObservedLabeledIPimg";
 import { sendMessage } from "../../util/websocket/useWebsocket";
-import { timeSince } from "../../util/timeUtils"
+import { formatTime } from "../../util/timeUtils"
 
 const id = "MiningOverview";
 const MiningOverview = () => {
@@ -41,13 +41,9 @@ const MiningOverview = () => {
       return "Collect"
     } else if (rocketStatus.startsWith("to")) {
       // return `${Math.round((rocketDistanceRequired - rocketKm)/speed/360)/10}h`
-      let date = new Date()
-      date.setSeconds(date.getSeconds() - (rocketDistanceRequired - rocketKm)/speed)
-      return timeSince(date).toString()
+      return formatTime((rocketDistanceRequired - rocketKm)/speed).toString()
     } else { // way back
-      let date = new Date()
-      date.setSeconds(date.getSeconds() - rocketKm/speed)
-      return timeSince(date).toString()
+      return formatTime(rocketKm/speed).toString()
 
     }
   }

@@ -1,3 +1,19 @@
+export const formatTime = (seconds: number) => {
+  if(seconds < 60 )
+    return `${Math.floor(seconds)}s`
+  const mins = (seconds) / 60
+  if(mins < 60)
+    return `${Math.floor(mins)}m`
+  const hours = (seconds) / 3_600
+  if(hours < 24)
+    return `${Math.floor(hours)}h`
+  const days = (seconds) / 86_400
+  if(days < 365)
+    return `${Math.floor(days)}d`
+  const years = (seconds) / 31_536_000
+  return `${Math.floor(years)}y`
+}
+
 export const timeSince = (timestamp: Date | string) => {
   const parsedTimestamp = new Date(timestamp)
   const now = new Date()
