@@ -21,20 +21,22 @@ const CombatOverview = () => {
   const [fightPoints] = useNumberItemObserver('fight_points', id)
   const [monsterHp] = useNumberItemObserver('monster_hp', id)
 
-  const startCombat = () => {
-    sendMessage('START_FIGHT', 'blood_field')
-    setTimeout(() => {
-      sendMessage('PRESET_LOAD', 3, 1)
-    }, 1000)
-    setTimeout(() => {
-      sendMessage('SPELL', 'reflect')
-    }, 3000)
-    setTimeout(() => {
-      sendMessage('SPELL', 'fire')
-    }, 3000)
-    setTimeout(() => {
-      sendMessage('PRESET_LOAD', 1, 1)
-    }, 6000)
+  const startCombat = (zone: string) => {
+    sendMessage('START_FIGHT', zone)
+    if (zone === 'blood_field') {
+      setTimeout(() => {
+        sendMessage('PRESET_LOAD', 3, 1)
+      }, 1000)
+      setTimeout(() => {
+        sendMessage('SPELL', 'reflect')
+      }, 3000)
+      setTimeout(() => {
+        sendMessage('SPELL', 'fire')
+      }, 3000)
+      setTimeout(() => {
+        sendMessage('PRESET_LOAD', 1, 1)
+      }, 6000)
+    }
   }
 
   return (
@@ -52,15 +54,42 @@ const CombatOverview = () => {
           marginTop: '20px',
           justifyItems: 'center',
         }}>
-        {fightPoints >= 1000 && energy >= 2000 && monsterHp === 0 && <LabeledIPimg
+        {/* {fightPoints >= 1000 && energy >= 2000 && monsterHp === 0 && <LabeledIPimg
           name={'blood_moon'}
-          label={'Blood Forest'}
-          size={50}
-          onClick={() => startCombat()}
+          label={'Blood Fields'}
+          size={30}
+          onClick={() => startCombat('blood_field')}
           style={{
             cursor: "pointer",
           }}
         />}
+        {fightPoints >= 2000 && energy >= 4000 && monsterHp === 0 && <LabeledIPimg
+          name={'blood_moon'}
+          label={'Blood Forest'}
+          size={50}
+          onClick={() => startCombat('blood_forest')}
+          style={{
+            cursor: "pointer",
+          }}
+        />} */}
+        {fightPoints >= 3500 && energy >= 6000 && monsterHp === 0 && <LabeledIPimg
+          name={'blood_moon'}
+          label={'Blood Cave'}
+          size={50}
+          onClick={() => startCombat('blood_cave')}
+          style={{
+            cursor: "pointer",
+          }}
+        />}
+        {/* {fightPoints >= 5000 && energy >= 10000 && monsterHp === 0 && <LabeledIPimg
+          name={'melee'}
+          label={'Beach'}
+          size={50}
+          onClick={() => startCombat('beach')}
+          style={{
+            cursor: "pointer",
+          }}
+        />} */}
       </div>
     </OverviewBox>
   );

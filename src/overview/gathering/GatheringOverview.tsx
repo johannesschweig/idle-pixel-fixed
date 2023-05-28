@@ -5,6 +5,7 @@ import OverviewBox from "../OverviewBox";
 import { keysOf } from "../../util/typeUtils";
 import GatheringAreaDisplay from "./GatheringAreaDisplay";
 import {AREAS} from "./areas";
+import ObservedLabeledIPimg from "../../util/ObservedLabeledIPimg";
 
 
 
@@ -58,9 +59,14 @@ const GatheringOverview = () => {
           justifyContent: "space-evenly",
         }}
       >
-        {areas.map((area) => (
+        {/* {areas.map((area) => (
           <GatheringBagDisplay area={area} key={area} />
-        ))}
+        ))} */}
+        <ObservedLabeledIPimg
+          label={"machete_unclaimed"}
+          action={""}
+          size={30}
+        />
       </div>
     </OverviewBox>
   );

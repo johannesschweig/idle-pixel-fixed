@@ -14,6 +14,7 @@ export enum LogAction {
 const id = "InventionOverview";
 const InventionOverview = () => {
   const limbs = Object.keys(LIMBS);
+  const WEAPONS = ["stinger", "iron_dagger", "skeleton_sword", "bone_amulet"]
 
   const [evil_blood, setEvilBlood] = useNumberItemObserver("evil_blood", id);
   const [cleansed_blood] = useNumberItemObserver("cleansed_blood", id);
@@ -84,11 +85,13 @@ const InventionOverview = () => {
                 key={limb}
               />
             ))}
-            <ObservedLabeledIPimg
-              label="stinger"
-              action="INVENTION_DISASSEMBLE"
-              size={30}
-            />
+            {WEAPONS.map((weapon) => (
+              <ObservedLabeledIPimg
+                label={weapon}
+                action="INVENTION_DISASSEMBLE"
+                size={30}
+              />
+            ))}
         </div>
       </div>
     </OverviewBox>

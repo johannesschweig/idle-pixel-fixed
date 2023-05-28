@@ -125,7 +125,7 @@ const FarmingOverview = () => {
           gap: "10px",
         }}
       >
-      { (water === 100 || wateringCanActive === 1) && 
+      { (water >= 20 || wateringCanActive === 1) && 
         <LabeledIPimg
           name={"watering_can"}
           label={water}
