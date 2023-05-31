@@ -23,6 +23,7 @@ const BARS = [
 export enum CraftingView {
   SMELTING = "SMELTING",
   CONVERTING = "CONVERTING",
+  SELLING = "SELLING",
 }
 
 const oreToBar = (ore: string) =>
@@ -33,10 +34,10 @@ export interface Smelting {
   amountAt: number;
   amountSet: number;
 }
-// CRAFT=wooden_arrows~1
+
 const id = "CraftingOverview";
 const CraftingOverview = () => {
-  const [view, setView] = useState(CraftingView.SMELTING);
+  const [view, setView] = useState(CraftingView.SELLING);
   const furnace = Furnace.getFurnace();
   const [oreType, setOreType] = useItemObserver("furnace_ore_type", id);
   const [oreAmountAt, setOreAmountAt] = useNumberItemObserver(
@@ -57,7 +58,7 @@ const CraftingOverview = () => {
     setOreAmountAt(smelting.amountAt);
     setOreAmountSet(smelting.amountSet);
   };
-// CONVERT_STARDUST=bronze_bar~2010
+
   return (
     <OverviewBox
       height={250}
@@ -73,7 +74,7 @@ const CraftingOverview = () => {
         {BARS.map((bar) => (
           <ObserveredLabeledIPimg
             label={bar}
-            action={"CONVERT_STARDUST"}
+            action={view === CraftingView.CONVERTING ? "CONVERT_STARDUST" : "SHOP_SELL"}
             size={30} />
         ))}
       </div>
@@ -113,6 +114,12 @@ const CraftingOverview = () => {
           { view === CraftingView.CONVERTING &&
             <IPimg
               name={"stardust"}
+              size={50}
+              onClick={() => setView(CraftingView.SELLING)}
+              /> }
+          { view === CraftingView.SELLING &&
+            <IPimg
+              name={"coins"}
               size={50}
               onClick={() => setView(CraftingView.SMELTING)}
               /> }

@@ -81,8 +81,10 @@ const OreDisplay = ({
         showElementById("notification-furnace");
         sendMessage("SMELT", ore, making);
       }
-    } else {
+    } else if (view === "CONVERTING") {
       sendMessage("CONVERT_STARDUST", ore, amount)
+    } else {
+      sendMessage("SHOP_SELL", ore, amount)
     }
   };
 
