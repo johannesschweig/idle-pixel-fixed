@@ -15,6 +15,15 @@ interface Data {
   name: string;
   value: string;
 }
+interface MarketData {
+  slot: string
+  name: string
+  amount: string
+  price: string
+  sold: string
+  type: string
+  timestamp: string
+}
 
 export const useNumberItemObserver = (
   item: string,
@@ -114,4 +123,35 @@ export const useSetItemsObserver = () => {
     [observers]
   );
   useWebsocket(onMessage, 10, "setItems");
+};
+
+
+// REFRESH_MARKET_SLOT_DATA=1~bone_amulet~2~169700~0~other_equipment~1686030487957~3~gold~125~75~0~ores~1686030919956~2~silver~2119~15~0~ores~1686037925816
+// 1686038984235-timestamp when posted
+export const useRefreshMarketSlotDataObserver = () => {
+  const observers = useIPFSelector(selectSetItemsObservers);
+
+  const onMessage = useMemo(
+    () =>
+      observeWebSocketMessage("REFRESH_MARKET_SLOT_DATA", (dataString: string) => {
+        const data = reduceToRecord<MarketData>(dataString.split("~"), [
+          (value) => ({ slot: value }),
+          (value) => ({ name: value }),
+          (value) => ({ amount: value }),
+          (value) => ({ price: value }),
+          (value) => ({ sold: value }),
+          (value) => ({ type: value }),
+          (value) => ({ timestamp: value }),
+        ]);
+        observers.forEach((observer) => {
+          data.forEach((d) => {
+            if (d.slot === observer.item) {
+              observer.onChange(d.amount);
+            }
+          });
+        });
+      }),
+    [observers]
+  );
+  useWebsocket(onMessage, 10, "refreshMarketSlotData");
 };

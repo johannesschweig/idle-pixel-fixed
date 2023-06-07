@@ -10,7 +10,7 @@ import OverviewBox from "../OverviewBox";
 import { formatNumber } from "../../util/numberUtils";
 import { useState } from "react";
 
-const ORES = ["copper", "iron", "silver", "gold", "promethium", "titanium", "ancient_ore"];
+const ORES = ["stone", "copper", "iron", "silver", "gold", "promethium", "titanium", "ancient_ore"];
 const BARS = [
   "bronze_bar",
   "iron_bar",
@@ -27,7 +27,7 @@ export enum CraftingView {
 }
 
 const oreToBar = (ore: string) =>
-  ore === "copper" ? "bronze_bar" : `${ore}_bar`;
+  ore === "copper" ? "bronze_bar" : ore === "ancient_ore" ? "ancient_bar" : `${ore}_bar`;
 
 export interface Smelting {
   type: string;
@@ -37,7 +37,7 @@ export interface Smelting {
 
 const id = "CraftingOverview";
 const CraftingOverview = () => {
-  const [view, setView] = useState(CraftingView.SELLING);
+  const [view, setView] = useState(CraftingView.SMELTING);
   const furnace = Furnace.getFurnace();
   const [oreType, setOreType] = useItemObserver("furnace_ore_type", id);
   const [oreAmountAt, setOreAmountAt] = useNumberItemObserver(
@@ -61,7 +61,7 @@ const CraftingOverview = () => {
 
   return (
     <OverviewBox
-      height={250}
+      height={300}
       width={400}
       xp={craftingXp}
     >
@@ -180,7 +180,8 @@ const CraftingOverview = () => {
 
       <div
         style={{
-          display: "flex",
+          display: "grid",
+          gridTemplateColumns: "repeat(6, 1fr)",
           gap: "10px",
         }}
       >

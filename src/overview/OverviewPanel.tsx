@@ -9,6 +9,7 @@ import MiningOverview from "./mining/MiningOverview";
 import InventionOverview from "./invention/InventionOverview";
 import FishingOverview from "./fishing/FishingOverview";
 import CombatOverview from "./combat/CombatOverview";
+import MarketOverview from "./market/MarketOverview";
 import { useLocalStorage } from "../util/localstorage/useLocalStorage";
 import {
   ActivityLogItem,
@@ -101,6 +102,7 @@ const OverviewPanel = () => {
             <WoodcuttingOverview />
             <FarmingOverview />
             <CombatOverview />
+            <MarketOverview />
           </div>
           <div
             style={{

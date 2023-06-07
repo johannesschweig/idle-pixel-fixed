@@ -6,6 +6,8 @@ import {
 } from "../setItems/useSetItemsObserver";
 import OverviewBox from "../OverviewBox";
 import { sendMessage } from "../../util/websocket/useWebsocket";
+import CombatAreaDisplay from "./CombatAreaDisplay";
+import { useState } from "react";
 
 
 // START_FIGHT=blood_field
@@ -15,28 +17,43 @@ import { sendMessage } from "../../util/websocket/useWebsocket";
 // PRESET_LOAD=2~1
 const id = "CombatOverview";
 const CombatOverview = () => {
+  const AREAS = [{ name: "field", fightpoints: 300, energy: 50, }, { name: "forest", fightpoints: 600, energy: 200, }, { name: "cave", fightpoints: 900, energy: 500, }, { name: "volcano", fightpoints: 1500, energy: 1000, }, { name: "northern_field", fightpoints: 2000, energy: 3000, }, { name: "mansion", fightpoints: 3500, energy: 5000, }, { name: "beach", fightpoints: 5000, energy: 10000, }, { name: "blood_field", fightpoints: 1000, energy: 2000, }, { name: "blood_forest", fightpoints: 2000, energy: 4000, }, { name: "blood_cave", fightpoints: 3500, energy: 6000, }, { name: "blood_volcano", fightpoints: 5000, energy: 10000, }]
+  const [selectedArea, setSelectedArea] = useState(AREAS[0].name);
+
   const [magicXp] = useNumberItemObserver('magic_xp', id)
-  const [woodenArrows] = useNumberItemObserver('wooden_arrows', id)
   const [energy] = useNumberItemObserver('energy', id)
   const [fightPoints] = useNumberItemObserver('fight_points', id)
   const [monsterHp] = useNumberItemObserver('monster_hp', id)
+  const [bloodMoonActive] = useNumberItemObserver('blood_moon_active', id)
 
-  const startCombat = (zone: string) => {
-    sendMessage('START_FIGHT', zone)
-    if (zone === 'blood_field') {
-      setTimeout(() => {
-        sendMessage('PRESET_LOAD', 3, 1)
-      }, 1000)
-      setTimeout(() => {
-        sendMessage('SPELL', 'reflect')
-      }, 3000)
-      setTimeout(() => {
-        sendMessage('SPELL', 'fire')
-      }, 3000)
-      setTimeout(() => {
-        sendMessage('PRESET_LOAD', 1, 1)
-      }, 6000)
+  const formatAreaName = (str: string) => {
+    var formattedStr = str.replace(/_/g, ' ');
+    formattedStr = formattedStr.replace(/\b\w/g, function (match: string) {
+      return match.toUpperCase();
+    });
+    return formattedStr;
+  }
+
+  const startCombat = () => {
+    if ((bloodMoonActive === 0 && selectedArea.startsWith('blood_')) ||
+      (bloodMoonActive === 1 && !selectedArea.startsWith('blood_'))) {
+      sendMessage('ACTIVATE_BLOODMOON')
     }
+    sendMessage('START_FIGHT', selectedArea)
+    // if (zone === 'blood_field') {
+    //   setTimeout(() => {
+    //     sendMessage('PRESET_LOAD', 3, 1)
+    //   }, 1000)
+    //   setTimeout(() => {
+    //     sendMessage('SPELL', 'reflect')
+    //   }, 3000)
+    //   setTimeout(() => {
+    //     sendMessage('SPELL', 'fire')
+    //   }, 3000)
+    //   setTimeout(() => {
+    //     sendMessage('PRESET_LOAD', 1, 1)
+    //   }, 6000)
+    // }
   }
 
   return (
@@ -49,47 +66,26 @@ const CombatOverview = () => {
       <div
         style={{
           display: 'grid',
-          gap: '10px',
-          gridTemplateColumns: '1fr 1fr 1fr',
+          gridTemplateColumns: 'repeat(7, 1fr)',
           marginTop: '20px',
-          justifyItems: 'center',
+          gap: "12px",
         }}>
-        {/* {fightPoints >= 1000 && energy >= 2000 && monsterHp === 0 && <LabeledIPimg
-          name={'blood_moon'}
-          label={'Blood Fields'}
-          size={30}
-          onClick={() => startCombat('blood_field')}
-          style={{
-            cursor: "pointer",
-          }}
-        />}
-        {fightPoints >= 2000 && energy >= 4000 && monsterHp === 0 && <LabeledIPimg
-          name={'blood_moon'}
-          label={'Blood Forest'}
-          size={50}
-          onClick={() => startCombat('blood_forest')}
-          style={{
-            cursor: "pointer",
-          }}
-        />} */}
-        {fightPoints >= 3500 && energy >= 6000 && monsterHp === 0 && <LabeledIPimg
-          name={'blood_moon'}
-          label={'Blood Cave'}
-          size={50}
-          onClick={() => startCombat('blood_cave')}
-          style={{
-            cursor: "pointer",
-          }}
-        />}
-        {/* {fightPoints >= 5000 && energy >= 10000 && monsterHp === 0 && <LabeledIPimg
-          name={'melee'}
-          label={'Beach'}
-          size={50}
-          onClick={() => startCombat('beach')}
-          style={{
-            cursor: "pointer",
-          }}
-        />} */}
+        {AREAS.map((a) => (
+          <CombatAreaDisplay
+            name={formatAreaName(a.name)}
+            energy={a.energy}
+            fightpoints={a.fightpoints}
+            image={a.name.startsWith("blood_") ? "blood_moon" : "melee"}
+            isSelectedArea={a.name === selectedArea}
+            selectArea={() => setSelectedArea(a.name)}
+            isDisabled={energy < a.energy || fightPoints < a.fightpoints}
+          />
+        ))}
+        <button
+          disabled={monsterHp > 0}
+          onClick={() => startCombat()}>
+          Fight
+        </button>
       </div>
     </OverviewBox>
   );

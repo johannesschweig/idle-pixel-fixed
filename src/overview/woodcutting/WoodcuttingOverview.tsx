@@ -88,7 +88,7 @@ const WoodcuttingOverview = () => {
 
   return (
     <OverviewBox
-      height={250}
+      height={300}
       width={550}
       justifyContent={"space-between"}
       xp={woddcuttingXp}
