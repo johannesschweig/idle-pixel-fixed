@@ -9,6 +9,7 @@ interface Props {
   action: string;
   size?: 10 | 15 | 20 | 25 | 30 | 50 | 100;
   retain?: number;
+  action_item?: string;
 }
 
 const id = "ObservedLabeledIPimg"
@@ -17,6 +18,7 @@ const ObserveredLabeledIPimg = ({
   action,
   size,
   retain = 0,
+  action_item = "",
   style,
   ...rest
 }: PropsWithHTMLElementAttributes<Props>) => {
@@ -24,7 +26,11 @@ const ObserveredLabeledIPimg = ({
 
   const imgClick = () => {
     let v = value - retain
-    sendMessage(action, label, v);
+    if(action_item) {
+      sendMessage(action, action_item, v);
+    } else {
+      sendMessage(action, label, v);
+    }
   }
 
 

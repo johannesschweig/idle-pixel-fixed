@@ -19,6 +19,7 @@ const FishingOverview = () => {
   const [cooksBookItem] = useItemObserver("cooks_book_item", id)
   const [coconut] = useNumberItemObserver("coconut", id)
   const [banana] = useNumberItemObserver("banana", id)
+  const [heat] = useNumberItemObserver("heat", id)
 
   const clickBoat = (boat: string) => {
     let timer
@@ -82,12 +83,7 @@ const FishingOverview = () => {
           gap: "10px",
         }}
       >
-        {/* <LabeledIPimg
-          name="row_boat"
-          label={rowBoatTimer > 1 ? "Fishing" : rowBoatTimer === 1 ? "Collect" : ""}
-          size={50}
-          onClick={() => clickBoat("row_boat")}
-          style={boatStyle(rowBoatTimer)} /> */}
+        { heat > 50 && <span>{heat} heat</span>}
         { canoeBoatTimer <= 1 && <LabeledIPimg
           name="canoe_boat"
           label={canoeBoatTimer === 1 ? "Collect" : "Send out"}

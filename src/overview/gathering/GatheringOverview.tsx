@@ -59,14 +59,20 @@ const GatheringOverview = () => {
           justifyContent: "space-evenly",
         }}
       >
-        {/* {areas.map((area) => (
+        {areas.map((area) => (
           <GatheringBagDisplay area={area} key={area} />
-        ))} */}
-        <ObservedLabeledIPimg
+        ))}
+        {/* <ObservedLabeledIPimg
           label={"machete_unclaimed"}
           action={""}
           size={30}
-        />
+        /> */}
+        <ObservedLabeledIPimg
+          label={"gathering_loot_bag_junk"}
+          action={"OPEN_GATHERING_LOOT"}
+          size={30}
+          action_item={"junk"}
+          />
       </div>
     </OverviewBox>
   );
