@@ -10,6 +10,11 @@ import {
   useWebsocket,
 } from "../../util/websocket/useWebsocket";
 import { reduceToRecord } from "../../util/arrayUtils";
+import {
+  addMarketSlotDataObserver,
+  removeMarketSlotDataObserver,
+  selectMarketSlotDataObservers
+} from "./marketSlotDataReducer.tsx"
 
 interface Data {
   name: string;
@@ -125,11 +130,69 @@ export const useSetItemsObserver = () => {
   useWebsocket(onMessage, 10, "setItems");
 };
 
+export const useMarketSlotDataObserver = (
+  item: string,
+  id: string,
+  specialCase: (value: string) => boolean = (_) => false
+): [string, (newValue: string) => void] => {
+  const [value, setValue] = useState(Items.getItem(item).toString());
+  const trueValue = useRef(Items.getItem(item).toString());
+
+  const itemId = `${id}-${item}`;
+
+  const [forceTrueValueTimeout, setForceTrueValueTimeout] =
+    useState<NodeJS.Timeout | null>(null);
+
+  const setTrueValue = useCallback(
+    (newValue: string) => {
+      const override = specialCase(newValue);
+      if (override) {
+        setValue(newValue);
+      } else if (value === trueValue.current) {
+        setValue(newValue);
+      } else {
+        if (!forceTrueValueTimeout) {
+          setForceTrueValueTimeout(
+            setTimeout(() => {
+              setValue(trueValue.current);
+              setForceTrueValueTimeout(null);
+            }, 3000)
+          );
+        }
+      }
+      trueValue.current = newValue;
+    },
+    [
+      setValue,
+      forceTrueValueTimeout,
+      setForceTrueValueTimeout,
+      value,
+      trueValue,
+    ]
+  );
+
+  const dispatch = useIPFDispatch();
+
+  useEffect(() => {
+    dispatch(
+      addMarketSlotDataObserver({
+        onChange: setTrueValue,
+        item,
+        id: itemId,
+      })
+    );
+    return () => {
+      dispatch(removeMarketSlotDataObserver(itemId));
+    };
+  }, [setTrueValue, item, id]);
+
+  return [value, setValue];
+};
 
 // REFRESH_MARKET_SLOT_DATA=1~bone_amulet~2~169700~0~other_equipment~1686030487957~3~gold~125~75~0~ores~1686030919956~2~silver~2119~15~0~ores~1686037925816
 // 1686038984235-timestamp when posted
 export const useRefreshMarketSlotDataObserver = () => {
-  const observers = useIPFSelector(selectSetItemsObservers);
+  const observers = useIPFSelector(selectMarketSlotDataObservers);
 
   const onMessage = useMemo(
     () =>
@@ -143,10 +206,11 @@ export const useRefreshMarketSlotDataObserver = () => {
           (value) => ({ type: value }),
           (value) => ({ timestamp: value }),
         ]);
+        console.log('x', data)
         observers.forEach((observer) => {
           data.forEach((d) => {
             if (d.slot === observer.item) {
-              observer.onChange(d.amount);
+              observer.onChange(d.sold);
             }
           });
         });

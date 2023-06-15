@@ -6,6 +6,7 @@ import overviewReducer from "../overview/overviewReducer";
 import setItemsReducer from "../overview/setItems/setItemsReducer";
 import keyboardReducer from "../util/keyboard/keyboardReducer";
 import modiferKeyReducer, {modifierKeySlice} from "../util/keyboard/modiferKeyReducer";
+import marketSlotDataReducer from "../overview/setItems/marketSlotDataReducer.tsx";
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
     websocket: websocketReducer,
     overview: overviewReducer,
     setItems: setItemsReducer,
+    marketSlotData: marketSlotDataReducer, 
     keyboard: keyboardReducer,
     modifierKey: modiferKeyReducer,
   },

@@ -2,7 +2,7 @@ import { closeOverview, selectOverviewIsOpen } from "./overviewReducer";
 import { useIPFDispatch, useIPFSelector } from "../redux/hooks";
 import BrewingOverview from "./brewing/BrewingOverview";
 import { useEffect, useRef } from "react";
-import { useSetItemsObserver } from "./setItems/useSetItemsObserver";
+import { useRefreshMarketSlotDataObserver, useSetItemsObserver } from "./setItems/useSetItemsObserver";
 import WoodcuttingOverview from "./woodcutting/WoodcuttingOverview";
 import CraftingOverview from "./crafting/CraftingOverview";
 import MiningOverview from "./mining/MiningOverview";
@@ -33,6 +33,7 @@ const OverviewPanel = () => {
   const dispatch = useIPFDispatch();
   const overviewIsOpen = useIPFSelector(selectOverviewIsOpen);
   useSetItemsObserver();
+  useRefreshMarketSlotDataObserver();
 
   const [settings] = useLocalStorage<ActivityLogSettings>(
     "activity-log-settings",
