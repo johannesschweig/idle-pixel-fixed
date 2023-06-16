@@ -1,16 +1,10 @@
 import OverviewBox from "../OverviewBox";
-import LabeledIPimg from "../../util/LabeledIPimg";
-import ObservedLabeledIPimg from "../../util/ObservedLabeledIPimg";
 import { sendMessage } from "../../util/websocket/useWebsocket";
-import { useMarketSlotDataObserver, useNumberItemObserver } from "../setItems/useSetItemsObserver";
-import { useSetItemsObserver, useRefreshMarketSlotDataObserver } from "../setItems/useSetItemsObserver";
+import { useMarketSlotDataObserver } from "../setItems/useSetItemsObserver";
+import { useEffect } from "react";
 
-// MARKET_REFRESH_SLOTS
 // MARKET_POST=2~silver~2119~15 position-item-amount-price
 // MARKET_REMOVE_OFFER=2
-// MARKET_COLLECT=1
-// REFRESH_MARKET_SLOT_DATA=1~silver~0~9~47322~ores~1686822189252
-// position-item-amountLeft-price-collect-type-timestamp
 // 3~gold~337~58~0~ores~1686822200084
 const id = "MarketOverview";
 const InventionOverview = () => {
@@ -19,45 +13,40 @@ const InventionOverview = () => {
   const [two] = useMarketSlotDataObserver("2", id)
   const [three] = useMarketSlotDataObserver("3", id)
 
-  const evilBloodClick = () => {
-    // sendMessage("CLEANSE_EVIL_BLOOD", "evil_blood", evil_blood)
-  }
+  useEffect(() => {
+    sendMessage("MARKET_REFRESH_SLOTS")
+  })
 
   return (
     <OverviewBox
       height={250}
-      width={300}
+      width={550}
       justifyContent={"space-between"}
     >
-      <button
-        onClick={() => sendMessage("MARKET_REFRESH_SLOTS")}
-      >
-        refresh
-      </button>
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "1fr 1fr",
+          gridTemplateColumns: "1fr 1fr 1fr",
+          marginTop: "10px",
+          gap: "64px",
         }}
       >
-        <span>{one.toString()}</span>
-        <button
-          onClick={() => sendMessage("MARKET_COLLECT", "1")}
-        >
-          Collect
-        </button>
-        <span>{two.toString()}</span>
-        <button
-          onClick={() => sendMessage("MARKET_COLLECT", "2")}
-        >
-          Collect
-        </button>
-        <span>{three.toString()}</span>
-        <button
-          onClick={() => sendMessage("MARKET_COLLECT", "3")}
-        >
-          Collect
-        </button>
+      {[one, two, three].map((item, index) => (
+        <div>
+          <div>{item.name}@{item.price}</div>
+          <div>Left: {item.amount}</div>
+          <div>Sold: {item.sold}</div>
+          {/* <span>Timestamp: {item.timestamp}</span> */}
+          <button
+            style={{
+              opacity: item.sold !== '' && item.sold !== '0' ? 1 : 0,
+            }}
+            onClick={() => sendMessage("MARKET_COLLECT", (index + 1).toString())}
+          >
+            Collect
+          </button>
+        </div>
+      ))}
       </div>
 
     </OverviewBox>

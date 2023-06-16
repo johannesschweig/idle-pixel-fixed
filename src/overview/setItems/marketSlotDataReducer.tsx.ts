@@ -1,9 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { MarketData } from "./useSetItemsObserver";
 
 import { RootState } from "../../redux/store";
 
 export interface MarketSlotDataObserver {
-  onChange: (message: string) => void;
+  onChange: (data: MarketData) => void;
   item: string;
   id: string;
 }

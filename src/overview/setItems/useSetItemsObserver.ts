@@ -20,7 +20,7 @@ interface Data {
   name: string;
   value: string;
 }
-interface MarketData {
+export interface MarketData {
   slot: string
   name: string
   amount: string
@@ -133,41 +133,57 @@ export const useSetItemsObserver = () => {
 export const useMarketSlotDataObserver = (
   item: string,
   id: string,
-  specialCase: (value: string) => boolean = (_) => false
-): [string, (newValue: string) => void] => {
-  const [value, setValue] = useState(Items.getItem(item).toString());
-  const trueValue = useRef(Items.getItem(item).toString());
+  specialCase: (values: MarketData) => boolean = (_) => false
+): [MarketData, (newValue: MarketData) => void] => {
+  const [values, setValues] = useState<MarketData>({
+    slot: '',
+    name: '',
+    amount: '',
+    price: '',
+    sold: '',
+    type: '',
+    timestamp: '',
+  });
+  const trueValues = useRef<MarketData>({
+    slot: '',
+    name: '',
+    amount: '',
+    price: '',
+    sold: '',
+    type: '',
+    timestamp: '',
+  });
 
   const itemId = `${id}-${item}`;
 
   const [forceTrueValueTimeout, setForceTrueValueTimeout] =
     useState<NodeJS.Timeout | null>(null);
 
-  const setTrueValue = useCallback(
-    (newValue: string) => {
-      const override = specialCase(newValue);
+  const setTrueValues = useCallback(
+    (newValues: MarketData) => {
+      const override = specialCase(newValues);
       if (override) {
-        setValue(newValue);
-      } else if (value === trueValue.current) {
-        setValue(newValue);
+        setValues(newValues);
+      } else if (values === trueValues.current) {
+        setValues(newValues);
       } else {
         if (!forceTrueValueTimeout) {
           setForceTrueValueTimeout(
             setTimeout(() => {
-              setValue(trueValue.current);
+              setValues(trueValues.current);
               setForceTrueValueTimeout(null);
             }, 3000)
           );
         }
       }
-      trueValue.current = newValue;
+      trueValues.current = newValues;
     },
     [
-      setValue,
+      setValues,
       forceTrueValueTimeout,
       setForceTrueValueTimeout,
-      value,
-      trueValue,
+      values,
+      trueValues,
     ]
   );
 
@@ -176,7 +192,7 @@ export const useMarketSlotDataObserver = (
   useEffect(() => {
     dispatch(
       addMarketSlotDataObserver({
-        onChange: setTrueValue,
+        onChange: setTrueValues,
         item,
         id: itemId,
       })
@@ -184,9 +200,9 @@ export const useMarketSlotDataObserver = (
     return () => {
       dispatch(removeMarketSlotDataObserver(itemId));
     };
-  }, [setTrueValue, item, id]);
+  }, [setTrueValues, item, id]);
 
-  return [value, setValue];
+  return [values, setValues];
 };
 
 // REFRESH_MARKET_SLOT_DATA=1~bone_amulet~2~169700~0~other_equipment~1686030487957~3~gold~125~75~0~ores~1686030919956~2~silver~2119~15~0~ores~1686037925816
@@ -210,7 +226,7 @@ export const useRefreshMarketSlotDataObserver = () => {
         observers.forEach((observer) => {
           data.forEach((d) => {
             if (d.slot === observer.item) {
-              observer.onChange(d.sold);
+              observer.onChange(d);
             }
           });
         });
