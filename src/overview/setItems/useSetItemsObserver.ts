@@ -222,7 +222,6 @@ export const useRefreshMarketSlotDataObserver = () => {
           (value) => ({ type: value }),
           (value) => ({ timestamp: value }),
         ]);
-        console.log('x', data)
         observers.forEach((observer) => {
           data.forEach((d) => {
             if (d.slot === observer.item) {

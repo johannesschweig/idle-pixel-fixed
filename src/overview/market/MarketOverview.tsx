@@ -1,7 +1,8 @@
 import OverviewBox from "../OverviewBox";
 import { sendMessage } from "../../util/websocket/useWebsocket";
 import { useMarketSlotDataObserver } from "../setItems/useSetItemsObserver";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import MarketSlotDisplay from "./MarketSlotDisplay";
 
 // MARKET_POST=2~silver~2119~15 position-item-amount-price
 // MARKET_REMOVE_OFFER=2
@@ -15,7 +16,7 @@ const InventionOverview = () => {
 
   useEffect(() => {
     sendMessage("MARKET_REFRESH_SLOTS")
-  })
+  }, [])
 
   return (
     <OverviewBox
@@ -28,26 +29,26 @@ const InventionOverview = () => {
           display: "grid",
           gridTemplateColumns: "1fr 1fr 1fr",
           marginTop: "10px",
-          gap: "64px",
+          gap: "32px",
         }}
       >
-      {[one, two, three].map((item, index) => (
-        <div>
-          <div>{item.name}@{item.price}</div>
-          <div>Left: {item.amount}</div>
-          <div>Sold: {item.sold}</div>
-          {/* <span>Timestamp: {item.timestamp}</span> */}
-          <button
-            style={{
-              opacity: item.sold !== '' && item.sold !== '0' ? 1 : 0,
-            }}
-            onClick={() => sendMessage("MARKET_COLLECT", (index + 1).toString())}
-          >
-            Collect
-          </button>
-        </div>
-      ))}
+        { one.name &&
+         <MarketSlotDisplay
+          item={one}
+          index={0}
+         /> }
+        { two.name &&
+         <MarketSlotDisplay
+          item={two}
+          index={1}
+         /> }
+      { three.name &&
+         <MarketSlotDisplay
+          item={three}
+          index={2}
+         /> }
       </div>
+
 
     </OverviewBox>
   );
