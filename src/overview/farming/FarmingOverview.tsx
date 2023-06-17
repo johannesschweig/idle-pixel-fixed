@@ -6,6 +6,7 @@ import { hideElementById } from "../../util/domOperations";
 import { SEEDS } from "./seeds";
 import OverviewBox from "../OverviewBox";
 import LabeledIPimg from "../../util/LabeledIPimg";
+import IPimg from "../../util/IPimg";
 import { useNumberItemObserver } from "../setItems/useSetItemsObserver";
 import { keysOf } from "../../util/typeUtils";
 import { BONES } from "./bonemeal/bones";
@@ -16,10 +17,13 @@ const FarmingOverview = () => {
   const seeds = Object.keys(SEEDS);
   const bones = keysOf(BONES);
 
+  const [normalBones] = useNumberItemObserver("bones", id);
   const [bonemeal, setBonemeal] = useNumberItemObserver("bonemeal", id);
   const [farmingXp] = useNumberItemObserver("farming_xp", id);
   const [water] = useNumberItemObserver("water", id);
   const [wateringCanActive] = useNumberItemObserver("watering_can_active", id);
+  const [incineratorCooldown] = useNumberItemObserver("incinerator_cooldown", id);
+  const [incineratorActive] = useNumberItemObserver("incinerator_active", id);
 
   const patches =
     3 + Math.sign(Number(Items.getItem("donor_farm_patches_timestamp"))) * 2;
@@ -55,16 +59,12 @@ const FarmingOverview = () => {
     }
   };
 
-  const wateringCanClick = () => {
-    sendMessage("USE_WATERING_CAN")
-  }
-
   return (
     <OverviewBox
       height={250}
       width={550}
       justifyContent={"space-between"}
-      xp={farmingXp}  
+      xp={farmingXp}
     >
       <div style={{ display: "flex" }}>
         <LabeledIPimg
@@ -125,18 +125,27 @@ const FarmingOverview = () => {
           gap: "10px",
         }}
       >
-      { (water >= 20 || wateringCanActive === 1) && 
-        <LabeledIPimg
-          name={"watering_can"}
-          label={water}
-          size={30}
-          style={{
-            justifyContent: "center",
-            cursor: "pointer",
-            color: water === 100 ? "darkgreen" : "black",
-          }}
-          onClick={() => wateringCanClick()}
-        /> }
+        { normalBones > 60 && incineratorCooldown === 0 && <IPimg
+            name={"incinerator"}
+            size={30}
+            onClick={() => sendMessage("INCINERATOR")}
+            style={{
+              backgroundColor: incineratorActive > 0 ? "red" : "transparent",
+            }}
+          />
+        }
+        {(water >= 20 || wateringCanActive === 1) &&
+          <LabeledIPimg
+            name={"watering_can"}
+            label={water}
+            size={30}
+            style={{
+              justifyContent: "center",
+              cursor: "pointer",
+              color: water === 100 ? "darkgreen" : "black",
+            }}
+            onClick={() => sendMessage("USE_WATERING_CAN")}
+          />}
         {Array(patches)
           .fill(null)
           .map((v, i) => (
