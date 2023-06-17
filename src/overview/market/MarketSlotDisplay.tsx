@@ -1,6 +1,7 @@
 import { sendMessage } from "../../util/websocket/useWebsocket";
 import { MarketData } from "../setItems/useSetItemsObserver";
 import { useState, useEffect } from "react";
+import { useNumberItemObserver } from "../setItems/useSetItemsObserver";
 import IPimg from "../../util/IPimg";
 
 interface Props {
@@ -14,6 +15,7 @@ const MarketSlotDisplay = ({
   index,
 }: Props) => {
   const [prices, setPrices] = useState([]);
+  const [amount] = useNumberItemObserver(item.name, id + index);
 
   useEffect(() => {
     // fetch prices for item on load of component
@@ -28,35 +30,99 @@ const MarketSlotDisplay = ({
       });
   }, [])
 
+  const adjustPrice = () => {
+    sendMessage('MARKET_REMOVE_OFFER', index)
+    sendMessage('MARKET_POST', index, item.name, item.amount, prices[0] - 1)
+  }
+
+  const adjustAmount = () => {
+    sendMessage('MARKET_REMOVE_OFFER', index)
+    sendMessage('MARKET_POST', index, item.name, item.amount + amount, item.price)
+  }
+
+  const removeOffer = () => {
+    sendMessage('MARKET_REMOVE_OFFER', index)
+    sendMessage("MARKET_REFRESH_SLOTS")
+  }
+
+  const buttonStyle = {
+    marginLeft: '4px',
+    display: 'inline-block',
+    border: '1px solid black',
+    borderRadius: "4px",
+    padding: '0px 6px',
+    fontSize: "12px",
+    cursor: "pointer",
+    backgroundColor: "rgba(255,255,255,0.5)",
+    '&:hover, &:active': {
+      backgroundColor: "rgba(255,255,255,0.7)",
+    }
+  };
 
   return (
     <div
       style={{
         backgroundColor: 'rgb(114, 181, 192)',
-        padding: "8px",
+        padding: "16px",
         display: "grid",
         justifyItems: "center",
+        gap: "8px",
       }}
     >
+      { /* Icon */}
       <IPimg
         name={item.name}
-        size={30}
+        size={50}
         style={{
-          marginBottom: "4px",
+          marginBottom: "12px",
         }}
       />
-      <div>{item.amount}<br/>for {item.price}</div>
+      { /* Amount with plus button */}
       <div>
-        {prices.map(e => (
-          <span>({e})</span>
-        ))}
+        {item.amount}
+        {amount != 0 &&
+          <div
+            className="button"
+            onClick={() => adjustAmount()}
+            style={buttonStyle}>
+            +{amount}
+          </div>
+        }
       </div>
-      { item.sold !== "0" &&
+      { /* Price with adjust button */}
+      <div>for {item.price}
+        {prices && (prices[0] > item.price + 1 || prices[0] < item.price ) &&
+          <div
+            style={{
+              display: "inline-block",
+            }}
+          >
+            <span
+              style={{
+                fontWeight: "bold",
+                fontSize: "14px",
+                color: prices[0] > item.price ? "darkgreen" : 'firebrick',
+              }}
+            >
+              {prices[0] > item.price ? "+" : ""}
+              {prices[0] - item.price}
+            </span>
+            <div
+              className="button"
+              onClick={() => adjustPrice()}
+              style={buttonStyle}>
+              ↕
+            </div>
+          </div>
+        }
+      </div>
+      { /* Collect button (optional) */}
+      {item.sold !== 0 &&
         <button
           style={{
             backgroundColor: 'gold'
           }}
-          onClick={() => sendMessage("MARKET_COLLECT", (index + 1).toString())}
+          onClick={() => sendMessage("MARKET_COLLECT", index.toString())}
         >
           <IPimg
             name={"coins"}
@@ -68,6 +134,15 @@ const MarketSlotDisplay = ({
           Collect {item.sold}
         </button>
       }
+      { /* Delete button */}
+      <div>
+        <div
+          className="button"
+          style={buttonStyle}
+          onClick={() => removeOffer()}>
+          x
+        </div>
+      </div>
     </div>
   );
 };

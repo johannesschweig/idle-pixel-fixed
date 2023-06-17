@@ -4,9 +4,6 @@ import { useMarketSlotDataObserver } from "../setItems/useSetItemsObserver";
 import { useEffect, useState } from "react";
 import MarketSlotDisplay from "./MarketSlotDisplay";
 
-// MARKET_POST=2~silver~2119~15 position-item-amount-price
-// MARKET_REMOVE_OFFER=2
-// 3~gold~337~58~0~ores~1686822200084
 const id = "MarketOverview";
 const InventionOverview = () => {
 
@@ -22,7 +19,6 @@ const InventionOverview = () => {
     <OverviewBox
       height={250}
       width={550}
-      justifyContent={"space-between"}
     >
       <div
         style={{
@@ -35,21 +31,19 @@ const InventionOverview = () => {
         { one.name &&
          <MarketSlotDisplay
           item={one}
-          index={0}
+          index={1}
          /> }
         { two.name &&
          <MarketSlotDisplay
           item={two}
-          index={1}
+          index={2}
          /> }
       { three.name &&
          <MarketSlotDisplay
           item={three}
-          index={2}
+          index={3}
          /> }
       </div>
-
-
     </OverviewBox>
   );
 };

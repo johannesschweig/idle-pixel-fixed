@@ -21,13 +21,13 @@ interface Data {
   value: string;
 }
 export interface MarketData {
-  slot: string
+  slot: number
   name: string
-  amount: string
-  price: string
-  sold: string
+  amount: number
+  price: number
+  sold: number
   type: string
-  timestamp: string
+  timestamp: number
 }
 
 export const useNumberItemObserver = (
@@ -136,22 +136,22 @@ export const useMarketSlotDataObserver = (
   specialCase: (values: MarketData) => boolean = (_) => false
 ): [MarketData, (newValue: MarketData) => void] => {
   const [values, setValues] = useState<MarketData>({
-    slot: '',
+    slot: 0,
     name: '',
-    amount: '',
-    price: '',
-    sold: '',
+    amount: 0,
+    price: 0,
+    sold: 0,
     type: '',
-    timestamp: '',
+    timestamp: 0,
   });
   const trueValues = useRef<MarketData>({
-    slot: '',
+    slot: 0,
     name: '',
-    amount: '',
-    price: '',
-    sold: '',
+    amount: 0,
+    price: 0,
+    sold: 0,
     type: '',
-    timestamp: '',
+    timestamp: 0,
   });
 
   const itemId = `${id}-${item}`;
@@ -214,17 +214,17 @@ export const useRefreshMarketSlotDataObserver = () => {
     () =>
       observeWebSocketMessage("REFRESH_MARKET_SLOT_DATA", (dataString: string) => {
         const data = reduceToRecord<MarketData>(dataString.split("~"), [
-          (value) => ({ slot: value }),
+          (value) => ({ slot: parseInt(value) }),
           (value) => ({ name: value }),
-          (value) => ({ amount: value }),
-          (value) => ({ price: value }),
-          (value) => ({ sold: value }),
+          (value) => ({ amount: parseInt(value) }),
+          (value) => ({ price: parseInt(value) }),
+          (value) => ({ sold: parseInt(value) }),
           (value) => ({ type: value }),
-          (value) => ({ timestamp: value }),
+          (value) => ({ timestamp: parseInt(value) }),
         ]);
         observers.forEach((observer) => {
           data.forEach((d) => {
-            if (d.slot === observer.item) {
+            if (d.slot.toString() === observer.item) {
               observer.onChange(d);
             }
           });
