@@ -3,6 +3,7 @@ import { sendMessage } from "../../util/websocket/useWebsocket";
 import { useMarketSlotDataObserver } from "../setItems/useSetItemsObserver";
 import { useEffect, useState } from "react";
 import MarketSlotDisplay from "./MarketSlotDisplay";
+import MarketSlotPlaceholder from "./MarketSlotPlaceholder";
 
 const id = "MarketOverview";
 const InventionOverview = () => {
@@ -28,21 +29,30 @@ const InventionOverview = () => {
           gap: "32px",
         }}
       >
-        { one.name &&
-         <MarketSlotDisplay
-          item={one}
-          index={1}
-         /> }
-        { two.name &&
-         <MarketSlotDisplay
-          item={two}
-          index={2}
-         /> }
-      { three.name &&
-         <MarketSlotDisplay
-          item={three}
-          index={3}
-         /> }
+        {one.name ?
+          <MarketSlotDisplay
+            item={one}
+            index={1}
+          /> :
+          <MarketSlotPlaceholder
+            index={1}/>
+        }
+        {two.name ? 
+          <MarketSlotDisplay
+            item={two}
+            index={2}
+          /> :
+          <MarketSlotPlaceholder
+            index={2} />
+        }
+        {three.name ?
+          <MarketSlotDisplay
+            item={three}
+            index={3}
+          /> :
+          <MarketSlotPlaceholder
+            index={3} />
+          }
       </div>
     </OverviewBox>
   );

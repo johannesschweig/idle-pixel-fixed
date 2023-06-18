@@ -9,6 +9,20 @@ interface Props {
   index: number,
 }
 
+export const buttonStyle = {
+  marginLeft: '4px',
+  display: 'inline-block',
+  border: '1px solid black',
+  borderRadius: "4px",
+  padding: '0px 6px',
+  fontSize: "12px",
+  cursor: "pointer",
+  backgroundColor: "rgba(255,255,255,0.5)",
+  '&:hover, &:active': {
+    backgroundColor: "rgba(255,255,255,0.7)",
+  }
+}
+
 const id = "MarketSlotDisplay";
 const MarketSlotDisplay = ({
   item,
@@ -53,20 +67,6 @@ const MarketSlotDisplay = ({
     sendMessage("MARKET_COLLECT", index.toString())
     sendMessage("MARKET_REFRESH_SLOTS")
   }
-
-  const buttonStyle = {
-    marginLeft: '4px',
-    display: 'inline-block',
-    border: '1px solid black',
-    borderRadius: "4px",
-    padding: '0px 6px',
-    fontSize: "12px",
-    cursor: "pointer",
-    backgroundColor: "rgba(255,255,255,0.5)",
-    '&:hover, &:active': {
-      backgroundColor: "rgba(255,255,255,0.7)",
-    }
-  };
 
   return (
     <div
