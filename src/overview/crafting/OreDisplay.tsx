@@ -22,6 +22,8 @@ interface Props {
   setCharcoal: (charcoal: number) => void;
   lava: number;
   setLava: (lava: number) => void;
+  plasma: number;
+  setPlasma: (lava: number) => void;
 }
 
 const OreDisplay = ({
@@ -35,12 +37,15 @@ const OreDisplay = ({
   setCharcoal,
   lava,
   setLava,
+  plasma,
+  setPlasma,
 }: Props) => {
   const furnaceCapacity = Number(Furnace.getFurnaceCapacity());
   const [amount, setAmount] = useNumberItemObserver(ore, `OreDisplay-${ore}`);
   const oilPerBar = Crafting.getOilPerBar(ore);
   const charcoalPerBar = Crafting.getCharcoalPerBar(ore);
   const lavaPerBar = Crafting.getLavaPerBar(ore);
+  const plasmaPerBar = Crafting.getPlasmaPerBar(ore);
 
   const getSmeltable = () => {
     const maxAmountOil = Math.floor(
@@ -52,7 +57,10 @@ const OreDisplay = ({
     const maxAmountLava = Math.floor(
       Math.min(lava / lavaPerBar || Infinity, amount)
     );
-    const maxAmount = Math.min(maxAmountOil, maxAmountCharcoal, maxAmountLava);
+    const maxAmountPlasma = Math.floor(
+      Math.min(plasma / plasmaPerBar || Infinity, amount)
+    );
+    const maxAmount = Math.min(maxAmountOil, maxAmountCharcoal, maxAmountLava, maxAmountPlasma);
     return Math.min(furnaceCapacity, maxAmount);
   };
 
@@ -77,6 +85,7 @@ const OreDisplay = ({
         setOil(oil - making * oilPerBar);
         setCharcoal(charcoal - making * charcoalPerBar);
         setLava(lava - making * lavaPerBar);
+        setPlasma(plasma - making * plasmaPerBar);
         updateTextContentById("notification-furnace-label", `0/${making}`);
         showElementById("notification-furnace");
         sendMessage("SMELT", ore, making);
@@ -93,6 +102,7 @@ const OreDisplay = ({
     oilPerBar,
     charcoalPerBar,
     lavaPerBar,
+    plasmaPerBar,
   };
 
   const [oreProps, OreToolTips, hideTooltip] = useTooltip(
@@ -109,7 +119,8 @@ const OreDisplay = ({
     amount === 0 ||
     oil < oilPerBar ||
     charcoal < charcoalPerBar ||
-    lava < lavaPerBar;
+    lava < lavaPerBar || 
+    plasma < plasmaPerBar;
 
   const formattedAmount = formatNumber(amount);
 

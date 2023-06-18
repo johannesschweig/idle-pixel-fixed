@@ -22,7 +22,11 @@ const MarketSlotDisplay = ({
     fetch(`https://idle-pixel.com/market/browse/${item.name}/`)
       .then(response => response.json())
       .then(data => {
-        const marketItemPrices = data.map((item: { market_item_price_each: number; }) => item.market_item_price_each);
+        var marketItemPrices = data.map((item: { market_item_price_each: number; }) => item.market_item_price_each);
+        marketItemPrices = marketItemPrices.filter((element: number, index: number) => {
+          // Keep all elements except the first occurrence of elementToRemove
+          return element !== item.price || index !== marketItemPrices.indexOf(item.price);
+        });
         setPrices(marketItemPrices)
       })
       .catch(error => {
@@ -42,6 +46,11 @@ const MarketSlotDisplay = ({
 
   const removeOffer = () => {
     sendMessage('MARKET_REMOVE_OFFER', index)
+    sendMessage("MARKET_REFRESH_SLOTS")
+  }
+
+  const collectOffer = () => {
+    sendMessage("MARKET_COLLECT", index.toString())
     sendMessage("MARKET_REFRESH_SLOTS")
   }
 
@@ -91,7 +100,7 @@ const MarketSlotDisplay = ({
       </div>
       { /* Price with adjust button */}
       <div>for {item.price}
-        {prices && (prices[0] > item.price + 1 || prices[0] < item.price ) &&
+        {prices && !(prices[0] - item.price === 1 || prices[0] - item.price === 0) &&
           <div
             style={{
               display: "inline-block",
@@ -122,7 +131,7 @@ const MarketSlotDisplay = ({
           style={{
             backgroundColor: 'gold'
           }}
-          onClick={() => sendMessage("MARKET_COLLECT", index.toString())}
+          onClick={() => collectOffer()}
         >
           <IPimg
             name={"coins"}

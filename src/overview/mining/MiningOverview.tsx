@@ -47,26 +47,6 @@ const MiningOverview = () => {
 
     }
   }
-// ROCKET_COLLECT / moon: CLICKS_ROCKET=1 / sun: CLICKS_ROCKET=2
-
-// Rocket arrived and empty
-// var_ach_hard_rocket_potion_landing	1
-// var_ach_hard_send_rocket	1
-// var_mega_rocket	1
-// var_mega_rocket_crafted	1
-// var_rocket	0
-// var_rocket_crafted	1
-// var_rocket_distance_required	0
-// var_rocket_fuel	11
-// var_rocket_fuel_crafted	3
-// var_rocket_km	0
-// var_rocket_moon_total	12
-// var_rocket_potion	0
-// var_rocket_potion_timer	0
-// var_rocket_potion_total	5
-// var_rocket_result	none
-// var_rocket_status	none
-// var_rocket_usable	1
 
   return (
     <OverviewBox

@@ -51,6 +51,7 @@ const CraftingOverview = () => {
   const [oil, setOil] = useNumberItemObserver("oil", id);
   const [charcoal, setCharcoal] = useNumberItemObserver("charcoal", id);
   const [lava, setLava] = useNumberItemObserver("lava", id);
+  const [plasma, setPlasma] = useNumberItemObserver("plasma", id);
   const [craftingXp] = useNumberItemObserver("crafting_xp", id);
 
   const setSmelting = (smelting: Smelting) => {
@@ -175,6 +176,20 @@ const CraftingOverview = () => {
             <IPimg name={"lava"} size={30} />
             <span>{lava}</span>
           </div>
+          <div
+            style={{
+              display: "flex",
+              gap: "10px",
+              flexDirection: "column",
+              width: "50px",
+              justifyContent: "flex-end",
+              alignItems: "center",
+              height: "100%",
+            }}
+          >
+            <IPimg name={"plasma"} size={30} />
+            <span>{plasma}</span>
+          </div>
         </div>
       </div>
 
@@ -197,6 +212,8 @@ const CraftingOverview = () => {
             setCharcoal={setCharcoal}
             lava={lava}
             setLava={setLava}
+            plasma={plasma}
+            setPlasma={setPlasma}
             key={ore}
           />
         ))}

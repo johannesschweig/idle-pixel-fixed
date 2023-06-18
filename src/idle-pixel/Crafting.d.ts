@@ -3,6 +3,7 @@ declare global {
     static getOilPerBar: (ore: string) => number
     static getCharcoalPerBar: (ore: string) => number
     static getLavaPerBar: (ore: string) => number
+    static getPlasmaPerBar: (ore: string) => number
   }
 }
 
