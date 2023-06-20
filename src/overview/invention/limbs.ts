@@ -60,19 +60,19 @@ export const LIMBS: Record<string, limbData> = {
     zone: "caves",
     blood: "5-10",
   },
-  blood_fire_snake: {
+  blood_fire_snake_tongue: {
     zone: "volcano",
     blood: "5-10",
   },
-  blood_fire_hawk: {
+  blood_fire_hawk_wing: {
     zone: "volcano",
     blood: "5-10",
   },
-  blood_fire_golem: {
-    zone: "field",
+  blood_fire_golem_head: {
+    zone: "volcano",
     blood: "5-10",
   },
-  blood_fire_witch : {
+  blood_fire_witch_web: {
     zone: "volcano",
     blood: "5-10",
   },

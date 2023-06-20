@@ -23,6 +23,7 @@ const GatheringOverview = () => {
   const selectArea = (area: string) => {
     setCurrentGatheringArea(area);
     sendMessage("GATHERING", area);
+    sendMessage("GATHERER", area);
   };
 // GATHERING_OPEN_UNIQUE=mines~mega_boosters_unclaimed
 // var_mega_boosters_unclaimed: found=1, claimed=0

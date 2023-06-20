@@ -105,6 +105,10 @@ const MiningOverview = () => {
               action={"MINERAL_XP"}
               size={30} />
           ))}
+          <ObservedLabeledIPimg
+            label={"meteor"}
+            action={"MINE_METEOR"}
+            size={30} />
           <LabeledIPimg
             name={"mega_rocket"}
             label={getRocketLabel()}
