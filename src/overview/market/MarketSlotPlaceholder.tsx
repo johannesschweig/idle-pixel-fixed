@@ -16,7 +16,7 @@ const MarketSlotPlaceholder = ({
   index,
 }: Props) => {
   const [name, setName] = useState('');
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState(1);
   const [price, setPrice] = useState(0);
 
   const changeName = (event: ChangeEvent<HTMLInputElement>) => {

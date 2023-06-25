@@ -24,6 +24,7 @@ const MiningOverview = () => {
   const STARDUST_PRISMS = ["small", "medium", "large", "huge"].map(e => e + "_stardust_prism")
   const GEODES = ["grey", "blue", "green", "red", "cyan", "ancient"].map(c => c + "_geode")
   const MINERALS = ["blue_marble", "amethyst", "sea_crystal", "dense_marble", "fluorite", "clear_marble", "jade", "lime_quartz", "opal", "purple_quartz", "amber", "smooth_pearl",  "topaz", "tanzanite", "magnesium", "sulfer", "frozen", "blood"].map(c => c + "_mineral")
+  const FRAGMENTS = ["sapphire", "emerald", "ruby", "diamond"].map(e => `gathering_${e}_fragments`)
 
   const changeOilOut = (change: number) => setOilOut(oilOut + change);
   const clickRocket = () => {
@@ -47,7 +48,6 @@ const MiningOverview = () => {
 
     }
   }
-
   return (
     <OverviewBox
       height={250}
@@ -109,6 +109,18 @@ const MiningOverview = () => {
             label={"meteor"}
             action={"MINE_METEOR"}
             size={30} />
+          <ObservedLabeledIPimg
+            label={"tnt"}
+            action={"USE_TNT"}
+            size={30} />
+          {FRAGMENTS.map((fragment) => (
+            <ObservedLabeledIPimg
+              label={fragment}
+              action={"COMBINE_GEM_FRAGMENTS"}
+              action_override={["COMBINE_GEM_FRAGMENTS", fragment]}
+              size={30}
+              retain={10} />
+            ))}
           <LabeledIPimg
             name={"mega_rocket"}
             label={getRocketLabel()}
@@ -126,3 +138,5 @@ const MiningOverview = () => {
 };
 
 export default MiningOverview;
+
+// COMBINE_GEM_FRAGMENTS=gathering_sapphire_fragments

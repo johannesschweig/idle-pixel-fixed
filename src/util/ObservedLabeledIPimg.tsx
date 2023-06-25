@@ -10,6 +10,7 @@ interface Props {
   size?: 10 | 15 | 20 | 25 | 30 | 50 | 100;
   retain?: number;
   action_item?: string;
+  action_override?: Array<string>;
 }
 
 const id = "ObservedLabeledIPimg"
@@ -19,6 +20,7 @@ const ObserveredLabeledIPimg = ({
   size,
   retain = 0,
   action_item = "",
+  action_override = [],
   style,
   ...rest
 }: PropsWithHTMLElementAttributes<Props>) => {
@@ -26,7 +28,9 @@ const ObserveredLabeledIPimg = ({
 
   const imgClick = () => {
     let v = value - retain
-    if(action_item) {
+    if(action_override.length != 0) {
+      sendMessage(action_override[0], ...action_override.slice(1))
+    } else if(action_item) {
       sendMessage(action, action_item, v);
     } else {
       sendMessage(action, label, v);

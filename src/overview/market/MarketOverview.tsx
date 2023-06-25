@@ -11,9 +11,25 @@ const InventionOverview = () => {
   const [one] = useMarketSlotDataObserver("1", id)
   const [two] = useMarketSlotDataObserver("2", id)
   const [three] = useMarketSlotDataObserver("3", id)
+  const [prices, setPrices] = useState([]);
 
   useEffect(() => {
     sendMessage("MARKET_REFRESH_SLOTS")
+    let name = "unbound_donor_coins"
+    // fetch prices for item on load of component
+    fetch(`https://idle-pixel.com/market/browse/${name}/`)
+      .then(response => response.json())
+      .then(data => {
+        var marketItemPrices = data.map((item: { market_item_price_each: number; }) => item.market_item_price_each);
+        marketItemPrices = marketItemPrices.filter((element: number, index: number) => {
+          // Keep all elements except the first occurrence of elementToRemove
+          return element
+        });
+        setPrices(marketItemPrices)
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
   }, [])
 
   return (
@@ -54,6 +70,7 @@ const InventionOverview = () => {
             index={3} />
           }
       </div>
+      <span>Unbound donor coins: {prices[0]}</span>
     </OverviewBox>
   );
 };
