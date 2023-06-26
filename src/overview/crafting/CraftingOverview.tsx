@@ -203,7 +203,7 @@ const CraftingOverview = () => {
         {ORES.map((ore) => (
           <OreDisplay
             ore={ore}
-            disabled={oreType !== "none"}
+            disabled={oreType !== "none" && view === CraftingView.SMELTING}
             setSmelting={setSmelting}
             view={view}
             oil={oil}

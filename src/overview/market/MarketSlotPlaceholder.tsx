@@ -1,8 +1,5 @@
 import { sendMessage } from "../../util/websocket/useWebsocket";
-import { MarketData } from "../setItems/useSetItemsObserver";
 import { useState, ChangeEvent } from "react";
-import { useNumberItemObserver } from "../setItems/useSetItemsObserver";
-import IPimg from "../../util/IPimg";
 import { buttonStyle } from "./MarketSlotDisplay";
 
 interface Props {

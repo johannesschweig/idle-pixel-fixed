@@ -10,12 +10,13 @@ import {
 import { formatNumber } from "../../util/numberUtils";
 import { useTooltip } from "../../util/tooltip/useTooltip";
 import OreTooltip from "./OreTooltip";
+import { CraftingView } from "./CraftingOverview";
 
 interface Props {
   ore: string;
   disabled: boolean;
   setSmelting: (smelting: Smelting) => void;
-  view: string,
+  view: CraftingView,
   oil: number;
   setOil: (oil: number) => void;
   charcoal: number;
@@ -103,6 +104,7 @@ const OreDisplay = ({
     charcoalPerBar,
     lavaPerBar,
     plasmaPerBar,
+    view,
   };
 
   const [oreProps, OreToolTips, hideTooltip] = useTooltip(
@@ -117,10 +119,13 @@ const OreDisplay = ({
   const unselectable =
     disabled ||
     amount === 0 ||
-    oil < oilPerBar ||
-    charcoal < charcoalPerBar ||
-    lava < lavaPerBar || 
-    plasma < plasmaPerBar;
+    (
+      view === CraftingView.SMELTING &&
+      (oil < oilPerBar ||
+      charcoal < charcoalPerBar ||
+      lava < lavaPerBar || 
+      plasma < plasmaPerBar)
+    );
 
   const formattedAmount = formatNumber(amount);
 
