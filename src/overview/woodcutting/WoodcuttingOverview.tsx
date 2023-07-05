@@ -45,8 +45,8 @@ const WoodcuttingOverview = () => {
   });
 
   const plotClick = (index: number) => {
-    const { stage, setType, setStage } = patchData[index];
-    if (stage === 4) {
+    const { stage, setType, setStage, timer } = patchData[index];
+    if (stage === 4 || timer === 1) {
       if (finishedPatches === 1) {
         hideElementById("notification-woodcutting");
       }

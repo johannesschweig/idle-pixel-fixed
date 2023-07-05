@@ -10,6 +10,7 @@ const FishingOverview = () => {
   const [rowBoatTimer] = useNumberItemObserver("row_boat_timer", id);
   const [canoeBoatTimer] = useNumberItemObserver("canoe_boat_timer", id);
   const [stardustBoatTimer] = useNumberItemObserver("stardust_boat_timer", id);
+  const [pirateShipTimer] = useNumberItemObserver("pirate_ship_timer", id);
   const [aquariumTimer] = useNumberItemObserver("aquarium_timer", id)
   const [bait] = useNumberItemObserver("bait", id)
   const [superBait] = useNumberItemObserver("super_bait", id)
@@ -29,6 +30,8 @@ const FishingOverview = () => {
       case "canoe_boat": timer = canoeBoatTimer
         break
       case "stardust_boat": timer = stardustBoatTimer
+        break
+      case "pirate_ship": timer = pirateShipTimer
         break
     }
     if (timer === 1) {
@@ -56,6 +59,17 @@ const FishingOverview = () => {
     }
   }
 
+  const boatsOut = () => {
+    let sum = 0
+    let boats = [rowBoatTimer, canoeBoatTimer, stardustBoatTimer, pirateShipTimer]
+    for (let i = 0; i < boats.length; i++) {
+      if (boats[i] > 1) {
+        sum = sum + 1
+      }
+    }
+    return sum
+  }
+
   const boatStyle = (timer: number) => {
     return {
       cursor: "pointer",
@@ -69,8 +83,7 @@ const FishingOverview = () => {
     "shrimp", "anchovy", "sardine", "crab", "piranha", "salmon", "trout", "pike", "eel", "tuna", "swordfish", "manta_ray", "shark", "whale", "small_stardust_fish", "medium_stardust_fish", "large_stardust_fish"
   ].map(fish => "cooked_" + fish )
   const FOOD = [ "orange", "egg", "maple_syrup", "chocolate", "cheese", "honey", "coconut_stew", "banana_jello"].concat(FISH)
-// CONSUME=apple~177
-// COOK=raw_shark~3
+
   return (
     <OverviewBox
       height={250}
@@ -84,18 +97,24 @@ const FishingOverview = () => {
         }}
       >
         { heat > 50 && <span>{heat} heat</span>}
-        { canoeBoatTimer <= 1 && <LabeledIPimg
+        { canoeBoatTimer <= 1 && boatsOut() < 2 && <LabeledIPimg
           name="canoe_boat"
           label={canoeBoatTimer === 1 ? "Collect" : "Send out"}
           size={50}
           onClick={() => clickBoat("canoe_boat")}
           style={boatStyle(canoeBoatTimer)} /> }
-        { stardustBoatTimer <= 1 && <LabeledIPimg
+        { stardustBoatTimer <= 1 && boatsOut() < 2 && <LabeledIPimg
           name="stardust_boat"
           label={stardustBoatTimer === 1 ? "Collect" : "Send out"}
           size={50}
           onClick={() => clickBoat("stardust_boat")}
           style={boatStyle(stardustBoatTimer)} /> }
+        { pirateShipTimer <= 1 && boatsOut() < 2 && <LabeledIPimg
+          name="pirate_ship"
+          label={pirateShipTimer === 1 ? "Collect" : "Send out"}
+          size={50}
+          onClick={() => clickBoat("pirate_ship")}
+          style={boatStyle(pirateShipTimer)} /> }
         {aquariumTimer === 0 &&
           <LabeledIPimg
             name="aquarium"

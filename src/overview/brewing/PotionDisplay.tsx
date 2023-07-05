@@ -54,13 +54,13 @@ const PotionDisplay = ({
   const getMakeable = () =>
     brewingLevel >= level
       ? ingredients.reduce(
-          (acc, cur) =>
-            Math.min(
-              Math.floor(Number(Items.getItem(cur.item)) / cur.amount),
-              acc
-            ),
-          Number.MAX_SAFE_INTEGER
-        )
+        (acc, cur) =>
+          Math.min(
+            Math.floor(Number(Items.getItem(cur.item)) / cur.amount),
+            acc
+          ),
+        Number.MAX_SAFE_INTEGER
+      )
       : 0;
 
   const isDrinkable =
@@ -73,7 +73,11 @@ const PotionDisplay = ({
       setTimeout(() => {
         updateTimer(`potion-${potionName}_timer`, timer + potionTimer - 1);
       }, 1000);
-      sendMessage("DRINK", potionName);
+      if (potionName === "rotten_potion") {
+        sendMessage("BREWING_DRINK_ROTTEN_POTION")
+      } else {
+        sendMessage("DRINK", potionName);
+      }
     }
   };
 
@@ -120,15 +124,15 @@ const PotionDisplay = ({
     view === BrewingView.DRINK
       ? drinkProps
       : view === BrewingView.BREW
-      ? brewProps
-      : viewProps;
+        ? brewProps
+        : viewProps;
 
   const onClick =
     view === BrewingView.DRINK
       ? onDrinkClick
       : view === BrewingView.BREW
-      ? onBrewClick
-      : toggle;
+        ? onBrewClick
+        : toggle;
 
   return (
     <>
@@ -148,8 +152,8 @@ const PotionDisplay = ({
           role="button"
           name={
             view === BrewingView.FAVORITE
-            ? "stardust"
-            : "brewing_kit"
+              ? "stardust"
+              : "brewing_kit"
           }
           style={{
             visibility: view !== BrewingView.DRINK ? "visible" : "hidden",
@@ -163,11 +167,11 @@ const PotionDisplay = ({
           role={"button"}
           style={
             (view === BrewingView.BREW && getMakeable() === 0) ||
-            (view === BrewingView.DRINK && !isDrinkable)
+              (view === BrewingView.DRINK && !isDrinkable)
               ? {
-                  opacity: 0.5,
-                  cursor: "default",
-                }
+                opacity: 0.5,
+                cursor: "default",
+              }
               : undefined
           }
           {...imgProps}

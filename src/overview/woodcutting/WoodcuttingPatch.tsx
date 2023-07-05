@@ -17,6 +17,12 @@ const WoodcuttingPatch = ({ type, stage, timer, shiny, plotClick }: Props) => {
     </span>
   );
 
+  const getStage = () => {
+    // stage is not correctly returned for regrown trees
+    if (timer === 1) return 4
+    return stage
+  }
+
   return (
     <div
       style={{
@@ -26,7 +32,7 @@ const WoodcuttingPatch = ({ type, stage, timer, shiny, plotClick }: Props) => {
         backgroundImage: `url(${get_image("images/background_grass.png")}`,
         height: "120px",
         width: "100px",
-        cursor: stage === 4 ? "pointer" : "default",
+        cursor: getStage() === 4 ? "pointer" : "default",
       }}
       onClick={() => {
         plotClick();
@@ -39,7 +45,7 @@ const WoodcuttingPatch = ({ type, stage, timer, shiny, plotClick }: Props) => {
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              opacity: stage === 4 ? 1 : 0.5,
+              opacity: getStage() === 4 ? 1 : 0.5,
           }}>
           {shiny ? (
             <img
@@ -55,7 +61,7 @@ const WoodcuttingPatch = ({ type, stage, timer, shiny, plotClick }: Props) => {
             />
           ) : null}
           <IPimg
-            name={`woodcutting_${type}_${stage}`}
+            name={`woodcutting_${type}_${getStage()}`}
             size={100}
             {...patchProps}
           />
@@ -64,7 +70,7 @@ const WoodcuttingPatch = ({ type, stage, timer, shiny, plotClick }: Props) => {
               color: "white",
             }}
           >
-            {stage === 4 ? "READY" : format_time(timer)}
+            {getStage() === 4 ? "READY" : format_time(timer)}
           </span>
           <PatchTooltip />
         </div>
