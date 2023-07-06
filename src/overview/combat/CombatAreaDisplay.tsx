@@ -31,7 +31,7 @@ const CombatAreaDisplay = ({
         border: `2px solid ${(isSelectedArea && !isDisabled) ? "green" : "transparent"}`,
         borderRadius: "4px",
         cursor: isDisabled ? "auto" : "pointer",
-        opacity: isDisabled ? .7 : 1,
+        opacity: isDisabled ? .5 : 1,
       }}
       onClick={selectArea}
     >

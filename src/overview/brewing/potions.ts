@@ -130,4 +130,12 @@ export const POTIONS: Record<string, PotionData> = {
     level: 80,
     ...getData("ancient_potion")
   },
+  guardian_key_potion: {
+    level: 85,
+    ...getData("guardian_key_potion")
+  },
+  red_orb_potion: {
+    level: 95,
+    ...getData("red_orb_potion")
+  },
 };

@@ -75,7 +75,7 @@ const CombatOverview = () => {
             name={formatAreaName(a.name)}
             energy={a.energy}
             fightpoints={a.fightpoints}
-            image={a.name.startsWith("blood_") ? "blood_moon" : "melee"}
+            image={a.name === "field" ? "gathering_field" : a.name}
             isSelectedArea={a.name === selectedArea}
             selectArea={() => setSelectedArea(a.name)}
             isDisabled={energy < a.energy || fightPoints < a.fightpoints}
@@ -92,3 +92,5 @@ const CombatOverview = () => {
 };
 
 export default CombatOverview;
+
+//FIGHT_EVIL_PIRATE

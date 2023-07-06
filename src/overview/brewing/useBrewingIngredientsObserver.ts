@@ -23,7 +23,7 @@ export const useBrewingIngredientsObserver = (
     `strange_leaf`,
     hookId
   );
-  const [strangerLeaf, setStrangerLeaf] = useNumberItemObserver( `stranger_leaf`, hookId);
+  const [strangerLeaf, setStrangerLeaf] = useNumberItemObserver(`stranger_leaf`, hookId);
   const [goldLeaf, setGoldLeaf] = useNumberItemObserver(`gold_leaf`, hookId);
   const [crystalLeaf, setCrystalLeaf] = useNumberItemObserver(`crystal_leaf`, hookId);
   const [bones, setBones] = useNumberItemObserver(`bones`, hookId);
@@ -45,6 +45,7 @@ export const useBrewingIngredientsObserver = (
   const [seaweed, setSeaweed] = useNumberItemObserver(`seaweed`, hookId);
   const [blueShootingStar, setBlueShottingStar] = useNumberItemObserver(`blueShootingStar`, hookId);
   const [greenShootingStar, setGreenShottingStar] = useNumberItemObserver(`greenShootingStar`, hookId);
+  const [redShootingStar, setRedShottingStar] = useNumberItemObserver(`redShootingStar`, hookId);
   const [maggots, setMaggots] = useNumberItemObserver(`maggots`, hookId);
   const [fruitSkin, setFruitSkin] = useNumberItemObserver(`fruitSkin`, hookId);
   const [superBait, setSuperBait] = useNumberItemObserver(`superBait`, hookId);
@@ -135,6 +136,10 @@ export const useBrewingIngredientsObserver = (
     super_bait: {
       value: superBait,
       setValue: setSuperBait,
-    }
+    },
+    red_shooting_star: {
+      value: redShootingStar,
+      setValue: setRedShottingStar,
+    },
   };
 };
