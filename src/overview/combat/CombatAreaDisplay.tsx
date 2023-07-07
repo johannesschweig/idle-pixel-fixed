@@ -5,8 +5,10 @@ import React from "react";
 interface Props {
   image: string;
   name: string;
-  energy: Number;
-  fightpoints: Number;
+  reqEnergy: Number;
+  availEnergy: Number;
+  reqFightPoints: Number;
+  availFightPoints: Number;
   isSelectedArea: boolean;
   selectArea: () => void;
   isDisabled: boolean;
@@ -15,10 +17,61 @@ interface Props {
 const CombatAreaDisplay = ({
   image,
   name,
+  reqEnergy,
+  availEnergy,
+  reqFightPoints,
+  availFightPoints,
   isSelectedArea,
   selectArea,
   isDisabled
 }: Props) => {
+
+  const [areaProps, AreaToolTip] = useTooltip(
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "20px 1fr",
+        gap: "6px",
+        justifyItems: "start",
+      }}
+    >
+      <IPimg
+        size={20}
+        name={"energy"}
+        style={{
+          margin: "2px 0",
+        }}
+      />
+      <span
+        style={{
+          color: availEnergy < reqEnergy ? "red" : "white"
+        }}
+      >
+        {reqEnergy}
+        {reqEnergy > availEnergy &&
+          <span>/{availEnergy}</span>
+        }
+      </span>
+      <IPimg
+        size={20}
+        name={"fight_points"}
+        style={{
+          margin: "2px 0",
+        }}
+      />
+      <span
+        style={{
+          color: availFightPoints < reqFightPoints ? "red" : "white"
+        }}
+      >
+        {reqFightPoints}
+        {reqFightPoints > availFightPoints &&
+          <span>/{availFightPoints}</span>
+        }
+      </span>
+    </div>
+  );
+
   return (
     <div
       style={{
@@ -31,7 +84,6 @@ const CombatAreaDisplay = ({
         border: `2px solid ${(isSelectedArea && !isDisabled) ? "green" : "transparent"}`,
         borderRadius: "4px",
         cursor: isDisabled ? "auto" : "pointer",
-        opacity: isDisabled ? .5 : 1,
       }}
       onClick={selectArea}
     >
@@ -41,7 +93,10 @@ const CombatAreaDisplay = ({
         style={{
           boxSizing: "content-box",
           padding: "2px",
+          opacity: isDisabled ? .5 : 1,
+          marginRight: "6px",
         }}
+        {...areaProps}
       />
       <div
         style={{
@@ -49,10 +104,12 @@ const CombatAreaDisplay = ({
           display: "flex",
           alignItems: "center",
           fontSize: "12px",
+          opacity: isDisabled ? .5 : 1,
         }}
       >
         {name}
       </div>
+      <AreaToolTip />
     </div>
   );
 };

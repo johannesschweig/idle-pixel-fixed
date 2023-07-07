@@ -1,7 +1,4 @@
-import IPimg from "../../util/IPimg";
-import LabeledIPimg from "../../util/LabeledIPimg";
 import {
-  useItemObserver,
   useNumberItemObserver,
 } from "../setItems/useSetItemsObserver";
 import OverviewBox from "../OverviewBox";
@@ -56,6 +53,7 @@ const CombatOverview = () => {
     // }
   }
 
+
   return (
     <OverviewBox
       height={250}
@@ -73,8 +71,10 @@ const CombatOverview = () => {
         {AREAS.map((a) => (
           <CombatAreaDisplay
             name={formatAreaName(a.name)}
-            energy={a.energy}
-            fightpoints={a.fightpoints}
+            reqEnergy={a.energy}
+            availEnergy={energy}
+            reqFightPoints={a.fightpoints}
+            availFightPoints={fightPoints}
             image={a.name === "field" ? "gathering_field" : a.name}
             isSelectedArea={a.name === selectedArea}
             selectArea={() => setSelectedArea(a.name)}
