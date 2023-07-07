@@ -15,17 +15,18 @@ import {
 import { sendMessage } from "../../util/websocket/useWebsocket";
 import { formatTime } from "../../util/timeUtils"
 
-interface Props {}
+interface Props { }
 
 export enum BrewingView {
   DRINK = "DRINK",
   BREW = "BREW",
   FAVORITE = "FAVORITE",
+  MIXER = "MIXER",
 }
 
 const id = "BrewingOverview";
-const BrewingOverview = ({}: Props) => {
-  const [view, setView] = useState(BrewingView.DRINK);
+const BrewingOverview = ({ }: Props) => {
+  const [view, setView] = useState(BrewingView.MIXER);
 
   const potions = Object.keys(POTIONS);
 
@@ -68,7 +69,8 @@ const BrewingOverview = ({}: Props) => {
 
   const [drinkProps, DrinkToolTip] = useTooltip(<span>Drink potions</span>);
   const [brewProps, BrewToolTip] = useTooltip(<span>Brew potions</span>);
-  const [viewProps, ViewToolTip] = useTooltip(<span>Hide/show potions</span>);
+  const [viewProps, ViewToolTip] = useTooltip(<span>Favorite potions</span>);
+  const [mixerProps, MixerToolTip] = useTooltip(<span>Brewing XP Mixer</span>);
 
   return (
     <OverviewBox
@@ -82,6 +84,7 @@ const BrewingOverview = ({}: Props) => {
         style={{
           display: "flex",
           width: `100%`,
+          height: `100%`,
           flexDirection: "row",
           overflowY: "auto",
         }}
@@ -115,13 +118,21 @@ const BrewingOverview = ({}: Props) => {
           />
           <IPimg
             role="button"
-            name={"view"}
+            name={"stardust"}
             onClick={() => setView(BrewingView.FAVORITE)}
             size={30}
             style={viewSelectorStyle(BrewingView.FAVORITE)}
             {...viewProps}
           />
-          <span
+          <IPimg
+            role="button"
+            name={"stardust_brewing_xp_mixer"}
+            onClick={() => setView(BrewingView.MIXER)}
+            size={30}
+            style={viewSelectorStyle(BrewingView.MIXER)}
+            {...mixerProps}
+          />
+          {/* <span
             onClick={() => {
               if (brewingXpMixerTimer === 0) {
                 sendMessage('REROLL_BREWING_XP_MIXER')
@@ -140,36 +151,84 @@ const BrewingOverview = ({}: Props) => {
               }
               <br/>
               {brewingXpMixerUsed} / 5
-            </span>
+            </span> */
+          }
+          {/* selected={(brewingXpMixerSelected === potion) && (brewingXpMixerUsed != 5)} */}
         </div>
-        <div
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            alignContent: "flex-start",
-            overflowY: "auto",
-          }}
-        >
-          {(view === BrewingView.FAVORITE ? potions : favorites).map(
-            (potion) => (
-              <PotionDisplay
-                brewingLevel={get_level(brewingXp)}
-                key={potion}
-                potionName={potion}
-                toggle={toggle(potion)}
-                view={view}
-                favorite={favorites.includes(potion)}
-                brewingIngredients={brewingIngredients}
-                selected={(brewingXpMixerSelected === potion) && (brewingXpMixerUsed != 5)}
-              />
-            )
-          )}
-        </div>
+        {view === BrewingView.MIXER &&
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr 1fr 1fr",
+              height: "64px",
+              justifyItems: "center",
+              alignItems: "center",
+            }}
+          >
+            <span
+              style={{
+                color: brewingXpMixerUsed === 5 ? "green" : "black"
+              }}
+            >
+              {brewingXpMixerUsed} / 5
+              </span>
+            <PotionDisplay
+              brewingLevel={get_level(brewingXp)}
+              key={brewingXpMixerSelected}
+              potionName={brewingXpMixerSelected}
+              toggle={toggle(brewingXpMixerSelected)}
+              view={BrewingView.BREW}
+              favorite={true}
+              brewingIngredients={brewingIngredients}
+            />
+            <PotionDisplay
+              brewingLevel={get_level(brewingXp)}
+              key={brewingXpMixerSelected}
+              potionName={brewingXpMixerSelected}
+              toggle={toggle(brewingXpMixerSelected)}
+              view={BrewingView.DRINK}
+              favorite={true}
+              brewingIngredients={brewingIngredients}
+            />
+            <button
+              disabled={ brewingXpMixerUsed ===  5 || brewingXpMixerTimer > 0}
+              onClick={() => sendMessage('REROLL_BREWING_XP_MIXER')}
+            >
+              { brewingXpMixerTimer === 0 && <span>Reroll</span>}
+              {formatTime(brewingXpMixerTimer)}
+            </button>
+          </div>
+        }
+        {view !== BrewingView.MIXER &&
+          <div
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              alignContent: "flex-start",
+              overflowY: "auto",
+            }}
+          >
+            {(view === BrewingView.FAVORITE ? potions : favorites).map(
+              (potion) => (
+                <PotionDisplay
+                  brewingLevel={get_level(brewingXp)}
+                  key={potion}
+                  potionName={potion}
+                  toggle={toggle(potion)}
+                  view={view}
+                  favorite={favorites.includes(potion)}
+                  brewingIngredients={brewingIngredients}
+                />
+              )
+            )}
+          </div>
+        }
       </div>
       <DrinkToolTip />
       <BrewToolTip />
       <ViewToolTip />
-    </OverviewBox>
+      <MixerToolTip />
+    </OverviewBox >
   );
 };
 

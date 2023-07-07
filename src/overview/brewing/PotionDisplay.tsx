@@ -16,7 +16,6 @@ interface Props {
   favorite: boolean;
   brewingLevel: number;
   brewingIngredients: Record<string, BrewingIngredient>;
-  selected: boolean;
 }
 
 const PotionDisplay = ({
@@ -26,7 +25,6 @@ const PotionDisplay = ({
   favorite,
   brewingLevel,
   brewingIngredients,
-  selected,
 }: Props) => {
   const [amount, setAmount] = useNumberItemObserver(
     potionName,
@@ -75,6 +73,8 @@ const PotionDisplay = ({
       }, 1000);
       if (potionName === "rotten_potion") {
         sendMessage("BREWING_DRINK_ROTTEN_POTION")
+      } else if (potionName === 'rare_monster_potion') {
+        sendMessage('DRINK_SELECT_POTION', 'skeleton')
       } else {
         sendMessage("DRINK", potionName);
       }
@@ -145,7 +145,6 @@ const PotionDisplay = ({
           justifyContent: "center",
           height: "70px",
           opacity: favorite ? 1 : 0.5,
-          border: selected ? "1px solid brown" : "none",
         }}
       >
         <IPimg

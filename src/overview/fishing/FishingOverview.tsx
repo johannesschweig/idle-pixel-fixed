@@ -21,6 +21,11 @@ const FishingOverview = () => {
   const [coconut] = useNumberItemObserver("coconut", id)
   const [banana] = useNumberItemObserver("banana", id)
   const [heat] = useNumberItemObserver("heat", id)
+  const [robotBody] = useNumberItemObserver("robot_body", id)
+  const [robotLegs] = useNumberItemObserver("robot_legs", id)
+  const [robotHands] = useNumberItemObserver("robot_hands", id)
+  const [robotFeet] = useNumberItemObserver("robot_feet", id)
+  const [robotHead] = useNumberItemObserver("robot_head", id)
 
   const clickBoat = (boat: string) => {
     let timer
@@ -42,7 +47,7 @@ const FishingOverview = () => {
   }
 
   const clickAquarium = () => {
-    if(superBait > 0) {
+    if (superBait > 0) {
       sendMessage("FEED_FISH", "super_bait")
     } else if (bait > 0) {
       sendMessage("FEED_FISH", "bait")
@@ -81,8 +86,8 @@ const FishingOverview = () => {
 
   const FISH = [
     "shrimp", "anchovy", "sardine", "crab", "piranha", "salmon", "trout", "pike", "eel", "tuna", "swordfish", "manta_ray", "shark", "whale", "small_stardust_fish", "medium_stardust_fish", "large_stardust_fish"
-  ].map(fish => "cooked_" + fish )
-  const FOOD = [ "orange", "egg", "maple_syrup", "chocolate", "cheese", "honey", "coconut_stew", "banana_jello"].concat(FISH)
+  ].map(fish => "cooked_" + fish)
+  const FOOD = ["orange", "egg", "maple_syrup", "chocolate", "cheese", "honey", "coconut_stew", "banana_jello"].concat(FISH)
 
   return (
     <OverviewBox
@@ -96,25 +101,25 @@ const FishingOverview = () => {
           gap: "10px",
         }}
       >
-        { heat > 50 && <span>{heat} heat</span>}
-        { canoeBoatTimer <= 1 && boatsOut() < 2 && <LabeledIPimg
+        {heat > 50 && <span>{heat} heat</span>}
+        {canoeBoatTimer <= 1 && boatsOut() < 2 && <LabeledIPimg
           name="canoe_boat"
           label={canoeBoatTimer === 1 ? "Collect" : "Send out"}
           size={50}
           onClick={() => clickBoat("canoe_boat")}
-          style={boatStyle(canoeBoatTimer)} /> }
-        { stardustBoatTimer <= 1 && boatsOut() < 2 && <LabeledIPimg
+          style={boatStyle(canoeBoatTimer)} />}
+        {stardustBoatTimer <= 1 && boatsOut() < 2 && <LabeledIPimg
           name="stardust_boat"
           label={stardustBoatTimer === 1 ? "Collect" : "Send out"}
           size={50}
           onClick={() => clickBoat("stardust_boat")}
-          style={boatStyle(stardustBoatTimer)} /> }
-        { pirateShipTimer <= 1 && boatsOut() < 2 && <LabeledIPimg
+          style={boatStyle(stardustBoatTimer)} />}
+        {pirateShipTimer <= 1 && boatsOut() < 2 && <LabeledIPimg
           name="pirate_ship"
           label={pirateShipTimer === 1 ? "Collect" : "Send out"}
           size={50}
           onClick={() => clickBoat("pirate_ship")}
-          style={boatStyle(pirateShipTimer)} /> }
+          style={boatStyle(pirateShipTimer)} />}
         {aquariumTimer === 0 &&
           <LabeledIPimg
             name="aquarium"
@@ -126,7 +131,7 @@ const FishingOverview = () => {
             }}
           />
         }
-        { cooksBookTimer === 1 && <LabeledIPimg
+        {cooksBookTimer === 1 && <LabeledIPimg
           name={cooksBookItem}
           label={"Collect"}
           size={50}
@@ -134,15 +139,15 @@ const FishingOverview = () => {
           style={{
             cursor: "pointer",
             backgroundColor: "lightyellow",
-          }} /> }
-        { (coconut >= 10  || banana >=10 ) && cooksBookTimer === 0 && <LabeledIPimg
+          }} />}
+        {(coconut >= 10 || banana >= 10) && cooksBookTimer === 0 && <LabeledIPimg
           name={"cooks_book"}
           label={coconut >= 10 ? "Make coconut stew" : "Make banana jello"}
           size={50}
           onClick={() => clickCooksBook()}
           style={{
             cursor: "pointer",
-          }} /> }
+          }} />}
         {FOOD.map((food) => (
           <ObservedLabeledIPimg
             label={food}
@@ -151,23 +156,27 @@ const FishingOverview = () => {
           />
         ))}
         <ObservedLabeledIPimg
-            label={"banana"}
-            size={30}
-            action={"CONSUME"}
-            retain={20}
-          />
-          <ObservedLabeledIPimg
-            label={"apple"}
-            size={30}
-            action={"CONSUME"}
-            retain={2}
-          />
-          <ObservedLabeledIPimg
-            label={"coconut"}
-            size={30}
-            action={"CONSUME"}
-            retain={50}
-          />
+          label={"banana"}
+          size={30}
+          action={"CONSUME"}
+          retain={20}
+        />
+        <ObservedLabeledIPimg
+          label={"apple"}
+          size={30}
+          action={"CONSUME"}
+          retain={2}
+        />
+        <ObservedLabeledIPimg
+          label={"coconut"}
+          size={30}
+          action={"CONSUME"}
+          retain={50}
+        />
+        {
+          robotBody + robotFeet + robotHands + robotLegs + robotHead === 5 &&
+          <span>Robot 5/5</span>
+        }
 
       </div>
     </OverviewBox>

@@ -43,12 +43,12 @@ export const useBrewingIngredientsObserver = (
   );
   const [moonstone, setMoonstone] = useNumberItemObserver(`moonstone`, hookId);
   const [seaweed, setSeaweed] = useNumberItemObserver(`seaweed`, hookId);
-  const [blueShootingStar, setBlueShottingStar] = useNumberItemObserver(`blueShootingStar`, hookId);
-  const [greenShootingStar, setGreenShottingStar] = useNumberItemObserver(`greenShootingStar`, hookId);
-  const [redShootingStar, setRedShottingStar] = useNumberItemObserver(`redShootingStar`, hookId);
+  const [blueShootingStar, setBlueShottingStar] = useNumberItemObserver(`blue_shooting_star`, hookId);
+  const [greenShootingStar, setGreenShottingStar] = useNumberItemObserver(`green_shooting_star`, hookId);
+  const [redShootingStar, setRedShottingStar] = useNumberItemObserver(`red_shooting_star`, hookId);
   const [maggots, setMaggots] = useNumberItemObserver(`maggots`, hookId);
-  const [fruitSkin, setFruitSkin] = useNumberItemObserver(`fruitSkin`, hookId);
-  const [superBait, setSuperBait] = useNumberItemObserver(`superBait`, hookId);
+  const [fruitSkin, setFruitSkin] = useNumberItemObserver(`fruit_skin`, hookId);
+  const [superBait, setSuperBait] = useNumberItemObserver(`super_bait`, hookId);
 
 
 

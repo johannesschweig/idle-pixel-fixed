@@ -131,6 +131,7 @@ const FarmingOverview = () => {
             onClick={() => sendMessage("INCINERATOR")}
             style={{
               backgroundColor: incineratorActive > 0 ? "red" : "transparent",
+              cursor: "pointer",
             }}
           />
         }
