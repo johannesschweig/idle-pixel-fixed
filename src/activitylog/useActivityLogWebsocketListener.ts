@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { useLocalStorage } from "../util/localstorage/useLocalStorage";
-import {ActivityLogItem, ActivityLogItemType, ActivityLogSettings, initialActivitLogSettings, LootItem,} from "./types";
+import { ActivityLogItem, ActivityLogItemType, ActivityLogSettings, initialActivitLogSettings, LootItem, } from "./types";
 import { consumeWebSocketMessage, observeWebSocketMessage, useWebsocket } from "../util/websocket/useWebsocket";
 import { reduceToRecord } from "../util/arrayUtils";
 
@@ -33,6 +33,7 @@ export const useActivityLogWebSocketListener = () => {
     () =>
       onMessageFactory("OPEN_LOOT_DIALOGUE", (data) => {
         //OPEN_LOOT_DIALOGUE=none~images/junk.png~30 Junk~#cce6ff~images/stone.png~3 Stone~#cce6ff
+        // OPEN_LOOT_DIALOGUE=none~images/woodcutting.png~1050  Woodcutting xp~#99ff99~images/logs.png~38 Logs~#cce6ff
         addItem(lootDialogueParser(data));
       }),
     [onMessageFactory]
@@ -49,6 +50,24 @@ export const useActivityLogWebSocketListener = () => {
     [onMessageFactory]
   );
   useWebsocket(onCookedMessage, 1000, "useActivityLogWebSocketListener-Cook");
+
+  // ^(?!SET_ITEMS).+
+  const onShowToastMessage = useMemo(
+    () =>
+      onMessageFactory("SHOW_TOAST", (data) => {
+        // SHOP_SELL=copper~5039
+        // SHOW_TOAST=Sold Item~+12349 coins.
+        // SHOW_TOAST=Foundry~Foundry started.
+        //  SHOW_TOAST=Furnace~Furnace started.
+        // SEED FOUND=You found a seed: Red mushroom seed
+        const BLACKLIST = ['Foundry', 'Furnace', 'SEED FOUND']
+        if (!BLACKLIST.some(item => data.startsWith(item))) {
+          addItem(showToastDialogParser(data));
+        }
+      }),
+    [onMessageFactory]
+  );
+  useWebsocket(onShowToastMessage, 1000, "useActivityLogWebSocketListener-Toast");
 
   return list;
 };
@@ -76,10 +95,22 @@ const lootDialogueParser = (data: string): ActivityLogItem => {
     content: {
       extraData: dataArray[0],
       items: reduceToRecord<LootItem>(dataArray.slice(1), [
-        value => ({image: value}),
-        value => ({label: value}),
-        value => ({background: value}),
+        value => ({ image: value }),
+        value => ({ label: value }),
+        value => ({ background: value }),
       ])
     },
   };
 };
+
+const showToastDialogParser = (data: string): ActivityLogItem => {
+  const dataArray = data.split("~");
+  return {
+    type: ActivityLogItemType.TOAST,
+    timestamp: new Date(),
+    content: {
+      action: dataArray[0],
+      value: dataArray[1],
+    },
+  };
+}

@@ -38,6 +38,7 @@ const WoodcuttingOverview = () => {
   const [action, setAction] = useState(LogAction.OVEN);
   const [foundryAmount] = useNumberItemObserver('foundry_amount', id)
   const [woddcuttingXp] = useNumberItemObserver("woodcutting_xp", id);
+  const [treeSpeedPotiontimer] = useNumberItemObserver("tree_speed_potion_timer", id);
 
   const actionStyle = (selectorAction: LogAction): CSSProperties => ({
     opacity: action === selectorAction ? 1 : 0.3,
@@ -56,13 +57,13 @@ const WoodcuttingOverview = () => {
     }
   };
   const logClick = (log: string, amount: number) => {
-    switch(action) {
+    switch (action) {
       case LogAction.OVEN:
         sendMessage("ADD_HEAT", log, amount);
         break
       case LogAction.FOUNDRY:
         if (foundryAmount === 0) {
-          amount = Math.min(amount, 100, Math.floor(oil/10))
+          amount = Math.min(amount, 100, Math.floor(oil / 10))
           sendMessage("FOUNDRY", log, amount);
         }
         break
@@ -93,7 +94,7 @@ const WoodcuttingOverview = () => {
       justifyContent={"space-between"}
       xp={woddcuttingXp}
     >
-      <div 
+      <div
         style={{
           display: "flex",
           width: "100%"
@@ -108,12 +109,12 @@ const WoodcuttingOverview = () => {
             name={Cooking.getOven()}
             size={30}
             onClick={() => setAction(LogAction.OVEN)}
-            style={actionStyle(LogAction.OVEN)}/>
+            style={actionStyle(LogAction.OVEN)} />
           <IPimg
             name={"charcoal_foundry"}
             size={30}
             onClick={() => setAction(LogAction.FOUNDRY)}
-            style={actionStyle(LogAction.FOUNDRY)}/> 
+            style={actionStyle(LogAction.FOUNDRY)} />
           <span
             style={{
               opacity: getHeat() >= 6000 ? 1 : 0.5,
@@ -126,7 +127,7 @@ const WoodcuttingOverview = () => {
           style={{
             flexGrow: "1"
           }}>
-          </div>
+        </div>
         <div
           style={{
             display: "flex",
@@ -151,6 +152,8 @@ const WoodcuttingOverview = () => {
           alignContent: "center",
           justifyContent: "center",
           gap: "10px",
+          padding: "4px",
+          backgroundColor: treeSpeedPotiontimer === 0 ? "transparent" : "darkseagreen",
         }}
       >
         {Array(patches)

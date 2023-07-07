@@ -24,6 +24,7 @@ const FarmingOverview = () => {
   const [wateringCanActive] = useNumberItemObserver("watering_can_active", id);
   const [incineratorCooldown] = useNumberItemObserver("incinerator_cooldown", id);
   const [incineratorActive] = useNumberItemObserver("incinerator_active", id);
+  const [farmingSpeedPotiontimer] = useNumberItemObserver("farming_speed_potion_timer", id);
 
   const patches =
     3 + Math.sign(Number(Items.getItem("donor_farm_patches_timestamp"))) * 2;
@@ -123,6 +124,8 @@ const FarmingOverview = () => {
           alignContent: "center",
           justifyContent: "center",
           gap: "10px",
+          padding: "4px",
+          backgroundColor: farmingSpeedPotiontimer === 0 ? "transparent" : "darkseagreen",
         }}
       >
         { normalBones > 60 && incineratorCooldown === 0 && <IPimg

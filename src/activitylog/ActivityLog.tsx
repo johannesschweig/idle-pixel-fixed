@@ -25,27 +25,6 @@ const ActivityLog = ({}: Props) => {
 
   const dispatch = useIPFDispatch();
 
-  useEffect(() => {
-    dispatch(
-      subscribeToKeyboardEvent({
-        key: "Tab",
-        onKeyDown: (event) => {
-          event.preventDefault();
-          if (open) {
-            setSettingsOpen(false);
-            dispatch(closeActivityLog());
-          } else {
-            dispatch(openActivityLog());
-          }
-        },
-        id,
-      })
-    );
-    return () => {
-      dispatch(unsubscribeFromKeyboardEvent({ key: "Tab", id }));
-    };
-  }, [open, dispatch, setSettingsOpen]);
-
   return (
     <>
       {open && (

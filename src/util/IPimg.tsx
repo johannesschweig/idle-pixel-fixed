@@ -3,7 +3,7 @@ import { classNames } from "./styling";
 
 interface Props {
   name: string;
-  size?: 10 | 15 | 20 | 25 | 30 | 50 | 100;
+  size?: 10 | 15 | 20 | 25 | 30 | 40 | 50 | 100;
 }
 
 const IPimg = ({

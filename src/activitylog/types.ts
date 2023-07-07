@@ -1,6 +1,7 @@
 export enum ActivityLogItemType {
   LOOT = "LOOT",
   COOK = "COOK",
+  TOAST = "TOAST",
 }
 
 interface ActivityLogLootItem {
@@ -24,6 +25,11 @@ interface ActivityLogCookItem {
   content: CookContent;
 }
 
+interface ActivityLogToastItem {
+  type: ActivityLogItemType.TOAST;
+  content: ToastContent;
+}
+
 export interface CookContent {
   name: string
   cooked: number;
@@ -32,12 +38,17 @@ export interface CookContent {
   burntXp: number;
 }
 
+export interface ToastContent {
+  action: string;
+  value: string;
+}
+
 interface ActivityLogMetadata {
   timestamp: Date;
 }
 
 export type ActivityLogItem = ActivityLogMetadata &
-  (ActivityLogCookItem | ActivityLogLootItem);
+  (ActivityLogCookItem | ActivityLogLootItem | ActivityLogToastItem);
 
 export interface ActivityLogSettings {
   blockDialogues: boolean;
