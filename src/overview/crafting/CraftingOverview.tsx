@@ -9,8 +9,9 @@ import BarDisplay from "./BarDisplay";
 import OverviewBox from "../OverviewBox";
 import { formatNumber } from "../../util/numberUtils";
 import { useState } from "react";
+import { formatTime } from "../../util/timeUtils";
 
-const ORES = ["stone", "copper", "iron", "silver", "gold", "promethium", "titanium", "ancient_ore"];
+const ORES = ["stone", "copper", "iron", "silver", "gold", "promethium", "titanium", "ancient_ore", "dragon_ore"];
 const BARS = [
   "bronze_bar",
   "iron_bar",
@@ -19,7 +20,21 @@ const BARS = [
   "promethium_bar",
   "titanium_bar",
   "ancient_bar",
+  "dragon_bar",
 ];
+interface TimeToSmelt {
+  [key: string]: number;
+}
+const TIME_TO_SMELT: TimeToSmelt = {
+  "copper": 2,
+  "iron": 5,
+  "silver": 15,
+  "gold": 50,
+  "promethium": 100,
+  "titanium": 500,
+  "ancient": 1800,
+  "dragon": 3600,
+}
 export enum CraftingView {
   SMELTING = "SMELTING",
   CONVERTING = "CONVERTING",
@@ -53,6 +68,7 @@ const CraftingOverview = () => {
   const [lava, setLava] = useNumberItemObserver("lava", id);
   const [plasma, setPlasma] = useNumberItemObserver("plasma", id);
   const [craftingXp] = useNumberItemObserver("crafting_xp", id);
+  const [furnaceCountdown ] = useNumberItemObserver("furnace_countdown", id);
 
   const setSmelting = (smelting: Smelting) => {
     setOreType(smelting.type);
@@ -133,7 +149,8 @@ const CraftingOverview = () => {
             {oreType !== "none" ? (
               <>
                 <IPimg name={oreToBar(oreType)} size={20} style={{}} />
-                <span>{`${oreAmountAt}/${oreAmountSet}`}</span>
+                {/* <span>{`${oreAmountAt}/${oreAmountSet}`}</span> */}
+                <span>{ formatTime(furnaceCountdown + TIME_TO_SMELT[oreType] * (oreAmountSet - oreAmountAt - 1)) }</span>
               </>
             ) : (
               <span>Not smelting</span>

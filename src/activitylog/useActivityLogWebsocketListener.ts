@@ -60,6 +60,7 @@ export const useActivityLogWebSocketListener = () => {
         // SHOW_TOAST=Foundry~Foundry started.
         //  SHOW_TOAST=Furnace~Furnace started.
         // SEED FOUND=You found a seed: Red mushroom seed
+        // energy +123324 energy
         const BLACKLIST = ['Foundry', 'Furnace', 'SEED FOUND']
         if (!BLACKLIST.some(item => data.startsWith(item))) {
           addItem(showToastDialogParser(data));

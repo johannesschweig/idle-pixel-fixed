@@ -7,7 +7,31 @@ interface Props {
   timestamp: Date;
 }
 
+interface EntryStyle {
+  bg: string;
+  icon: string;
+}
+
 const ToastEntry = ({ content, timestamp }: Props) => {
+
+  // return style for a toast message
+  const getStyle = () : EntryStyle => {
+    switch (content.action) {
+      case "Sold Item": return {
+        bg: "lightyellow",
+        icon: "coins"
+      }
+      case "Energy": return {
+        bg: "#FBCBD9",
+        icon: "energy"
+      }
+      default: return {
+        bg: "white",
+        icon: "",
+      }
+    }
+  }
+
   return (
     <div
       style={{
@@ -53,7 +77,7 @@ const ToastEntry = ({ content, timestamp }: Props) => {
       >
         <div
           style={{
-            backgroundColor: 'lightyellow',
+            backgroundColor: getStyle().bg,
             border: "1px solid black",
             padding: "1em 2em",
             minWidth: "15me",
@@ -63,13 +87,13 @@ const ToastEntry = ({ content, timestamp }: Props) => {
         >
           <IPimg
             size={40}
-            name={"coins"} />
+            name={getStyle().icon} />
           <span
             style={{
               fontSize: "1.6em",
             }}
           >
-            {content.value.slice(0,-1)}
+            {content.value.slice(0, -1)}
           </span>
         </div>
       </div>
