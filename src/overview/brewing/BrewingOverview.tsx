@@ -26,7 +26,7 @@ export enum BrewingView {
 
 const id = "BrewingOverview";
 const BrewingOverview = ({ }: Props) => {
-  const [view, setView] = useState(BrewingView.MIXER);
+  const [view, setView] = useState(BrewingView.DRINK);
 
   const potions = Object.keys(POTIONS);
 
@@ -71,6 +71,14 @@ const BrewingOverview = ({ }: Props) => {
   const [brewProps, BrewToolTip] = useTooltip(<span>Brew potions</span>);
   const [viewProps, ViewToolTip] = useTooltip(<span>Favorite potions</span>);
   const [mixerProps, MixerToolTip] = useTooltip(<span>Brewing XP Mixer</span>);
+
+
+  const mixerActionRequired = () => {
+    const EXPENSIVE_POTIONS = ['rocket_potion', 'blue_orb_potion', 'rain_potion', 'combat_loot_potion', 'merchant_speed_potion', 'green_orb_potion', 'ancient_potion', 'guardian_key_potion', 'red_orb_potion']
+    return brewingXpMixerUsed != 5 &&
+      (!EXPENSIVE_POTIONS.includes(brewingXpMixerSelected) || // potion is not one of the expensive ones
+      brewingXpMixerTimer === 0) // Reroll possible
+  }
 
   return (
     <OverviewBox
@@ -124,36 +132,33 @@ const BrewingOverview = ({ }: Props) => {
             style={viewSelectorStyle(BrewingView.FAVORITE)}
             {...viewProps}
           />
-          <IPimg
-            role="button"
-            name={"stardust_brewing_xp_mixer"}
-            onClick={() => setView(BrewingView.MIXER)}
-            size={30}
-            style={viewSelectorStyle(BrewingView.MIXER)}
-            {...mixerProps}
-          />
-          {/* <span
-            onClick={() => {
-              if (brewingXpMixerTimer === 0) {
-                sendMessage('REROLL_BREWING_XP_MIXER')
-              }
-            }}
+          <div
             style={{
-              fontSize: "12px",
-              color: brewingXpMixerTimer === 0 ? 'black' : 'grey',
-              cursor: 'pointer',
-            }}>
-              {
-                brewingXpMixerTimer === 0
-                ? "Reroll"
-                // : new Date(brewingXpMixerTimer * 1000).toISOString().substring(11, 16)
-                : formatTime(brewingXpMixerTimer)
-              }
-              <br/>
-              {brewingXpMixerUsed} / 5
-            </span> */
-          }
-          {/* selected={(brewingXpMixerSelected === potion) && (brewingXpMixerUsed != 5)} */}
+              position: "relative",
+            }}
+          >
+            <IPimg
+              role="button"
+              name={"stardust_brewing_xp_mixer"}
+              onClick={() => setView(BrewingView.MIXER)}
+              size={30}
+              style={viewSelectorStyle(BrewingView.MIXER)}
+              {...mixerProps}
+            />
+            <div
+              style={{
+                width: "10px",
+                height: "10px",
+                backgroundColor: "blue",
+                borderRadius: "10px",
+                position: "absolute",
+                bottom: "-4px",
+                right: "-4px",
+                border: "2px solid lightblue",
+                display: mixerActionRequired() ? "block" : "none",
+              }}
+            ></div>
+          </div>
         </div>
         {view === BrewingView.MIXER &&
           <div
@@ -171,7 +176,7 @@ const BrewingOverview = ({ }: Props) => {
               }}
             >
               {brewingXpMixerUsed} / 5
-              </span>
+            </span>
             <PotionDisplay
               brewingLevel={get_level(brewingXp)}
               key={brewingXpMixerSelected}
@@ -191,10 +196,10 @@ const BrewingOverview = ({ }: Props) => {
               brewingIngredients={brewingIngredients}
             />
             <button
-              disabled={ brewingXpMixerUsed ===  5 || brewingXpMixerTimer > 0}
+              disabled={brewingXpMixerUsed === 5 || brewingXpMixerTimer > 0}
               onClick={() => sendMessage('REROLL_BREWING_XP_MIXER')}
             >
-              { brewingXpMixerTimer === 0 && <span>Reroll</span>}
+              {brewingXpMixerTimer === 0 && <span>Reroll</span>}
               {formatTime(brewingXpMixerTimer)}
             </button>
           </div>
