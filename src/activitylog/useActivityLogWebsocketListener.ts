@@ -55,14 +55,9 @@ export const useActivityLogWebSocketListener = () => {
   const onShowToastMessage = useMemo(
     () =>
       onMessageFactory("SHOW_TOAST", (data) => {
-        // SHOP_SELL=copper~5039
-        // SHOW_TOAST=Sold Item~+12349 coins.
-        // SHOW_TOAST=Foundry~Foundry started.
-        //  SHOW_TOAST=Furnace~Furnace started.
-        // SEED FOUND=You found a seed: Red mushroom seed
-        // energy +123324 energy
-        const BLACKLIST = ['Foundry', 'Furnace', 'SEED FOUND']
-        if (!BLACKLIST.some(item => data.startsWith(item))) {
+        // SCROLL_TOAST=images/evil_blood.png~red~357 (3570 XP)
+        const BLACKLIST = ['foundry', 'furnace', 'seed found', "combat", "brewing", 'magic bonus']
+        if (!BLACKLIST.some(item => data.toLowerCase().startsWith(item))) {
           addItem(showToastDialogParser(data));
         }
       }),

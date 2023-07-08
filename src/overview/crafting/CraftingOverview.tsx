@@ -25,14 +25,14 @@ const BARS = [
 interface TimeToSmelt {
   [key: string]: number;
 }
-const TIME_TO_SMELT: TimeToSmelt = {
+export const TIME_TO_SMELT: TimeToSmelt = {
   "copper": 2,
   "iron": 5,
   "silver": 15,
   "gold": 50,
   "promethium": 100,
   "titanium": 500,
-  "ancient": 1800,
+  "ancient_ore": 1800,
   "dragon": 3600,
 }
 export enum CraftingView {
@@ -213,7 +213,7 @@ const CraftingOverview = () => {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(6, 1fr)",
+          gridTemplateColumns: "repeat(5, 1fr)",
           gap: "10px",
         }}
       >

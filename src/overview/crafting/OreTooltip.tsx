@@ -1,6 +1,8 @@
 import React from "react";
 import LabeledIPimg from "../../util/LabeledIPimg";
 import { CraftingView } from "./CraftingOverview";
+import { TIME_TO_SMELT } from "./CraftingOverview";
+import { formatTime } from "../../util/timeUtils";
 
 interface Props {
   ore: string;
@@ -40,6 +42,7 @@ const OreTooltip = ({
     >
       <div>
         {getAction()} {amount} {Items.get_pretty_item_name(ore)}
+        { view === CraftingView.SMELTING && Object.keys(TIME_TO_SMELT).includes(ore) && <span> ({ formatTime(amount*TIME_TO_SMELT[ore]) })</span> }
       </div>
       {view === CraftingView.SMELTING &&
         <div style={{ display: "flex", justifyContent: "space-evenly" }}>

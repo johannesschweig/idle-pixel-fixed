@@ -15,15 +15,27 @@ interface EntryStyle {
 const ToastEntry = ({ content, timestamp }: Props) => {
 
   // return style for a toast message
-  const getStyle = () : EntryStyle => {
+  const getStyle = (): EntryStyle => {
     switch (content.action) {
       case "Sold Item": return {
+        bg: "lightyellow",
+        icon: "coins"
+      }
+      case "Collect": return {
         bg: "lightyellow",
         icon: "coins"
       }
       case "Energy": return {
         bg: "#FBCBD9",
         icon: "energy"
+      }
+      case "Crafting": return {
+        bg: "lightgrey",
+        icon: "crafting"
+      }
+      case "Bonemeal": return {
+        bg: "white",
+        icon: "bones"
       }
       default: return {
         bg: "white",
@@ -87,13 +99,16 @@ const ToastEntry = ({ content, timestamp }: Props) => {
         >
           <IPimg
             size={40}
-            name={getStyle().icon} />
+            name={getStyle().icon}
+            style={{
+              marginRight: "1.6em",
+            }}/>
           <span
             style={{
               fontSize: "1.6em",
             }}
           >
-            {content.value.slice(0, -1)}
+            {content.value}
           </span>
         </div>
       </div>

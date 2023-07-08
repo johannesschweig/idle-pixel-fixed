@@ -47,10 +47,10 @@ const CombatAreaDisplay = ({
           color: availEnergy < reqEnergy ? "red" : "white"
         }}
       >
-        {reqEnergy}
         {reqEnergy > availEnergy &&
-          <span>/{availEnergy}</span>
+          <span>{availEnergy}/</span>
         }
+        {reqEnergy}
       </span>
       <IPimg
         size={20}
