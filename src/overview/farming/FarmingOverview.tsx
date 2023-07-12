@@ -11,6 +11,7 @@ import { useNumberItemObserver } from "../setItems/useSetItemsObserver";
 import { keysOf } from "../../util/typeUtils";
 import { BONES } from "./bonemeal/bones";
 import BoneDisplay from "./bonemeal/BoneDisplay";
+import { formatTime } from "../../util/timeUtils";
 
 const id = "FarmingOverview";
 const FarmingOverview = () => {
@@ -128,15 +129,16 @@ const FarmingOverview = () => {
           backgroundColor: farmingSpeedPotiontimer === 0 ? "transparent" : "darkseagreen",
         }}
       >
-        { normalBones > 60 && incineratorCooldown === 0 && <IPimg
-            name={"incinerator"}
-            size={30}
-            onClick={() => sendMessage("INCINERATOR")}
-            style={{
-              backgroundColor: incineratorActive > 0 ? "red" : "transparent",
-              cursor: "pointer",
-            }}
-          />
+        {((normalBones > 60 && incineratorCooldown === 0) || incineratorActive > 0) && <LabeledIPimg
+          name={"incinerator"}
+          label={incineratorActive > 0 ? formatTime(incineratorActive) : ""}
+          size={30}
+          onClick={() => sendMessage("INCINERATOR")}
+          className={incineratorActive > 0 ? "shake" : ""}
+          style={{
+            cursor: "pointer",
+          }}
+        />
         }
         {(water >= 20 || wateringCanActive === 1) &&
           <LabeledIPimg

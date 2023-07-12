@@ -18,6 +18,21 @@ const MarketSlotPlaceholder = ({
 
   const changeName = (event: ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value)
+
+    if (event.target.value) {
+      fetch(`https://idle-pixel.com/market/browse/${event.target.value}/`)
+        .then(response => response.json())
+        .then(data => {
+          var marketItemPrices = data.map((item: { market_item_price_each: number; }) => item.market_item_price_each);
+          marketItemPrices = marketItemPrices.filter((element: number, index: number) => {
+            return element
+          });
+          setPrice(marketItemPrices[0] - 1)
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+    }
   }
   const changeAmount = (event: ChangeEvent<HTMLInputElement>) => {
     setAmount(parseInt(event.target.value))

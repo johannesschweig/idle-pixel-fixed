@@ -17,23 +17,23 @@ const ToastEntry = ({ content, timestamp }: Props) => {
   // return style for a toast message
   const getStyle = (): EntryStyle => {
     switch (content.action) {
-      case "Sold Item": return {
+      case "sold item": return {
         bg: "lightyellow",
         icon: "coins"
       }
-      case "Collect": return {
+      case "collect": return {
         bg: "lightyellow",
         icon: "coins"
       }
-      case "Energy": return {
+      case "energy": return {
         bg: "#FBCBD9",
         icon: "energy"
       }
-      case "Crafting": return {
+      case "crafting": return {
         bg: "lightgrey",
         icon: "crafting"
       }
-      case "Bonemeal": return {
+      case "bonemeal": return {
         bg: "white",
         icon: "bones"
       }

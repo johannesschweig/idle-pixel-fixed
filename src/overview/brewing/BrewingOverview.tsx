@@ -74,7 +74,7 @@ const BrewingOverview = ({ }: Props) => {
 
 
   const mixerActionRequired = () => {
-    const EXPENSIVE_POTIONS = ['rocket_potion', 'blue_orb_potion', 'rain_potion', 'combat_loot_potion', 'merchant_speed_potion', 'green_orb_potion', 'ancient_potion', 'guardian_key_potion', 'red_orb_potion']
+    const EXPENSIVE_POTIONS = ['rocket', 'blue_orb', 'rain', 'combat_loot', 'merchant_speed', 'green_orb', 'ancient', 'guardian_key', 'red_orb', 'stone_converter'].map(e => `${e}_potion`)
     return brewingXpMixerUsed != 5 &&
       (!EXPENSIVE_POTIONS.includes(brewingXpMixerSelected) || // potion is not one of the expensive ones
       brewingXpMixerTimer === 0) // Reroll possible
@@ -177,7 +177,7 @@ const BrewingOverview = ({ }: Props) => {
             >
               {brewingXpMixerUsed} / 5
             </span>
-            <PotionDisplay
+            { brewingXpMixerUsed != 5 && <PotionDisplay
               brewingLevel={get_level(brewingXp)}
               key={brewingXpMixerSelected}
               potionName={brewingXpMixerSelected}
@@ -185,8 +185,8 @@ const BrewingOverview = ({ }: Props) => {
               view={BrewingView.BREW}
               favorite={true}
               brewingIngredients={brewingIngredients}
-            />
-            <PotionDisplay
+            /> }
+            { brewingXpMixerUsed != 5 && <PotionDisplay
               brewingLevel={get_level(brewingXp)}
               key={brewingXpMixerSelected}
               potionName={brewingXpMixerSelected}
@@ -194,13 +194,12 @@ const BrewingOverview = ({ }: Props) => {
               view={BrewingView.DRINK}
               favorite={true}
               brewingIngredients={brewingIngredients}
-            />
+            /> }
             <button
               disabled={brewingXpMixerUsed === 5 || brewingXpMixerTimer > 0}
               onClick={() => sendMessage('REROLL_BREWING_XP_MIXER')}
             >
-              {brewingXpMixerTimer === 0 && <span>Reroll</span>}
-              {formatTime(brewingXpMixerTimer)}
+              {brewingXpMixerTimer === 0 ? 'Reroll' : formatTime(brewingXpMixerTimer) }
             </button>
           </div>
         }

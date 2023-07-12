@@ -22,7 +22,6 @@ const InventionOverview = () => {
       .then(data => {
         var marketItemPrices = data.map((item: { market_item_price_each: number; }) => item.market_item_price_each);
         marketItemPrices = marketItemPrices.filter((element: number, index: number) => {
-          // Keep all elements except the first occurrence of elementToRemove
           return element
         });
         setPrices(marketItemPrices)

@@ -56,9 +56,9 @@ export const useActivityLogWebSocketListener = () => {
     () =>
       onMessageFactory("SHOW_TOAST", (data) => {
         // SCROLL_TOAST=images/evil_blood.png~red~357 (3570 XP)
-        const BLACKLIST = ['foundry', 'furnace', 'seed found', "combat", "brewing", 'magic bonus']
+        const BLACKLIST = ['foundry', 'furnace', 'seed found', "combat", "brewing", 'magic bonus', 'heat']
         if (!BLACKLIST.some(item => data.toLowerCase().startsWith(item))) {
-          addItem(showToastDialogParser(data));
+          addItem(showToastDialogParser(data.toLowerCase()));
         }
       }),
     [onMessageFactory]
