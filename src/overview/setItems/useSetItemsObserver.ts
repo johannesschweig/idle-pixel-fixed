@@ -223,11 +223,24 @@ export const useRefreshMarketSlotDataObserver = () => {
           (value) => ({ timestamp: parseInt(value) }),
         ]);
         observers.forEach((observer) => {
+          let changed = false
           data.forEach((d) => {
             if (d.slot.toString() === observer.item) {
+              changed = true
               observer.onChange(d);
             }
-          });
+          })
+          if (!changed) { // clear data
+            observer.onChange({
+              slot: parseInt(observer.item),
+              name: '',
+              amount: 0,
+              price: 0,
+              sold: 0,
+              timestamp: 0,
+              type: '',
+            })
+          }
         });
       }),
     [observers]
