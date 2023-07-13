@@ -3,9 +3,11 @@ import { useNumberItemObserver, useItemObserver } from "../setItems/useSetItemsO
 import LabeledIPimg from "../../util/LabeledIPimg";
 import ObservedLabeledIPimg from "../../util/ObservedLabeledIPimg";
 import { sendMessage } from "../../util/websocket/useWebsocket";
+import { RAW_FOOD } from "./rawFood";
 
 const id = "FishingOverview";
 const FishingOverview = () => {
+
 
   const [rowBoatTimer] = useNumberItemObserver("row_boat_timer", id);
   const [canoeBoatTimer] = useNumberItemObserver("canoe_boat_timer", id);
@@ -84,10 +86,11 @@ const FishingOverview = () => {
     }
   }
 
-  const FISH = [
-    "shrimp", "anchovy", "sardine", "crab", "piranha", "salmon", "trout", "pike", "eel", "tuna", "swordfish", "manta_ray", "shark", "whale", "small_stardust_fish", "medium_stardust_fish", "large_stardust_fish"
+  const COOKED_FISH = [
+    "shrimp", "anchovy", "sardine", "crab", "piranha", "salmon", "trout", "pike", "rainbow_fish", "eel", "tuna", "swordfish", "manta_ray", "shark", "whale", "small_stardust_fish", "medium_stardust_fish", "large_stardust_fish",
   ].map(fish => "cooked_" + fish)
-  const FOOD = ["orange", "egg", "maple_syrup", "chocolate", "cheese", "honey", "coconut_stew", "banana_jello"].concat(FISH)
+  const COOKED_SHINY_FISH = COOKED_FISH.map(fish => fish + "_shiny")
+  const COOKED_FOOD = ['cooked_chicken', 'cooked_meat', "orange", "egg", "maple_syrup", "chocolate", "cheese", "honey", "coconut_stew", "banana_jello"].concat(COOKED_FISH, COOKED_SHINY_FISH)
 
   return (
     <OverviewBox
@@ -95,89 +98,123 @@ const FishingOverview = () => {
       width={400}
       xp={fishingXp}
     >
-      <div
-        style={{
-          display: "flex",
-          gap: "10px",
-        }}
-      >
-        {heat > 50 && <span>{heat} heat</span>}
-        {canoeBoatTimer <= 1 && boatsOut() < 2 && <LabeledIPimg
-          name="canoe_boat"
-          label={canoeBoatTimer === 1 ? "Collect" : "Send out"}
-          size={50}
-          onClick={() => clickBoat("canoe_boat")}
-          style={boatStyle(canoeBoatTimer)} />}
-        {stardustBoatTimer <= 1 && boatsOut() < 2 && <LabeledIPimg
-          name="stardust_boat"
-          label={stardustBoatTimer === 1 ? "Collect" : "Send out"}
-          size={50}
-          onClick={() => clickBoat("stardust_boat")}
-          style={boatStyle(stardustBoatTimer)} />}
-        {pirateShipTimer <= 1 && boatsOut() < 2 && <LabeledIPimg
-          name="pirate_ship"
-          label={pirateShipTimer === 1 ? "Collect" : "Send out"}
-          size={50}
-          onClick={() => clickBoat("pirate_ship")}
-          style={boatStyle(pirateShipTimer)} />}
-        {aquariumTimer === 0 &&
-          <LabeledIPimg
-            name="aquarium"
-            label={"Feed"}
+      <div>
+        <div
+          style={{
+            display: "flex",
+            gap: "10px",
+          }}
+        >
+          {canoeBoatTimer <= 1 && boatsOut() < 2 && <LabeledIPimg
+            name="canoe_boat"
+            label={canoeBoatTimer === 1 ? "Collect" : "Send out"}
             size={50}
-            onClick={() => clickAquarium()}
+            onClick={() => clickBoat("canoe_boat")}
+            style={boatStyle(canoeBoatTimer)} />}
+          {stardustBoatTimer <= 1 && boatsOut() < 2 && <LabeledIPimg
+            name="stardust_boat"
+            label={stardustBoatTimer === 1 ? "Collect" : "Send out"}
+            size={50}
+            onClick={() => clickBoat("stardust_boat")}
+            style={boatStyle(stardustBoatTimer)} />}
+          {pirateShipTimer <= 1 && boatsOut() < 2 && <LabeledIPimg
+            name="pirate_ship"
+            label={pirateShipTimer === 1 ? "Collect" : "Send out"}
+            size={50}
+            onClick={() => clickBoat("pirate_ship")}
+            style={boatStyle(pirateShipTimer)} />}
+          {aquariumTimer === 0 &&
+            <LabeledIPimg
+              name="aquarium"
+              label={"Feed"}
+              size={50}
+              onClick={() => clickAquarium()}
+              style={{
+                cursor: "pointer",
+              }}
+            />
+          }
+          {cooksBookTimer === 1 && <LabeledIPimg
+            name={cooksBookItem}
+            label={"Collect"}
+            size={50}
+            onClick={() => sendMessage("COOKS_BOOK_READY")}
             style={{
               cursor: "pointer",
-            }}
+              backgroundColor: "lightyellow",
+            }} />}
+          {(coconut >= 10 || banana >= 10) && cooksBookTimer === 0 && <LabeledIPimg
+            name={"cooks_book"}
+            label={coconut >= 10 ? "Make coconut stew" : "Make banana jello"}
+            size={50}
+            onClick={() => clickCooksBook()}
+            style={{
+              cursor: "pointer",
+            }} />}
+
+          <ObservedLabeledIPimg
+            label={"banana"}
+            size={30}
+            action={"CONSUME"}
+            retain={20}
           />
-        }
-        {cooksBookTimer === 1 && <LabeledIPimg
-          name={cooksBookItem}
-          label={"Collect"}
-          size={50}
-          onClick={() => sendMessage("COOKS_BOOK_READY")}
+          <ObservedLabeledIPimg
+            label={"apple"}
+            size={30}
+            action={"CONSUME"}
+            retain={2}
+          />
+          <ObservedLabeledIPimg
+            label={"coconut"}
+            size={30}
+            action={"CONSUME"}
+            retain={50}
+          />
+          {
+            robotBody + robotFeet + robotHands + robotLegs + robotHead === 5 &&
+            <span>Robot 5/5</span>
+          }
+        </div>
+        <div
           style={{
-            cursor: "pointer",
-            backgroundColor: "lightyellow",
-          }} />}
-        {(coconut >= 10 || banana >= 10) && cooksBookTimer === 0 && <LabeledIPimg
-          name={"cooks_book"}
-          label={coconut >= 10 ? "Make coconut stew" : "Make banana jello"}
-          size={50}
-          onClick={() => clickCooksBook()}
-          style={{
-            cursor: "pointer",
-          }} />}
-        {FOOD.map((food) => (
+            display: "grid",
+            gap: "10px",
+            gridTemplateColumns: "repeat(6, 1fr)",
+            border: "1px solid rgb(115, 77, 0)",
+            borderRadius: "4px",
+          }}
+        >{COOKED_FOOD.map((food) => (
           <ObservedLabeledIPimg
             label={food}
             size={30}
             action={"CONSUME"}
           />
         ))}
-        <ObservedLabeledIPimg
-          label={"banana"}
-          size={30}
-          action={"CONSUME"}
-          retain={20}
-        />
-        <ObservedLabeledIPimg
-          label={"apple"}
-          size={30}
-          action={"CONSUME"}
-          retain={2}
-        />
-        <ObservedLabeledIPimg
-          label={"coconut"}
-          size={30}
-          action={"CONSUME"}
-          retain={50}
-        />
-        {
-          robotBody + robotFeet + robotHands + robotLegs + robotHead === 5 &&
-          <span>Robot 5/5</span>
+        </div>
+        {heat > 50 &&
+          <div
+            style={{
+              display: "grid",
+              gap: "10px",
+              gridTemplateColumns: "repeat(6, 1fr)",
+              border: "1px solid #FBCBD9",
+              borderRadius: "4px",
+            }}
+          >
+            <LabeledIPimg
+              name={"heat"}
+              label={heat}
+              size={30}
+            />
+            {RAW_FOOD.sort((a, b) => (b.energy / b.heat) - (a.energy / a.heat)).map(f =>
+              <ObservedLabeledIPimg
+                label={f.name}
+                size={30}
+                action={'COOK'}
+                max_value={Math.floor(heat / f.heat)}
+              />)}
+          </div>
         }
-
       </div>
     </OverviewBox>
   );

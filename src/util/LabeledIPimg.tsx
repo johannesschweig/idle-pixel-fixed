@@ -21,7 +21,7 @@ const LabeledIPimg = ({
     <div
       style={{
         display: "flex",
-        gap: "10px",
+        gap: "4px",
         flexDirection: "column",
         width: `${(size ?? 0) + 20}px`,
         justifyContent: "flex-end",

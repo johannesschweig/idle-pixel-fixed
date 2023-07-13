@@ -11,6 +11,7 @@ interface Props {
   retain?: number;
   action_item?: string;
   action_override?: Array<string>;
+  max_value?: number;
 }
 
 const id = "ObservedLabeledIPimg"
@@ -21,6 +22,7 @@ const ObserveredLabeledIPimg = ({
   retain = 0,
   action_item = "",
   action_override = [],
+  max_value = 999999,
   style,
   ...rest
 }: PropsWithHTMLElementAttributes<Props>) => {
@@ -31,9 +33,9 @@ const ObserveredLabeledIPimg = ({
     if(action_override.length != 0) {
       sendMessage(action_override[0], ...action_override.slice(1))
     } else if(action_item) {
-      sendMessage(action, action_item, v);
+      sendMessage(action, action_item, Math.min(v, max_value));
     } else {
-      sendMessage(action, label, v);
+      sendMessage(action, label, Math.min(v, max_value));
     }
   }
 
@@ -44,7 +46,7 @@ const ObserveredLabeledIPimg = ({
         display: value > retain ? "flex" : "none"
       }}>
        <LabeledIPimg
-        name={label}
+        name={label.replace('_shiny', '')}
         size={size}
         label={value}
         style={{
