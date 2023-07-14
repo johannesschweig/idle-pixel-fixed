@@ -180,8 +180,6 @@ const FishingOverview = () => {
             display: "grid",
             gap: "10px",
             gridTemplateColumns: "repeat(6, 1fr)",
-            border: "1px solid rgb(115, 77, 0)",
-            borderRadius: "4px",
           }}
         >{COOKED_FOOD.map((food) => (
           <ObservedLabeledIPimg

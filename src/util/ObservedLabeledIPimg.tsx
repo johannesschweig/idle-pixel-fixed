@@ -30,9 +30,9 @@ const ObserveredLabeledIPimg = ({
 
   const imgClick = () => {
     let v = value - retain
-    if(action_override.length != 0) {
+    if (action_override.length != 0) {
       sendMessage(action_override[0], ...action_override.slice(1))
-    } else if(action_item) {
+    } else if (action_item) {
       sendMessage(action, action_item, Math.min(v, max_value));
     } else {
       sendMessage(action, label, Math.min(v, max_value));
@@ -43,18 +43,32 @@ const ObserveredLabeledIPimg = ({
   return (
     <div
       style={{
-        display: value > retain ? "flex" : "none"
-      }}>
-       <LabeledIPimg
+        display: value > retain ? "flex" : "none",
+        position: 'relative',
+      }}
+      onClick={() => imgClick()}
+    >
+      {label.includes('shiny') &&
+        <img
+          src={get_image(`images/shiny.gif`)}
+          alt={label}
+          style={{
+            width: `${size}px`,
+            height: `${size}px`,
+            position: "absolute",
+          }}
+        />
+      }
+      <LabeledIPimg
         name={label.replace('_shiny', '')}
         size={size}
         label={value}
         style={{
           cursor: "pointer",
+          backgroundColor: label.includes('shiny') ? "rgb(107, 107, 107)" : "transparent",
           ...style
         }}
-        onClick={() => imgClick()}
-        {...rest}/>
+        {...rest} />
     </div>
   );
 };
