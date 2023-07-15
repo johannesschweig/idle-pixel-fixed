@@ -27,6 +27,7 @@ import {
   shiftKeyUp,
 } from "../util/keyboard/modiferKeyReducer";
 import OverviewBox from "./OverviewBox";
+import { useOpenRocketDialogueObserver, useRocketObserver } from "./mining/useRocketObserver";
 
 const id = "OverviewPanel";
 const OverviewPanel = () => {
@@ -34,6 +35,7 @@ const OverviewPanel = () => {
   const overviewIsOpen = useIPFSelector(selectOverviewIsOpen);
   useSetItemsObserver();
   useRefreshMarketSlotDataObserver();
+  useOpenRocketDialogueObserver();
 
   const [settings] = useLocalStorage<ActivityLogSettings>(
     "activity-log-settings",

@@ -30,7 +30,7 @@ const removeObserver = (
 
 
 export const marketSlotDataSlice = createSlice({
-  name: "Set items",
+  name: "Market slot data",
   initialState: initialState,
   reducers: {
     addMarketSlotDataObserver(state, action: PayloadAction<MarketSlotDataObserver>) {

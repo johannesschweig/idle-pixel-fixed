@@ -8,6 +8,8 @@ import LabeledIPimg from "../../util/LabeledIPimg";
 import ObservedLabeledIPimg from "../../util/ObservedLabeledIPimg";
 import { sendMessage } from "../../util/websocket/useWebsocket";
 import { formatTime } from "../../util/timeUtils"
+import { useRocketObserver } from "./useRocketObserver";
+import { useEffect } from "react";
 
 const id = "MiningOverview";
 const MiningOverview = () => {
@@ -16,15 +18,17 @@ const MiningOverview = () => {
   const [rocketDistanceRequired] = useNumberItemObserver("rocket_distance_required", id);
   const [rocketKm] = useNumberItemObserver("rocket_km", id);
   const [rocketStatus] = useItemObserver("rocket_status", id)
-
-  // const [oilOut, setOilOut] = useState(Items.getItem("oil_out"));
-
+  const [sunDistance] = useRocketObserver("sun", id)
   const [miningXp] = useNumberItemObserver("mining_xp", id);
   const miningLevel = get_level(miningXp);
   const STARDUST_PRISMS = ["small", "medium", "large", "huge"].map(e => e + "_stardust_prism")
   const GEODES = ["grey", "blue", "green", "red", "cyan", "ancient"].map(c => c + "_geode")
   const MINERALS = ["blue_marble", "amethyst", "sea_crystal", "dense_marble", "fluorite", "clear_marble", "jade", "lime_quartz", "opal", "purple_quartz", "amber", "smooth_pearl", "topaz", "tanzanite", "magnesium", "sulfer", "frozen", "blood"].map(c => c + "_mineral")
   const FRAGMENTS = ["sapphire", "emerald", "ruby", "diamond"].map(e => `gathering_${e}_fragments`)
+
+  useEffect(() => {
+    sendMessage('CLICKS_ROCKET', '0')
+  }, []);
 
   const changeOilOut = (change: number) => setOilOut(oilOut + change);
   const clickRocket = () => {
@@ -34,6 +38,8 @@ const MiningOverview = () => {
       sendMessage("ROCKET_COLLECT")
     }
   }
+  // CLICKS_ROCKET=0
+  // OPEN_ROCKET_DIALOGUE=259122~149507501
   const getRocketLabel = (): string => {
     const speed = 300 // km/s
     if (rocketStatus === "none") {
@@ -45,7 +51,6 @@ const MiningOverview = () => {
       return formatTime((rocketDistanceRequired - rocketKm) / speed).toString()
     } else { // way back
       return formatTime(rocketKm / speed).toString()
-
     }
   }
   return (
@@ -136,6 +141,7 @@ const MiningOverview = () => {
           }}
           onClick={clickRocket}
         />
+        <span>Sun: {sunDistance}</span>
       </div>
     </OverviewBox>
   );
