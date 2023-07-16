@@ -37,6 +37,10 @@ const ToastEntry = ({ content, timestamp }: Props) => {
         bg: "white",
         icon: "bones"
       }
+      case "treasure map solved!": return {
+        bg: "rosybrown",
+        icon: "treasure_chest"
+      }
       default: return {
         bg: "white",
         icon: "",

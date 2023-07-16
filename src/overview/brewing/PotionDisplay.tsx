@@ -145,6 +145,8 @@ const PotionDisplay = ({
           justifyContent: "center",
           height: "70px",
           opacity: favorite ? 1 : 0.5,
+          backgroundColor: timer > 0 ? "lightskyblue" : "transparent",
+          borderRadius: "4px",
         }}
       >
         <IPimg

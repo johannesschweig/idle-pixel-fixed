@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useIPFDispatch, useIPFSelector } from "../../redux/hooks";
 import {
-  observeWebSocketMessage,
+  consumeWebSocketMessage,
   useWebsocket,
 } from "../../util/websocket/useWebsocket";
 import { reduceToRecord } from "../../util/arrayUtils";
@@ -79,7 +79,7 @@ export const useOpenRocketDialogueObserver = () => {
 
   const onMessage = useMemo(
     () =>
-      observeWebSocketMessage("OPEN_ROCKET_DIALOGUE", (dataString: string) => {
+      consumeWebSocketMessage("OPEN_ROCKET_DIALOGUE", (dataString: string) => {
         const data = reduceToRecord<RocketData>(dataString.split("~"), [
           (value) => ({ moonDistance: parseInt(value) }),
           (value) => ({ sunDistance: parseInt(value) }),

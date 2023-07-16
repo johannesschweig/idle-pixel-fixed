@@ -1,14 +1,15 @@
 import IPimg from "../../util/IPimg";
 import { useTooltip } from "../../util/tooltip/useTooltip";
 import React from "react";
+import { formatNumber } from "../../util/numberUtils";
 
 interface Props {
   image: string;
   name: string;
-  reqEnergy: Number;
-  availEnergy: Number;
-  reqFightPoints: Number;
-  availFightPoints: Number;
+  reqEnergy: number;
+  availEnergy: number;
+  reqFightPoints: number;
+  availFightPoints: number;
   isSelectedArea: boolean;
   selectArea: () => void;
   isDisabled: boolean;
@@ -48,9 +49,9 @@ const CombatAreaDisplay = ({
         }}
       >
         {reqEnergy > availEnergy &&
-          <span>{availEnergy}/</span>
+          <span>{formatNumber(availEnergy)}/</span>
         }
-        {reqEnergy}
+        {formatNumber(reqEnergy)}
       </span>
       <IPimg
         size={20}
@@ -64,9 +65,9 @@ const CombatAreaDisplay = ({
           color: availFightPoints < reqFightPoints ? "red" : "white"
         }}
       >
-        {reqFightPoints}
+        {formatNumber(reqFightPoints)}
         {reqFightPoints > availFightPoints &&
-          <span>/{availFightPoints}</span>
+          <span>/{formatNumber(availFightPoints)}</span>
         }
       </span>
     </div>

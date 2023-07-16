@@ -28,6 +28,11 @@ const FishingOverview = () => {
   const [robotHands] = useNumberItemObserver("robot_hands", id)
   const [robotFeet] = useNumberItemObserver("robot_feet", id)
   const [robotHead] = useNumberItemObserver("robot_head", id)
+  const [treasureChest] = useNumberItemObserver("treasure_chest", id)
+  const [greenTreasureChest] = useNumberItemObserver("green_treasure_chest", id)
+  const [goldBar] = useNumberItemObserver("gold_bar", id)
+  const [emerald] = useNumberItemObserver("emerald", id)
+  const [promethiumBar] = useNumberItemObserver("promethium_bar", id)
 
   const clickBoat = (boat: string) => {
     let timer
@@ -64,6 +69,18 @@ const FishingOverview = () => {
     } else if (banana >= 10) {
       sendMessage("COOKS_BOOK", "banana_jello")
     }
+  }
+
+  // CRAFT=gold_emerald_key~1
+  // OPEN_TREASURE_CHEST=gold_emerald_key
+  const openTreasureChest = () => {
+    sendMessage('CRAFT', 'gold_emerald_key', '1')
+    sendMessage('OPEN_TREASURE_CHEST', 'gold_emerald_key')
+  }
+
+  const openGreenTreasureChest = () => {
+    sendMessage('CRAFT', 'promethium_emerald_key', '1')
+    sendMessage('OPEN_TREASURE_CHEST', 'promethium_emerald_key')
   }
 
   const boatsOut = () => {
@@ -105,6 +122,26 @@ const FishingOverview = () => {
             gap: "10px",
           }}
         >
+          {treasureChest > 0 &&
+            <LabeledIPimg
+              name={"treasure_chest"}
+              label={treasureChest}
+              onClick={() => openTreasureChest()}
+              style={{
+                opacity: (goldBar >= 5 && emerald >= 1) ? 1 : 0.5
+              }}
+            />
+          }
+          {greenTreasureChest > 0 &&
+            <LabeledIPimg
+              name={"green_treasure_chest"}
+              label={greenTreasureChest}
+              onClick={() => openGreenTreasureChest()}
+              style={{
+                opacity: (promethiumBar >= 5 && emerald >= 1) ? 1 : 0.5
+              }}
+            />
+          }
           {canoeBoatTimer <= 1 && boatsOut() < 2 && <LabeledIPimg
             name="canoe_boat"
             label={canoeBoatTimer === 1 ? "Collect" : "Send out"}
@@ -151,7 +188,18 @@ const FishingOverview = () => {
             style={{
               cursor: "pointer",
             }} />}
-
+          {
+            robotBody + robotFeet + robotHands + robotLegs + robotHead === 5 &&
+            <span>Robot 5/5</span>
+          }
+        </div>
+        <div
+          style={{
+            display: "grid",
+            gap: "10px",
+            gridTemplateColumns: "repeat(6, 1fr)",
+          }}
+        >
           <ObservedLabeledIPimg
             label={"banana"}
             size={30}
@@ -170,24 +218,13 @@ const FishingOverview = () => {
             action={"CONSUME"}
             retain={50}
           />
-          {
-            robotBody + robotFeet + robotHands + robotLegs + robotHead === 5 &&
-            <span>Robot 5/5</span>
-          }
-        </div>
-        <div
-          style={{
-            display: "grid",
-            gap: "10px",
-            gridTemplateColumns: "repeat(6, 1fr)",
-          }}
-        >{COOKED_FOOD.map((food) => (
-          <ObservedLabeledIPimg
-            label={food}
-            size={30}
-            action={"CONSUME"}
-          />
-        ))}
+          {COOKED_FOOD.map((food) => (
+            <ObservedLabeledIPimg
+              label={food}
+              size={30}
+              action={"CONSUME"}
+            />
+          ))}
         </div>
         {heat > 50 &&
           <div

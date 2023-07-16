@@ -1,4 +1,5 @@
 import { CSSProperties, PropsWithChildren } from "react";
+import { formatNumber } from "../util/numberUtils";
 
 interface Props {
   width: number;
@@ -53,7 +54,7 @@ const XpBar = (xp: number) => {
           height: "15px",
           position: "absolute",
         }} />
-      <span
+      { xpNext(xp).next > 0 && <span
         style={{
           lineHeight: "16px",
           padding: "0 4px",
@@ -61,8 +62,8 @@ const XpBar = (xp: number) => {
           zIndex: 1,
           right: "0px",
         }}>
-        {xpNext(xp).next} xp
-      </span>
+        {formatNumber(xpNext(xp).next)} xp
+      </span> }
     </div>
   )
 }

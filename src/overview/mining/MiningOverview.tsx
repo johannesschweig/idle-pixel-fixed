@@ -10,6 +10,7 @@ import { sendMessage } from "../../util/websocket/useWebsocket";
 import { formatTime } from "../../util/timeUtils"
 import { useRocketObserver } from "./useRocketObserver";
 import { useEffect } from "react";
+import { formatNumber } from "../../util/numberUtils";
 
 const id = "MiningOverview";
 const MiningOverview = () => {
@@ -20,10 +21,11 @@ const MiningOverview = () => {
   const [rocketStatus] = useItemObserver("rocket_status", id)
   const [sunDistance] = useRocketObserver("sun", id)
   const [miningXp] = useNumberItemObserver("mining_xp", id);
+  const [rocketPotionTimer] = useNumberItemObserver("rocket_potion_timer", id)
   const miningLevel = get_level(miningXp);
   const STARDUST_PRISMS = ["small", "medium", "large", "huge"].map(e => e + "_stardust_prism")
   const GEODES = ["grey", "blue", "green", "red", "cyan", "ancient"].map(c => c + "_geode")
-  const MINERALS = ["blue_marble", "amethyst", "sea_crystal", "dense_marble", "fluorite", "clear_marble", "jade", "lime_quartz", "opal", "purple_quartz", "amber", "smooth_pearl", "topaz", "tanzanite", "magnesium", "sulfer", "frozen", "blood"].map(c => c + "_mineral")
+  const MINERALS = ["blue_marble", "amethyst", "sea_crystal", "dense_marble", "fluorite", "clear_marble", "jade", "lime_quartz", "opal", "purple_quartz", "amber", "smooth_pearl", "topaz", "tanzanite",  "sulfer" ].map(c => c + "_mineral") // "frozen", "blood_crystal", "magnesium",
   const FRAGMENTS = ["sapphire", "emerald", "ruby", "diamond"].map(e => `gathering_${e}_fragments`)
 
   useEffect(() => {
@@ -38,21 +40,23 @@ const MiningOverview = () => {
       sendMessage("ROCKET_COLLECT")
     }
   }
-  // CLICKS_ROCKET=0
-  // OPEN_ROCKET_DIALOGUE=259122~149507501
+
   const getRocketLabel = (): string => {
-    const speed = 300 // km/s
+    var speed = 255 // km/s
+    if (rocketPotionTimer > 0) {
+      speed = speed * 10
+    }
     if (rocketStatus === "none") {
-      return "Ready"
+      return `Ready (${formatNumber(sunDistance)})`
     } else if (rocketKm === rocketDistanceRequired) {
       return "Collect"
     } else if (rocketStatus.startsWith("to")) {
-      // return `${Math.round((rocketDistanceRequired - rocketKm)/speed/360)/10}h`
       return formatTime((rocketDistanceRequired - rocketKm) / speed).toString()
     } else { // way back
       return formatTime(rocketKm / speed).toString()
     }
   }
+
   return (
     <OverviewBox
       height={250}
@@ -141,7 +145,6 @@ const MiningOverview = () => {
           }}
           onClick={clickRocket}
         />
-        <span>Sun: {sunDistance}</span>
       </div>
     </OverviewBox>
   );
