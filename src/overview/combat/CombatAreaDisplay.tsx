@@ -65,10 +65,10 @@ const CombatAreaDisplay = ({
           color: availFightPoints < reqFightPoints ? "red" : "white"
         }}
       >
-        {formatNumber(reqFightPoints)}
         {reqFightPoints > availFightPoints &&
-          <span>/{formatNumber(availFightPoints)}</span>
+          <span>{formatNumber(availFightPoints)}/</span>
         }
+        {formatNumber(reqFightPoints)}
       </span>
     </div>
   );

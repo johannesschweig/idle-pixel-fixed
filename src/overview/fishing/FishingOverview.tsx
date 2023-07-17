@@ -14,20 +14,12 @@ const FishingOverview = () => {
   const [stardustBoatTimer] = useNumberItemObserver("stardust_boat_timer", id);
   const [pirateShipTimer] = useNumberItemObserver("pirate_ship_timer", id);
   const [aquariumTimer] = useNumberItemObserver("aquarium_timer", id)
-  const [bait] = useNumberItemObserver("bait", id)
-  const [superBait] = useNumberItemObserver("super_bait", id)
-  const [maggots] = useNumberItemObserver("maggots", id)
   const [fishingXp] = useNumberItemObserver("fishing_xp", id)
   const [cooksBookTimer] = useNumberItemObserver("cooks_book_timer", id)
   const [cooksBookItem] = useItemObserver("cooks_book_item", id)
   const [coconut] = useNumberItemObserver("coconut", id)
   const [banana] = useNumberItemObserver("banana", id)
   const [heat] = useNumberItemObserver("heat", id)
-  const [robotBody] = useNumberItemObserver("robot_body", id)
-  const [robotLegs] = useNumberItemObserver("robot_legs", id)
-  const [robotHands] = useNumberItemObserver("robot_hands", id)
-  const [robotFeet] = useNumberItemObserver("robot_feet", id)
-  const [robotHead] = useNumberItemObserver("robot_head", id)
   const [treasureChest] = useNumberItemObserver("treasure_chest", id)
   const [greenTreasureChest] = useNumberItemObserver("green_treasure_chest", id)
   const [goldBar] = useNumberItemObserver("gold_bar", id)
@@ -50,16 +42,6 @@ const FishingOverview = () => {
       sendMessage("BOAT_COLLECT", boat)
     } else {
       sendMessage("BOAT_SEND", boat)
-    }
-  }
-
-  const clickAquarium = () => {
-    if (superBait > 0) {
-      sendMessage("FEED_FISH", "super_bait")
-    } else if (bait > 0) {
-      sendMessage("FEED_FISH", "bait")
-    } else if (maggots >= 10) {
-      sendMessage("FEED_FISH", "maggots")
     }
   }
 
@@ -128,7 +110,8 @@ const FishingOverview = () => {
               label={treasureChest}
               onClick={() => openTreasureChest()}
               style={{
-                opacity: (goldBar >= 5 && emerald >= 1) ? 1 : 0.5
+                opacity: (goldBar >= 5 && emerald >= 1) ? 1 : 0.5,
+                cursor: "pointer",
               }}
             />
           }
@@ -138,7 +121,8 @@ const FishingOverview = () => {
               label={greenTreasureChest}
               onClick={() => openGreenTreasureChest()}
               style={{
-                opacity: (promethiumBar >= 5 && emerald >= 1) ? 1 : 0.5
+                opacity: (promethiumBar >= 5 && emerald >= 1) ? 1 : 0.5,
+                cursor: "pointer",
               }}
             />
           }
@@ -165,12 +149,25 @@ const FishingOverview = () => {
               name="aquarium"
               label={"Feed"}
               size={50}
-              onClick={() => clickAquarium()}
+              onClick={() => sendMessage("FEED_FISH", "maggots")}
               style={{
                 cursor: "pointer",
               }}
             />
           }
+          <ObservedLabeledIPimg
+            label={"bait"}
+            action={""}
+            size={30}
+            action_override={["THROW_BAIT"]}
+          />
+          <ObservedLabeledIPimg
+            label={"super_bait"}
+            action={""}
+            retain={3}
+            size={30}
+            action_override={["THROW_SUPER_BAIT"]}
+          />
           {cooksBookTimer === 1 && <LabeledIPimg
             name={cooksBookItem}
             label={"Collect"}
@@ -188,10 +185,6 @@ const FishingOverview = () => {
             style={{
               cursor: "pointer",
             }} />}
-          {
-            robotBody + robotFeet + robotHands + robotLegs + robotHead === 5 &&
-            <span>Robot 5/5</span>
-          }
         </div>
         <div
           style={{
