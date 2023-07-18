@@ -1,6 +1,7 @@
 import { ToastContent } from "../types";
 import { formatDate, timeSince } from "../../util/timeUtils";
 import IPimg from "../../util/IPimg";
+import { formatNumber } from "../../util/numberUtils";
 
 interface Props {
   content: ToastContent;
@@ -45,6 +46,19 @@ const ToastEntry = ({ content, timestamp }: Props) => {
         bg: "white",
         icon: "",
       }
+    }
+  }
+
+  const formatContent = (val: string): string => {
+    switch(content.action) {
+      case "collect":
+        const num = val.match(/\d+/g)
+        if (num) {
+          return `+${formatNumber(parseInt(num[0]))} coins`
+        } else {
+          return val
+        }
+      default: return val
     }
   }
 
@@ -112,7 +126,7 @@ const ToastEntry = ({ content, timestamp }: Props) => {
               fontSize: "1.6em",
             }}
           >
-            {content.value}
+            {formatContent(content.value)}
           </span>
         </div>
       </div>

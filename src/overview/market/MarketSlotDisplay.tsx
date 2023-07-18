@@ -79,13 +79,32 @@ const MarketSlotDisplay = ({
       }}
     >
       { /* Icon */}
-      <IPimg
-        name={item.name}
-        size={50}
+      <div
         style={{
-          marginBottom: "12px",
+          position: "relative",
         }}
-      />
+      >
+        <IPimg
+          name={item.name}
+          size={50}
+          style={{
+            marginBottom: "12px",
+          }}
+        />
+        { prices.length > 0 && <span
+          style={{
+            position: "absolute",
+            fontSize: "12px",
+            border: "1px solid #4c4c4c",
+            padding: "0 2px",
+            borderRadius: "4px",
+            color: "#4c4c4c",
+            right: "-16px",
+          }}
+        >
+          {prices.length}
+        </span> }
+      </div>
       { /* Amount with plus button */}
       <div>
         {item.amount}
