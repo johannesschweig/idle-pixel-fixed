@@ -240,6 +240,8 @@ const FishingOverview = () => {
                 size={30}
                 action={'COOK'}
                 max_value={Math.floor(heat / f.heat)}
+                tooltipText={f.heat.toString()}
+                tooltipIcon={'heat'}
               />)}
           </div>
         }

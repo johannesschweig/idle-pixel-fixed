@@ -3,6 +3,8 @@ import React from "react";
 import { PropsWithHTMLElementAttributes } from "./domTypes";
 import { useNumberItemObserver } from "../overview/setItems/useSetItemsObserver";
 import { sendMessage } from "./websocket/useWebsocket";
+import { useTooltip } from "./tooltip/useTooltip";
+import IPimg from "./IPimg";
 
 interface Props {
   label: string;
@@ -12,6 +14,8 @@ interface Props {
   action_item?: string;
   action_override?: Array<string>;
   max_value?: number;
+  tooltipText?: string;
+  tooltipIcon?: string;
 }
 
 const id = "ObservedLabeledIPimg"
@@ -23,6 +27,8 @@ const ObserveredLabeledIPimg = ({
   action_item = "",
   action_override = [],
   max_value = 999999,
+  tooltipText = "",
+  tooltipIcon = "",
   style,
   ...rest
 }: PropsWithHTMLElementAttributes<Props>) => {
@@ -40,13 +46,32 @@ const ObserveredLabeledIPimg = ({
   }
 
 
+  const [imgProps, ImgToolTip] = useTooltip(
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "20px 1fr",
+        gap: "6px",
+        justifyItems: "start",
+      }}
+    >
+      <IPimg
+        name={tooltipIcon}
+        size={20}
+      />
+      {tooltipText}
+    </div>
+  );
+
   return (
     <div
       style={{
         display: value > retain ? "flex" : "none",
         position: 'relative',
+        cursor: "pointer",
       }}
       onClick={() => imgClick()}
+      {...imgProps}
     >
       {label.includes('shiny') &&
         <img
@@ -64,11 +89,11 @@ const ObserveredLabeledIPimg = ({
         size={size}
         label={value}
         style={{
-          cursor: "pointer",
           backgroundColor: label.includes('shiny') ? "rgb(107, 107, 107)" : "transparent",
           ...style
         }}
         {...rest} />
+      {tooltipText && <ImgToolTip />}
     </div>
   );
 };
