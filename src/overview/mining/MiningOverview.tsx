@@ -25,7 +25,7 @@ const MiningOverview = () => {
   const miningLevel = get_level(miningXp);
   const STARDUST_PRISMS = ["small", "medium", "large", "huge"].map(e => e + "_stardust_prism")
   const GEODES = ["grey", "blue", "green", "red", "cyan", "ancient"].map(c => c + "_geode")
-  const MINERALS = ["blue_marble", "amethyst", "sea_crystal", "dense_marble", "fluorite", "clear_marble", "jade", "lime_quartz", "opal", "purple_quartz", "amber", "smooth_pearl", "topaz", "tanzanite",  "sulfer" ].map(c => c + "_mineral") // "frozen", "blood_crystal", "magnesium",
+  const MINERALS = ["blue_marble", "amethyst", "sea_crystal", "dense_marble", "fluorite", "clear_marble", "jade", "lime_quartz", "opal", "purple_quartz", "amber", "smooth_pearl", "topaz", "tanzanite", "sulfer"].map(c => c + "_mineral") // "frozen", "blood_crystal", "magnesium",
   const FRAGMENTS = ["sapphire", "emerald", "ruby", "diamond"].map(e => `gathering_${e}_fragments`)
 
   useEffect(() => {
@@ -41,20 +41,32 @@ const MiningOverview = () => {
     }
   }
 
+  const getRocketDuration = (dist: number): string => {
+    const baseSpeed = 255;
+    const boostedSpeed = baseSpeed * 10;
+    const duration =
+      rocketPotionTimer === 0
+        ? dist / baseSpeed // no timer
+        : rocketPotionTimer * boostedSpeed >= dist
+          ? dist / boostedSpeed // enough timer
+          : rocketPotionTimer + (dist - rocketPotionTimer * boostedSpeed) / baseSpeed; // too little timer
+    return formatTime(duration);
+  }
+
   const getRocketLabel = (): string => {
-    var speed = 255 // km/s
-    if (rocketPotionTimer > 0) {
-      speed = speed * 10
-    }
     if (rocketStatus === "none") {
       return `Ready (${formatNumber(sunDistance)})`
     } else if (rocketKm === rocketDistanceRequired) {
       return "Collect"
     } else if (rocketStatus.startsWith("to")) {
-      return formatTime((rocketDistanceRequired - rocketKm) / speed).toString()
+      return getRocketDuration(rocketDistanceRequired - rocketKm)
     } else { // way back
-      return formatTime(rocketKm / speed).toString()
+      return getRocketDuration(rocketKm)
     }
+  }
+
+  const isRocketFlying = (): boolean => {
+    return rocketStatus.startsWith('from') || rocketStatus.startsWith('to')
   }
 
   return (
@@ -134,14 +146,35 @@ const MiningOverview = () => {
             size={30}
             retain={9} />
         ))}
+        <ObservedLabeledIPimg
+          label={"sapphire"}
+          action={"SHOP_SELL"}
+          size={30}
+        />
+        <ObservedLabeledIPimg
+          label={"emerald"}
+          action={"SHOP_SELL"}
+          size={30}
+        />
+        <ObservedLabeledIPimg
+          label={"ruby"}
+          action={""}
+          size={30}
+        />
+        <ObservedLabeledIPimg
+          label={"diamond"}
+          action={""}
+          size={30}
+        />
         <LabeledIPimg
           name={"mega_rocket"}
           label={getRocketLabel()}
           size={30}
           style={{
             cursor: "pointer",
-            backgroundColor: rocketStatus === "none" ? "blue" : "transparent",
-            color: rocketStatus === "none" ? "white" : "black",
+            backgroundColor: isRocketFlying() ? "transparent" : "blue",
+            color: isRocketFlying() ? "black" : "white",
+            opacity: isRocketFlying() ? 0.5 : 1,
           }}
           onClick={clickRocket}
         />

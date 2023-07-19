@@ -51,6 +51,7 @@ const ToastEntry = ({ content, timestamp }: Props) => {
 
   const formatContent = (val: string): string => {
     switch(content.action) {
+      case "sold item":
       case "collect":
         const num = val.match(/\d+/g)
         if (num) {

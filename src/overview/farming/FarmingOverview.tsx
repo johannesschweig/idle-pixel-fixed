@@ -145,6 +145,7 @@ const FarmingOverview = () => {
             name={"watering_can"}
             label={water}
             size={30}
+          className={wateringCanActive === 1 ? "shake" : ""}
             style={{
               justifyContent: "center",
               cursor: "pointer",

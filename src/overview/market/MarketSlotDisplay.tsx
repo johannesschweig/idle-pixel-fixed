@@ -3,6 +3,7 @@ import { MarketData } from "../setItems/useSetItemsObserver";
 import { useState, useEffect } from "react";
 import { useNumberItemObserver } from "../setItems/useSetItemsObserver";
 import IPimg from "../../util/IPimg";
+import { formatNumber } from "../../util/numberUtils";
 
 interface Props {
   item: MarketData,
@@ -118,8 +119,8 @@ const MarketSlotDisplay = ({
         }
       </div>
       { /* Price with adjust button */}
-      <div>for {item.price}
-        {prices && !(prices[0] - item.price === 1 || prices[0] - item.price === 0) &&
+      <div>for {formatNumber(item.price)}
+        {prices.length > 0 && !(prices[0] - item.price === 1 || prices[0] - item.price === 0) &&
           <div
             style={{
               display: "inline-block",
@@ -133,7 +134,7 @@ const MarketSlotDisplay = ({
               }}
             >
               {prices[0] > item.price ? "+" : ""}
-              {prices[0] - item.price}
+              {formatNumber(prices[0] - item.price)}
             </span>
             <div
               className="button"
@@ -159,7 +160,7 @@ const MarketSlotDisplay = ({
               marginRight: "4px",
             }}
           />
-          Collect {item.sold}
+          Collect {formatNumber(item.sold)}
         </button>
       }
       { /* Delete button */}
