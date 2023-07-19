@@ -5,6 +5,7 @@ import OverviewBox from "../OverviewBox";
 import { sendMessage } from "../../util/websocket/useWebsocket";
 import CombatAreaDisplay from "./CombatAreaDisplay";
 import { useState } from "react";
+import LabeledIPimg from "../../util/LabeledIPimg";
 
 
 // START_FIGHT=blood_field
@@ -22,6 +23,7 @@ const CombatOverview = () => {
   const [fightPoints] = useNumberItemObserver('fight_points', id)
   const [monsterHp] = useNumberItemObserver('monster_hp', id)
   const [bloodMoonActive] = useNumberItemObserver('blood_moon_active', id)
+  const [robotWaveTimer] = useNumberItemObserver('robot_wave_timer', id)
 
   const formatAreaName = (str: string) => {
     var formattedStr = str.replace(/_/g, ' ');
@@ -86,6 +88,11 @@ const CombatOverview = () => {
           onClick={() => startCombat()}>
           Fight
         </button>
+        { robotWaveTimer === 0 && <LabeledIPimg
+          name={"robot_active"}
+          label={"Robot"}
+          onClick={() => sendMessage('ROBOT_WAVES', 'novice')} // novice, warrior, master, elite
+        /> }
       </div>
     </OverviewBox>
   );

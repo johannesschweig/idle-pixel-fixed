@@ -5,9 +5,13 @@ export const formatTime = (seconds: number) => {
   if(mins < 60)
     return `${Math.floor(mins)}m`
   const hours = (seconds) / 3_600
+  if(hours < 4)
+    return `${Math.floor(hours * 10) / 10}h`
   if(hours < 24)
     return `${Math.floor(hours)}h`
   const days = (seconds) / 86_400
+  if(days < 4)
+    return `${Math.floor(days * 10) / 10}h`
   if(days < 365)
     return `${Math.floor(days)}d`
   const years = (seconds) / 31_536_000
