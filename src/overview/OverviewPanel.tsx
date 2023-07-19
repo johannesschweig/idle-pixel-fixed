@@ -77,80 +77,46 @@ const OverviewPanel = () => {
   return overviewIsOpen ? (
     <div
       style={{
-        display: "flex",
-        gap: "15px",
+        display: "grid",
+        gridTemplateColumns: "3fr 1fr",
+          gap: "16px",
       }}
     >
       <div
         style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "15px",
+          display: "grid",
+          gridTemplateColumns: "repeat(3, 1fr)",
+          gap: "16px",
         }}
       >
-        <div
-          style={{
-            display: "flex",
-            gap: "15px",
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "15px",
-              alignItems: "center",
-            }}
-          >
-            <WoodcuttingOverview />
-            <FarmingOverview />
-            <CombatOverview />
-            <MarketOverview />
-          </div>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "15px",
-              alignItems: "center",
-              width: "50%%",
-            }}
-          >
-            <BrewingOverview />
-            <GatheringOverview />
-            <InventionOverview />
-          </div>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "15px",
-              alignItems: "center",
-              width: "50%%",
-            }}
-          >
-            <CraftingOverview />
-            <MiningOverview />
-            <FishingOverview />
-          </div>
-        </div>
+        <WoodcuttingOverview />
+        <FarmingOverview />
+        <GatheringOverview />
+        <MiningOverview />
+        <CraftingOverview />
+        <BrewingOverview />
+        <MarketOverview/>
+        <CombatOverview />
+        <InventionOverview />
+        <FishingOverview />
       </div>
-      {settings.showInOverview && (
-        <OverviewBox
-          height={800}
-          width={400}
-          gap={"15px"}
-          fontSize={"8px"}
-          overflowY={"auto"}
-          overflowX={"hidden"}
-          justifyContent={"flex-start"}
-          border={"unset"}
-        >
-          {list.slice(0, 25).map((item) => (
-            <ActivityLogEntry item={item} />
-          ))}
-        </OverviewBox>
-      )}
+      <div>
+        {settings.showInOverview && (
+          <OverviewBox
+            gap={"15px"}
+            fontSize={"8px"}
+            overflowY={"auto"}
+            overflowX={"hidden"}
+            justifyContent={"flex-start"}
+            border={"unset"}
+            height={"100vh"}
+          >
+            {list.slice(0, 25).map((item) => (
+              <ActivityLogEntry item={item} />
+            ))}
+          </OverviewBox>
+        )}
+      </div>
     </div>
   ) : null;
 };

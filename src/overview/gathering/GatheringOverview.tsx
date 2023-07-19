@@ -29,8 +29,6 @@ const GatheringOverview = () => {
 // var_mega_boosters_unclaimed: found=1, claimed=0
   return (
     <OverviewBox
-      height={250}
-      width={300}
       justifyContent={"space-between"}
       xp={gatheringXp}
     >

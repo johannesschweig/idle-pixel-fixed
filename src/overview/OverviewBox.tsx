@@ -2,8 +2,6 @@ import { CSSProperties, PropsWithChildren } from "react";
 import { formatNumber } from "../util/numberUtils";
 
 interface Props {
-  width: number;
-  height: number;
   xp?: number;
 }
 
@@ -68,20 +66,14 @@ const XpBar = (xp: number) => {
   )
 }
 
-const OverviewBox = ({ width, height, xp, children, ...style }: PropsWithChildren<Props> & CSSProperties) => {
+const OverviewBox = ({ xp, children, ...style }: PropsWithChildren<Props> & CSSProperties) => {
 
   return (
     <div
       style={{
-        display: "flex",
-        height: `${height}px`,
-        width: `${width}px`,
         gap: "5px",
-        flexDirection: "column",
-        alignItems: "center",
         backgroundColor: "#b1d6dc",
         padding: "0 10px 10px 10px",
-        boxSizing: "content-box",
         ...style
       }}
     >

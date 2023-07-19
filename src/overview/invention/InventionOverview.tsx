@@ -30,8 +30,6 @@ const InventionOverview = () => {
 
   return (
     <OverviewBox
-      height={250}
-      width={300}
       justifyContent={"space-between"}
       xp={inventionXp}
     >

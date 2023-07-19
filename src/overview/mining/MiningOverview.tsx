@@ -71,8 +71,6 @@ const MiningOverview = () => {
 
   return (
     <OverviewBox
-      height={250}
-      width={400}
       xp={miningXp}
     >
       <div

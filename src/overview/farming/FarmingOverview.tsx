@@ -63,8 +63,6 @@ const FarmingOverview = () => {
 
   return (
     <OverviewBox
-      height={250}
-      width={550}
       justifyContent={"space-between"}
       xp={farmingXp}
     >

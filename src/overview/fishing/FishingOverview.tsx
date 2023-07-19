@@ -93,8 +93,6 @@ const FishingOverview = () => {
 
   return (
     <OverviewBox
-      height={250}
-      width={400}
       xp={fishingXp}
     >
       <div>

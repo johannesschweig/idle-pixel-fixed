@@ -78,8 +78,6 @@ const CraftingOverview = () => {
 
   return (
     <OverviewBox
-      height={300}
-      width={400}
       xp={craftingXp}
     >
       <div

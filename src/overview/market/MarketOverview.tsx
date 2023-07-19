@@ -33,8 +33,7 @@ const InventionOverview = () => {
 
   return (
     <OverviewBox
-      height={250}
-      width={550}
+      gridColumn={"1/3"}
     >
       <div
         style={{

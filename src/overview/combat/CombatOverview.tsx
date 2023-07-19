@@ -58,8 +58,6 @@ const CombatOverview = () => {
 
   return (
     <OverviewBox
-      height={250}
-      width={550}
       xp={magicXp}
       display={'block'}
     >
