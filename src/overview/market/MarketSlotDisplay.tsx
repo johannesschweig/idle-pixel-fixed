@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useNumberItemObserver } from "../setItems/useSetItemsObserver";
 import IPimg from "../../util/IPimg";
 import { formatNumber } from "../../util/numberUtils";
+import { TRADABLES } from "./tradables";
 
 interface Props {
   item: MarketData,
@@ -50,8 +51,9 @@ const MarketSlotDisplay = ({
   }, [])
 
   const adjustPrice = () => {
+    const lower = TRADABLES.filter(t => t.item === item.name)[0].lower
     sendMessage('MARKET_REMOVE_OFFER', index)
-    sendMessage('MARKET_POST', index, item.name, item.amount, prices[0] - 1)
+    sendMessage('MARKET_POST', index, item.name, item.amount, Math.max(prices[0] - 1, lower))
   }
 
   const adjustAmount = () => {
@@ -92,7 +94,7 @@ const MarketSlotDisplay = ({
             marginBottom: "12px",
           }}
         />
-        { prices.length > 0 && <span
+        {prices.length > 0 && <span
           style={{
             position: "absolute",
             fontSize: "12px",
@@ -104,7 +106,7 @@ const MarketSlotDisplay = ({
           }}
         >
           {prices.length}
-        </span> }
+        </span>}
       </div>
       { /* Amount with plus button */}
       <div>

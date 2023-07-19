@@ -1,12 +1,11 @@
 import { sendMessage } from "../../util/websocket/useWebsocket";
 import { useState, ChangeEvent } from "react";
 import { buttonStyle } from "./MarketSlotDisplay";
+import { TRADABLES } from "./tradables";
 
 interface Props {
   index: number,
 }
-
-const TRADEABLES = ["sapphire", "emerald", "ruby", "diamond", "stone", "copper", "iron", "silver", "gold", "promethium", "titanium", "ancient_ore", "moonstone", "bronze_bar", "iron_bar", "silver_bar", "gold_bar", "promethium_bar", "titanium_bar", "ancient_bar", "bones", "big_bones", "ashes", "ice_bones", "blood_bones", "dotted_green_leaf_seeds", "green_leaf_seeds", "lime_leaf_seeds", "gold_leaf_seeds", "crystal_leaf_seeds", "red_mushroom_seeds", "stardust_seeds", "tree_seeds", "oak_tree_seeds", "willow_tree_seeds", "maple_tree_seeds", "stardust_tree_seeds", "pine_tree_seeds", "redwood_tree_seeds", "dotted_green_leaf", "green_leaf", "lime_leaf", "gold_leaf", "crystal_leaf", "red_mushroom", "strange_leaf", "logs", "oak_logs", "willow_logs", "maple_logs", "stardust_logs", "pine_logs", "redwood_logs", "stinger", "iron_dagger", "skeleton_sword", "club", "spiked_club", "scythe", "trident", "rapier", "long_bow", "wooden_arrows", "fire_arrows", "ice_arrows", "cannon", "lizard_skin", "bear_fur", "bat_skin", "crocodile_hide", "skeleton_shield", "bone_amulet", "raw_shrimp", "raw_anchovy", "raw_sardine", "raw_crab", "raw_piranha", "raw_salmon", "raw_trout", "raw_pike", "raw_eel", "raw_rainbow_fish", "raw_tuna", "raw_swordfish", "raw_manta_ray", "raw_shark", "raw_whale", "cooked_shrimp", "cooked_anchovy", "cooked_sardine", "cooked_crab", "cooked_piranha", "cooked_salmon", "cooked_trout", "cooked_pike", "cooked_eel", "cooked_rainbow_fish", "cooked_tuna", "cooked_swordfish", "cooked_manta_ray", "cooked_shark", "cooked_whale", "unbound_donor_coins", "blue_pickaxe_orb", "blue_hammer_orb", "blue_oil_storage_orb", "blue_oil_well_orb", "blue_farming_orb", "blue_woodcutting_orb", "green_charcoal_orb", "green_arrow_orb", "green_bone_orb", "green_log_orb", "green_boat_orb", "red_farming_orb", "red_woodcutting_orb", "red_combat_orb", "red_oil_factory_orb", "red_stardust_watch_orb"]
 
 const id = "MarketSlotPlaceholder";
 const MarketSlotPlaceholder = ({
@@ -27,7 +26,8 @@ const MarketSlotPlaceholder = ({
           marketItemPrices = marketItemPrices.filter((element: number, index: number) => {
             return element
           });
-          setPrice(marketItemPrices[0] - 1)
+          const lower = TRADABLES.filter(t => t.item === name)[0].lower
+          setPrice(Math.max(marketItemPrices[0] - 1, lower))
         })
         .catch(error => {
           console.error('Error:', error);
@@ -69,7 +69,7 @@ const MarketSlotPlaceholder = ({
           list="suggestions"
         />
         <datalist id="suggestions">
-          {TRADEABLES.map(t =>
+          {TRADABLES.map(t => t.item).map(t =>
             <option value={t} />
           )}
         </datalist>
