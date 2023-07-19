@@ -4,11 +4,18 @@ import { useEffect, useState } from "react";
 import { buttonStyle } from "./MarketSlotDisplay";
 import { formatNumber } from "../../util/numberUtils";
 
+interface Props {
+  item: string;
+  threshold: number;
+  removeTracker: (item: string) => void;
+}
+
 const id = "TrackerDisplay";
-const MarketSlotDisplay = ({
+const TrackerDisplay = ({
   item,
   threshold,
-}: TrackerData) => {
+  removeTracker,
+}: Props) => {
   const [prices, setPrices] = useState([]);
 
   useEffect(() => {
@@ -53,13 +60,14 @@ const MarketSlotDisplay = ({
         <span>{formatNumber(prices[0])}</span> :
         <span><i>{formatNumber(threshold)}</i></span>
       }
-      {/* <button
+      <button
         style={buttonStyle}
+        onClick={() => removeTracker(item)}
       >
         x
-      </button> */}
+      </button>
     </div>
   )
 };
 
-export default MarketSlotDisplay;
+export default TrackerDisplay

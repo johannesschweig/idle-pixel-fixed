@@ -6,6 +6,7 @@ import { sendMessage } from "../../util/websocket/useWebsocket";
 import CombatAreaDisplay from "./CombatAreaDisplay";
 import { useState } from "react";
 import LabeledIPimg from "../../util/LabeledIPimg";
+import ObserveredLabeledIPimg from "../../util/ObservedLabeledIPimg";
 
 
 // START_FIGHT=blood_field
@@ -86,10 +87,16 @@ const CombatOverview = () => {
           onClick={() => startCombat()}>
           Fight
         </button>
-        { robotWaveTimer === 0 && <LabeledIPimg
+        {robotWaveTimer === 0 && <LabeledIPimg
           name={"robot_active"}
           label={"Robot"}
           onClick={() => sendMessage('ROBOT_WAVES', 'novice')} // novice, warrior, master, elite
+        />}
+        {fightPoints >= 6000 && <ObserveredLabeledIPimg
+          label={"evil_pirate"}
+          action={"FIGHT_EVIL_PIRATE"}
+          action_override={["FIGHT_EVIL_PIRATE"]}
+          size={30}
         /> }
       </div>
     </OverviewBox>
@@ -97,5 +104,3 @@ const CombatOverview = () => {
 };
 
 export default CombatOverview;
-
-//FIGHT_EVIL_PIRATE

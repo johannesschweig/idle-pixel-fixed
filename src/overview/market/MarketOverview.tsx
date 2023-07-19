@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import MarketSlotDisplay from "./MarketSlotDisplay";
 import MarketSlotPlaceholder from "./MarketSlotPlaceholder";
 import TrackerDisplay from './TrackerDisplay'
+import { useLocalStorage } from "../../util/localstorage/useLocalStorage";
+import TrackerDisplayPlaceholder from "./TrackerDisplayPlaceholder"
 
 export interface TrackerData {
   item: string;
@@ -12,26 +14,38 @@ export interface TrackerData {
 }
 
 const id = "MarketOverview";
-const InventionOverview = () => {
+const MarketOverview = () => {
 
   const [one] = useMarketSlotDataObserver("1", id)
   const [two] = useMarketSlotDataObserver("2", id)
   const [three] = useMarketSlotDataObserver("3", id)
 
-  const TRACKERS: TrackerData[] = [
-    {
-      item: 'unbound_donor_coins',
-      threshold: 250000,
-    },
-    {
-      item: 'moonstone',
-      threshold: 90000,
-    },
-    {
-      item: 'ruby',
-      threshold: 250000,
-    },
-  ]
+  useEffect(() => {
+    sendMessage("MARKET_REFRESH_SLOTS")
+  }, [])
+
+  const [trackers, setTrackers] = useLocalStorage<TrackerData[]>(
+    "trackers",
+    [
+      {
+        item: 'unbound_donor_coins',
+        threshold: 250000,
+      },
+    ],
+    id
+  );
+
+  const addTracker = (tracker: TrackerData) => {
+    setTrackers((trackers) => {
+      return trackers.concat(tracker)
+    })
+  }
+
+  const removeTracker = (item: string) => {
+    setTrackers((trackers) => {
+      return trackers.filter(t => t.item != item)
+    })
+  }
 
   return (
     <OverviewBox
@@ -89,23 +103,40 @@ const InventionOverview = () => {
           </div>
         </div>
         {/* Trackers */}
-        <div>
+        <div >
           <div
             style={{
-              fontSize: "20px",
               marginBottom: "10px",
-            }}>
-            Trackers
+            }}
+          >
+            <span
+              style={{
+                fontSize: "20px",
+              }}>
+              Trackers
+            </span>
+            <TrackerDisplayPlaceholder
+              addTracker={addTracker} />
           </div>
-          {TRACKERS.map(tracker => (
-            <TrackerDisplay
-              item={tracker.item}
-              threshold={tracker.threshold} />
-          ))}
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(3, 1fr)",
+              gridTemplateRows: "repeat(6, 1fr)",
+              gridAutoFlow: "column",
+            }}>
+            {trackers.map(tracker => (
+              <TrackerDisplay
+                item={tracker.item}
+                threshold={tracker.threshold}
+                removeTracker={removeTracker}
+              />
+            ))}
+          </div>
         </div>
       </div>
-    </OverviewBox>
+    </OverviewBox >
   );
 };
 
-export default InventionOverview;
+export default MarketOverview;
