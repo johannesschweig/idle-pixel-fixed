@@ -187,8 +187,8 @@ const FishingOverview = () => {
         <div
           style={{
             display: "grid",
-            gap: "10px",
-            gridTemplateColumns: "repeat(6, 1fr)",
+            rowGap: "10px",
+            gridTemplateColumns: "repeat(8, 1fr)",
           }}
         >
           <ObservedLabeledIPimg
@@ -221,8 +221,8 @@ const FishingOverview = () => {
           <div
             style={{
               display: "grid",
-              gap: "10px",
-              gridTemplateColumns: "repeat(6, 1fr)",
+              rowGap: "10px",
+              gridTemplateColumns: "repeat(8, 1fr)",
               border: "1px solid #FBCBD9",
               borderRadius: "4px",
             }}

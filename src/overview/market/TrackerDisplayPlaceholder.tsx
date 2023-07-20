@@ -28,6 +28,12 @@ const TrackerDisplayPlaceholder = ({
     setThreshold(parseInt(event.target.value))
   }
 
+  const clickAdd = () => {
+    setName('')
+    setThreshold(0)
+    addTracker({ item: name, threshold })
+  }
+
   return (
     <div
       style={{
@@ -62,7 +68,7 @@ const TrackerDisplayPlaceholder = ({
           />
           <button
             style={buttonStyle}
-            onClick={() => addTracker({ item: name, threshold })}>
+            onClick={() => clickAdd()}>
             Add
           </button>
           <button
