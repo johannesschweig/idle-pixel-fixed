@@ -12,6 +12,15 @@ interface Props {
   miningLevel: number;
 }
 
+const minimalButtonStyle = {
+  display: 'inline-block',
+  padding: '0px 6px',
+  fontSize: "12px",
+  cursor: "pointer",
+  width: "20px",
+  height: "20px",
+}
+
 const MachineDisplay = ({
   machine,
   changeOilOut,
@@ -72,66 +81,56 @@ const MachineDisplay = ({
   return amount > 0 ? (
     <div
       style={{
-        display: "flex",
-        flexDirection: "column",
-        gap: "10px",
-        width: "min-content",
-        alignItems: "center",
+        display: "inline-block",
       }}
     >
-      <IPimg name={machine} size={30} {...machineProps} />
+      <IPimg
+        name={machine}
+        size={40}
+        {...machineProps}
+      />
       <div
-        style={{
-          display: "flex",
-          gap: "5px",
-          alignItems: "center",
-        }}
+      style={{
+        display: "grid",
+        gridTemplateRows: "20px 20px",
+        gridTemplateColumns: "20px 20px",
+        alignItems: "center",
+        margin: "4px",
+      }}
       >
-        <IPimg name={"oil"} size={20} />
-        <span>{`${oilUse * amountOn} (${oilUse})`}</span>
+        <span
+          style={{
+            fontSize: "18px",
+            gridRow: "1/3"
+          }}>
+          {amountOn}
+        </span>
+        <div
+          style={{
+            visibility: miningLevel >= level && amountOn < amount ? "visible" : "hidden",
+            ...minimalButtonStyle
+          }}
+          onClick={onIncrease}
+        >
+          +
+        </div>
+        <div
+          style={{
+            visibility: amountOn > 0 ? "visible" : "hidden",
+            ...minimalButtonStyle
+          }}
+          onClick={onDecrease}
+        >
+          -
+        </div>
       </div>
       <div
         style={{
-          display: "flex",
-          gap: "5px",
-          width: "max-content",
+          opacity: .7,
+          fontSize: "12px",
         }}
       >
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
-          <span
-            role="button"
-            style={{
-              fontWeight: "500",
-              fontSize: "24px",
-              userSelect: "none",
-              visibility: amountOn > 0 ? "visible" : "hidden",
-            }}
-            onClick={onDecrease}
-          >
-            {"<"}
-          </span>
-          <span style={{ margin: "0 10px" }}>{`${amountOn} / ${amount}`}</span>
-          <span
-            role="button"
-            style={{
-              fontWeight: "500",
-              fontSize: "24px",
-              userSelect: "none",
-              visibility:
-                miningLevel >= level && amountOn < amount
-                  ? "visible"
-                  : "hidden",
-            }}
-            onClick={onIncrease}
-          >
-            {">"}
-          </span>
-        </div>
+        {`${oilUse} oil p. P.`}
       </div>
       <MachineTooltip />
     </div>

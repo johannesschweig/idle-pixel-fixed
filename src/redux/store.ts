@@ -7,7 +7,7 @@ import setItemsReducer from "../overview/setItems/setItemsReducer";
 import keyboardReducer from "../util/keyboard/keyboardReducer";
 import modiferKeyReducer, {modifierKeySlice} from "../util/keyboard/modiferKeyReducer";
 import marketSlotDataReducer from "../overview/setItems/marketSlotDataReducer.tsx";
-import rocketReducer from "../overview/mining/rocketReducer";
+import rocketReducer from "../overview/consume/rocketReducer";
 
 export const store = configureStore({
   reducer: {

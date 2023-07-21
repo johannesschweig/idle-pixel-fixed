@@ -26,7 +26,7 @@ import {
   shiftKeyUp,
 } from "../util/keyboard/modiferKeyReducer";
 import OverviewBox from "./OverviewBox";
-import { useOpenRocketDialogueObserver, useRocketObserver } from "./mining/useRocketObserver";
+import { useOpenRocketDialogueObserver } from "./consume/useRocketObserver";
 
 const id = "OverviewPanel";
 const OverviewPanel = () => {
@@ -91,12 +91,12 @@ const OverviewPanel = () => {
         <ConsumeOverview />
         <WoodcuttingOverview />
         <FarmingOverview />
-        <GatheringOverview />
-        <MiningOverview />
-        <CraftingOverview />
         <BrewingOverview />
-        <MarketOverview/>
+        <CraftingOverview />
         <CombatOverview />
+        <MiningOverview />
+        <MarketOverview/>
+        <GatheringOverview />
       </div>
       <div>
         {settings.showInOverview && (
