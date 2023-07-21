@@ -27,6 +27,15 @@ const CombatAreaDisplay = ({
   isDisabled
 }: Props) => {
 
+  const getBg = () => {
+    if (availFightPoints > reqFightPoints) {
+      return "none"
+    }
+    const progress = Math.round(availFightPoints/reqFightPoints * 100)
+    const rest = Math.round((1 - progress) * 100)
+    return `linear-gradient(0deg, rgba(114, 181, 192, 0.5) ${progress}%, transparent ${rest}%)`
+  }
+
   const [areaProps, AreaToolTip] = useTooltip(
     <div
       style={{
@@ -82,9 +91,10 @@ const CombatAreaDisplay = ({
         textAlign: "center",
         justifyContent: "space-between",
         visibility: "visible",
-        border: `2px solid ${(isSelectedArea && !isDisabled) ? "green" : "transparent"}`,
+        border: (isSelectedArea && !isDisabled) ? "2px solid green" : "none",
         borderRadius: "4px",
         cursor: isDisabled ? "auto" : "pointer",
+        background: getBg(),
       }}
       onClick={selectArea}
     >

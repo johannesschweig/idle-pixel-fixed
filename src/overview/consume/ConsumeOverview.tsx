@@ -314,7 +314,7 @@ const ConsumeOverview = () => {
             <LabeledIPimg
               name="aquarium"
               label={"Feed"}
-              size={50}
+              size={20}
               onClick={() => sendMessage("FEED_FISH", "maggots")}
               style={{
                 cursor: "pointer",
