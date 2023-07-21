@@ -6,18 +6,12 @@ import { useNumberItemObserver } from "../setItems/useSetItemsObserver";
 import { LIMBS } from "./limbs"
 import LimbDisplay from "./LimbDisplay";
 
-export enum LogAction {
-  OVEN = "OVEN",
-  FOUNDRY = "FOUNDRY"
-}
-
 const id = "InventionOverview";
 const InventionOverview = () => {
   const limbs = Object.keys(LIMBS);
   const WEAPONS = ["stinger", "iron_dagger", "skeleton_sword", "bone_amulet"]
 
   const [evil_blood, setEvilBlood] = useNumberItemObserver("evil_blood", id);
-  const [cleansed_blood] = useNumberItemObserver("cleansed_blood", id);
   const [inventionXp] = useNumberItemObserver("invention_xp", id);
 
   const limbClick = (limb: string, amount: number) => {
@@ -45,11 +39,6 @@ const InventionOverview = () => {
             flexDirection: "column",
             alignItems: "center",
           }}>
-          <LabeledIPimg
-            name={"cleansed_blood"}
-            label={cleansed_blood}
-            size={50}
-            style={{ justifyContent: "center" }} />
           <LabeledIPimg
             name={"evil_blood"}
             label={evil_blood}
