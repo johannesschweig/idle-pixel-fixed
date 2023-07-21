@@ -6,13 +6,10 @@ import { sendMessage } from "../../util/websocket/useWebsocket";
 import { RAW_FOOD } from "./rawFood";
 import { LIMBS } from "./limbs"
 import LimbDisplay from "./LimbDisplay";
-import { useRocketObserver } from "./useRocketObserver";
-import { formatTime } from "../../util/timeUtils"
-import { useEffect } from "react";
-import { formatNumber } from "../../util/numberUtils";
 import { AREAS } from "../gathering/areas";
 import { keysOf } from "../../util/typeUtils";
 import GatheringBagDisplay from "../gathering/GatheringBagDisplay";
+import RocketDisplay from "./RocketDisplay";
 
 const id = "ConsumeOverview";
 const ConsumeOverview = () => {
@@ -29,7 +26,6 @@ const ConsumeOverview = () => {
   const MINERALS = ["blue_marble", "amethyst", "sea_crystal", "dense_marble", "fluorite", "clear_marble", "jade", "lime_quartz", "opal", "purple_quartz", "amber", "smooth_pearl", "topaz", "tanzanite", "sulfer"].map(c => c + "_mineral") // "frozen", "blood_crystal", "magnesium",
   const FRAGMENTS = ["sapphire", "emerald", "ruby", "diamond"].map(e => `gathering_${e}_fragments`)
 
-  const [rocketPotionTimer] = useNumberItemObserver("rocket_potion_timer", id)
   const [evil_blood, setEvilBlood] = useNumberItemObserver("evil_blood", id);
   const [inventionXp] = useNumberItemObserver("invention_xp", id);
   const [rowBoatTimer] = useNumberItemObserver("row_boat_timer", id);
@@ -47,47 +43,6 @@ const ConsumeOverview = () => {
   const [goldBar] = useNumberItemObserver("gold_bar", id)
   const [emerald] = useNumberItemObserver("emerald", id)
   const [promethiumBar] = useNumberItemObserver("promethium_bar", id)
-  const [rocketDistanceRequired] = useNumberItemObserver("rocket_distance_required", id);
-  const [rocketKm] = useNumberItemObserver("rocket_km", id);
-  const [rocketStatus] = useItemObserver("rocket_status", id)
-  const [sunDistance] = useRocketObserver("sun", id)
-  const [gatheringLootBagJunk] = useNumberItemObserver("gathering_loot_bag_junk", id)
-
-  const clickRocket = () => {
-    if (rocketKm === 0) { // home
-      sendMessage("CLICKS_ROCKET", 2)
-    } else if (rocketKm === rocketDistanceRequired) { // sun
-      sendMessage("ROCKET_COLLECT")
-    }
-  }
-
-  const getRocketDuration = (dist: number): string => {
-    const baseSpeed = 255;
-    const boostedSpeed = baseSpeed * 10;
-    const duration =
-      rocketPotionTimer === 0
-        ? dist / baseSpeed // no timer
-        : rocketPotionTimer * boostedSpeed >= dist
-          ? dist / boostedSpeed // enough timer
-          : rocketPotionTimer + (dist - rocketPotionTimer * boostedSpeed) / baseSpeed; // too little timer
-    return formatTime(duration);
-  }
-
-  const getRocketLabel = (): string => {
-    if (rocketStatus === "none") {
-      return `Ready (${formatNumber(sunDistance)})`
-    } else if (rocketKm === rocketDistanceRequired) {
-      return "Collect"
-    } else if (rocketStatus.startsWith("to")) {
-      return getRocketDuration(rocketDistanceRequired - rocketKm)
-    } else { // way back
-      return getRocketDuration(rocketKm)
-    }
-  }
-
-  const isRocketFlying = (): boolean => {
-    return rocketStatus.startsWith('from') || rocketStatus.startsWith('to')
-  }
 
   const limbClick = (limb: string, amount: number) => {
     sendMessage("GRIND", limb, amount)
@@ -157,11 +112,6 @@ const ConsumeOverview = () => {
   }
 
 
-
-  useEffect(() => {
-    sendMessage('CLICKS_ROCKET', '0')
-  }, []);
-
   return (
     <OverviewBox
       xp={inventionXp}
@@ -174,6 +124,15 @@ const ConsumeOverview = () => {
             gap: "10px",
           }}
         >
+          <RocketDisplay />
+          {['novice', 'warrior', 'master', 'elite'].map(wave => (
+            <ObservedLabeledIPimg
+              label={`robot_${wave}_loot`}
+              action={''}
+              action_override={['OPEN_ROBOT_LOOT', wave]}
+            />
+          ))}
+
           {STARDUST_PRISMS.map((prism) => (
             <ObservedLabeledIPimg
               label={prism}
@@ -231,18 +190,6 @@ const ConsumeOverview = () => {
             label={"diamond"}
             action={""}
             size={30}
-          />
-          <LabeledIPimg
-            name={"mega_rocket"}
-            label={getRocketLabel()}
-            size={30}
-            style={{
-              cursor: "pointer",
-              backgroundColor: isRocketFlying() ? "transparent" : "blue",
-              color: isRocketFlying() ? "black" : "white",
-              opacity: isRocketFlying() ? 0.5 : 1,
-            }}
-            onClick={clickRocket}
           />
           <LabeledIPimg
             name={"evil_blood"}

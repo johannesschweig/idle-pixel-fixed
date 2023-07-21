@@ -90,7 +90,7 @@ const CombatOverview = () => {
         {robotWaveTimer === 0 && <LabeledIPimg
           name={"robot_active"}
           label={"Robot"}
-          onClick={() => sendMessage('ROBOT_WAVES', 'novice')} // novice, warrior, master, elite
+          onClick={() => sendMessage('ROBOT_WAVES', 'warrior')} // novice, warrior, master, elite
         />}
         {fightPoints >= 6000 && <ObserveredLabeledIPimg
           label={"evil_pirate"}
