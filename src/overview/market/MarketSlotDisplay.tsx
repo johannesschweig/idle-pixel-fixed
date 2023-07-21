@@ -121,7 +121,7 @@ const MarketSlotDisplay = ({
         }
       </div>
       { /* Price with adjust button */}
-      <div>for {formatNumber(item.price)}
+      <div>@{formatNumber(item.price)}
         {prices.length > 0 && !(prices[0] - item.price === 1 || prices[0] - item.price === 0) &&
           <div
             style={{

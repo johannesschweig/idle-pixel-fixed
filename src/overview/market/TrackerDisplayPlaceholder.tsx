@@ -7,7 +7,7 @@ import { TRADABLES } from "./tradables";
 interface Props {
   addTracker: (tracker: TrackerData) => void;
 }
-enum View {
+export enum View {
   PLUS,
   FORM
 }
@@ -22,6 +22,10 @@ const TrackerDisplayPlaceholder = ({
 
   const changeName = (event: ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value)
+    const tradable = TRADABLES.filter(t => t.item === event.target.value)
+    if (event.target.value !== '' && tradable.length) {
+      setThreshold(tradable[0].lower)
+    }
   }
 
   const changeThreshold = (event: ChangeEvent<HTMLInputElement>) => {
