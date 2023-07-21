@@ -37,7 +37,6 @@ const WoodcuttingOverview = () => {
   const [redwood_logs] = useNumberItemObserver('redwood_logs', id)
   const [action, setAction] = useState(LogAction.OVEN);
   const [foundryAmount] = useNumberItemObserver('foundry_amount', id)
-  const [woddcuttingXp] = useNumberItemObserver("woodcutting_xp", id);
   const [treeSpeedPotiontimer] = useNumberItemObserver("tree_speed_potion_timer", id);
 
   const actionStyle = (selectorAction: LogAction): CSSProperties => ({
@@ -90,7 +89,6 @@ const WoodcuttingOverview = () => {
   return (
     <OverviewBox
       justifyContent={"space-between"}
-      xp={woddcuttingXp}
     >
       <div
         style={{

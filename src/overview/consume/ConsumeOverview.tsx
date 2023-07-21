@@ -4,17 +4,23 @@ import LabeledIPimg from "../../util/LabeledIPimg";
 import ObservedLabeledIPimg from "../../util/ObservedLabeledIPimg";
 import { sendMessage } from "../../util/websocket/useWebsocket";
 import { RAW_FOOD } from "./rawFood";
+import { LIMBS } from "./limbs"
+import LimbDisplay from "./LimbDisplay";
 
-const id = "FishingOverview";
-const FishingOverview = () => {
 
 
+const id = "ConsumeOverview";
+const ConsumeOverview = () => {
+  const limbs = Object.keys(LIMBS);
+  const WEAPONS = ["stinger", "iron_dagger", "skeleton_sword", "bone_amulet"]
+
+  const [evil_blood, setEvilBlood] = useNumberItemObserver("evil_blood", id);
+  const [inventionXp] = useNumberItemObserver("invention_xp", id);
   const [rowBoatTimer] = useNumberItemObserver("row_boat_timer", id);
   const [canoeBoatTimer] = useNumberItemObserver("canoe_boat_timer", id);
   const [stardustBoatTimer] = useNumberItemObserver("stardust_boat_timer", id);
   const [pirateShipTimer] = useNumberItemObserver("pirate_ship_timer", id);
   const [aquariumTimer] = useNumberItemObserver("aquarium_timer", id)
-  const [fishingXp] = useNumberItemObserver("fishing_xp", id)
   const [cooksBookTimer] = useNumberItemObserver("cooks_book_timer", id)
   const [cooksBookItem] = useItemObserver("cooks_book_item", id)
   const [coconut] = useNumberItemObserver("coconut", id)
@@ -25,6 +31,14 @@ const FishingOverview = () => {
   const [goldBar] = useNumberItemObserver("gold_bar", id)
   const [emerald] = useNumberItemObserver("emerald", id)
   const [promethiumBar] = useNumberItemObserver("promethium_bar", id)
+
+  const limbClick = (limb: string, amount: number) => {
+    sendMessage("GRIND", limb, amount)
+  }
+  const evilBloodClick = () => {
+    setEvilBlood(0)
+    sendMessage("CLEANSE_EVIL_BLOOD", "evil_blood", evil_blood)
+  }
 
   const clickBoat = (boat: string) => {
     let timer
@@ -93,7 +107,8 @@ const FishingOverview = () => {
 
   return (
     <OverviewBox
-      xp={fishingXp}
+      xp={inventionXp}
+      gridColumn={"1/4"}
     >
       <div>
         <div
@@ -102,6 +117,32 @@ const FishingOverview = () => {
             gap: "10px",
           }}
         >
+          <LabeledIPimg
+            name={"evil_blood"}
+            label={evil_blood}
+            size={30}
+            role={"button"}
+            style={{
+              justifyContent: "center",
+              cursor: "pointer",
+              opacity: evil_blood > 0 ? 1 : 0
+            }}
+            onClick={() => evilBloodClick()} />
+          {limbs.map((limb) => (
+            <LimbDisplay
+              limb={limb}
+              limbClick={(limb: string, amount: number) => limbClick(limb, amount)}
+              {...LIMBS[limb]}
+              key={limb}
+            />
+          ))}
+          {WEAPONS.map((weapon) => (
+            <ObservedLabeledIPimg
+              label={weapon}
+              action="INVENTION_DISASSEMBLE"
+              size={30}
+            />
+          ))}
           {treasureChest > 0 &&
             <LabeledIPimg
               name={"treasure_chest"}
@@ -253,4 +294,4 @@ const FishingOverview = () => {
   );
 };
 
-export default FishingOverview;
+export default ConsumeOverview;

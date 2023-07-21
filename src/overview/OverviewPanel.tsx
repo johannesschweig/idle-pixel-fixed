@@ -6,8 +6,7 @@ import { useRefreshMarketSlotDataObserver, useSetItemsObserver } from "./setItem
 import WoodcuttingOverview from "./woodcutting/WoodcuttingOverview";
 import CraftingOverview from "./crafting/CraftingOverview";
 import MiningOverview from "./mining/MiningOverview";
-import InventionOverview from "./invention/InventionOverview";
-import FishingOverview from "./fishing/FishingOverview";
+import ConsumeOverview from "./consume/ConsumeOverview";
 import CombatOverview from "./combat/CombatOverview";
 import MarketOverview from "./market/MarketOverview";
 import { useLocalStorage } from "../util/localstorage/useLocalStorage";
@@ -89,6 +88,7 @@ const OverviewPanel = () => {
           gap: "16px",
         }}
       >
+        <ConsumeOverview />
         <WoodcuttingOverview />
         <FarmingOverview />
         <GatheringOverview />
@@ -97,8 +97,6 @@ const OverviewPanel = () => {
         <BrewingOverview />
         <MarketOverview/>
         <CombatOverview />
-        <InventionOverview />
-        <FishingOverview />
       </div>
       <div>
         {settings.showInOverview && (
