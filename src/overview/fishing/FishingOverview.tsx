@@ -209,6 +209,11 @@ const FishingOverview = () => {
             action={"CONSUME"}
             retain={50}
           />
+          <ObservedLabeledIPimg
+            label={"combat_xp_lamp"}
+            size={30}
+            action={""}
+            action_override={['COMBAT_XP_LAMP', 'magic']} />
           {COOKED_FOOD.map((food) => (
             <ObservedLabeledIPimg
               label={food}
