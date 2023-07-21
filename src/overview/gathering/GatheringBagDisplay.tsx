@@ -55,7 +55,7 @@ const GatheringBagDisplay = ({ area }: Props) => {
     <GatheringBagTooltip amount={Math.min(5, amount)} {...tooltipProps} />
   );
 
-  return amount > 0 ? (
+  return amount > 10000 ? (
     <div
       style={{
         display: "flex",

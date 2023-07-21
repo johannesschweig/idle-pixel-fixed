@@ -42,15 +42,13 @@ const GatheringAreaDisplay = ({
         flexDirection: "column",
         alignItems: "center",
         textAlign: "center",
-        width: "93px",
-        height: "90px",
         justifyContent: "space-between",
         visibility: getUnlocked() ? "visible" : "hidden",
       }}
     >
       <IPimg
         name={`gathering_${image}`}
-        size={50}
+        size={30}
         style={{
           boxSizing: "content-box",
           border: `3px solid ${isSelectedArea ? "green" : "transparent"}`,

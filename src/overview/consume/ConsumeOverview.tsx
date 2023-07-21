@@ -10,13 +10,14 @@ import { useRocketObserver } from "./useRocketObserver";
 import { formatTime } from "../../util/timeUtils"
 import { useEffect } from "react";
 import { formatNumber } from "../../util/numberUtils";
-
-
-
+import { AREAS } from "../gathering/areas";
+import { keysOf } from "../../util/typeUtils";
+import GatheringBagDisplay from "../gathering/GatheringBagDisplay";
 
 const id = "ConsumeOverview";
 const ConsumeOverview = () => {
   const limbs = Object.keys(LIMBS);
+  const areas: string[] = keysOf(AREAS).concat(['junk']);
   const WEAPONS = ["stinger", "iron_dagger", "skeleton_sword", "bone_amulet"]
   const COOKED_FISH = [
     "shrimp", "anchovy", "sardine", "crab", "piranha", "salmon", "trout", "pike", "rainbow_fish", "eel", "tuna", "swordfish", "manta_ray", "shark", "whale", "small_stardust_fish", "medium_stardust_fish", "large_stardust_fish",
@@ -50,6 +51,7 @@ const ConsumeOverview = () => {
   const [rocketKm] = useNumberItemObserver("rocket_km", id);
   const [rocketStatus] = useItemObserver("rocket_status", id)
   const [sunDistance] = useRocketObserver("sun", id)
+  const [gatheringLootBagJunk] = useNumberItemObserver("gathering_loot_bag_junk", id)
 
   const clickRocket = () => {
     if (rocketKm === 0) { // home
@@ -349,6 +351,14 @@ const ConsumeOverview = () => {
             style={{
               cursor: "pointer",
             }} />}
+          {areas.map((area) => (
+            <GatheringBagDisplay area={area} key={area} />
+          ))}
+          {/* <ObservedLabeledIPimg
+          label={"machete_unclaimed"}
+          action={""}
+          size={30}
+        /> */}
         </div>
         <div
           style={{

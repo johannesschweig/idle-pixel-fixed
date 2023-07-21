@@ -5,7 +5,6 @@ import OverviewBox from "../OverviewBox";
 import { keysOf } from "../../util/typeUtils";
 import GatheringAreaDisplay from "./GatheringAreaDisplay";
 import {AREAS} from "./areas";
-import ObservedLabeledIPimg from "../../util/ObservedLabeledIPimg";
 
 
 
@@ -50,28 +49,6 @@ const GatheringOverview = () => {
             isSelectedArea={area === currentGatheringArea}
           />
         ))}
-      </div>
-      <div
-        style={{
-          display: "flex",
-          width: "100%",
-          justifyContent: "space-evenly",
-        }}
-      >
-        {areas.map((area) => (
-          <GatheringBagDisplay area={area} key={area} />
-        ))}
-        {/* <ObservedLabeledIPimg
-          label={"machete_unclaimed"}
-          action={""}
-          size={30}
-        /> */}
-        <ObservedLabeledIPimg
-          label={"gathering_loot_bag_junk"}
-          action={"OPEN_GATHERING_LOOT"}
-          size={30}
-          action_item={"junk"}
-          />
       </div>
     </OverviewBox>
   );
