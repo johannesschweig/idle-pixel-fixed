@@ -60,7 +60,7 @@ const RocketDisplay = () => {
 
   const getRocketStatus = (): RocketData => {
     if (rocketStatus === "none") {
-      if (sunDistance > 2 * 6 * 3600 * BOOSTED_SPEED) { // too far away
+      if (sunDistance > 2 * 6 * 3600 * BOOSTED_SPEED) { // too far away, > 110.160.000
         return {
           label: `Too far (${formatNumber(sunDistance)})`,
           style: passiveStyle,

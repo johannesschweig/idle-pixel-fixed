@@ -5,11 +5,12 @@ import {
   useItemObserver,
   useNumberItemObserver,
 } from "../setItems/useSetItemsObserver";
-import BarDisplay from "./BarDisplay";
 import OverviewBox from "../OverviewBox";
 import { formatNumber } from "../../util/numberUtils";
 import { useState } from "react";
 import { formatTime } from "../../util/timeUtils";
+import { sendMessage } from "../../util/websocket/useWebsocket";
+import LabeledIPimg from "../../util/LabeledIPimg";
 
 const ORES = ["stone", "copper", "iron", "silver", "gold", "promethium", "titanium", "ancient_ore", "dragon_ore"];
 const BARS = [
@@ -68,7 +69,8 @@ const CraftingOverview = () => {
   const [lava, setLava] = useNumberItemObserver("lava", id);
   const [plasma, setPlasma] = useNumberItemObserver("plasma", id);
   const [craftingXp] = useNumberItemObserver("crafting_xp", id);
-  const [furnaceCountdown ] = useNumberItemObserver("furnace_countdown", id);
+  const [furnaceCountdown] = useNumberItemObserver("furnace_countdown", id);
+  const [rocketFuel] = useNumberItemObserver("rocket_fuel", id)
 
   const setSmelting = (smelting: Smelting) => {
     setOreType(smelting.type);
@@ -120,24 +122,24 @@ const CraftingOverview = () => {
             width: "150px",
           }}
         >
-          { view === CraftingView.SMELTING &&
+          {view === CraftingView.SMELTING &&
             <IPimg
               name={furnace}
               size={50}
               onClick={() => setView(CraftingView.CONVERTING)}
-              /> }
-          { view === CraftingView.CONVERTING &&
+            />}
+          {view === CraftingView.CONVERTING &&
             <IPimg
               name={"stardust"}
               size={50}
               onClick={() => setView(CraftingView.SELLING)}
-              /> }
-          { view === CraftingView.SELLING &&
+            />}
+          {view === CraftingView.SELLING &&
             <IPimg
               name={"coins"}
               size={50}
               onClick={() => setView(CraftingView.SMELTING)}
-              /> }
+            />}
           <div
             style={{
               display: "flex",
@@ -148,7 +150,7 @@ const CraftingOverview = () => {
               <>
                 <IPimg name={oreToBar(oreType)} size={20} style={{}} />
                 {/* <span>{`${oreAmountAt}/${oreAmountSet}`}</span> */}
-                <span>{ formatTime(furnaceCountdown + TIME_TO_SMELT[oreType] * (oreAmountSet - oreAmountAt - 1)) }</span>
+                <span>{formatTime(furnaceCountdown + TIME_TO_SMELT[oreType] * (oreAmountSet - oreAmountAt - 1))}</span>
               </>
             ) : (
               <span>Not smelting</span>
@@ -205,6 +207,11 @@ const CraftingOverview = () => {
             <IPimg name={"plasma"} size={30} />
             <span>{plasma}</span>
           </div>
+          <LabeledIPimg
+            name={"rocket_fuel"}
+            label={rocketFuel}
+            size={30}
+            onClick={() => sendMessage("CRAFT", "rocket_fuel", "1")} />
         </div>
       </div>
 

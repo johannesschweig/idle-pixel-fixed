@@ -91,6 +91,9 @@ const CombatOverview = () => {
           name={"robot_active"}
           label={"Robot"}
           onClick={() => sendMessage('ROBOT_WAVES', 'warrior')} // novice, warrior, master, elite
+          style={{
+            cursor: "pointer",
+          }}
         />}
         {fightPoints >= 6000 && <ObserveredLabeledIPimg
           label={"evil_pirate"}

@@ -121,7 +121,7 @@ const MarketOverview = () => {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(3, 1fr)",
+              gridTemplateColumns: "repeat(2, 1fr)",
               gridTemplateRows: "repeat(6, 1fr)",
               gridAutoFlow: "column",
             }}>

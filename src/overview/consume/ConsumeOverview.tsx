@@ -26,7 +26,6 @@ const ConsumeOverview = () => {
   const MINERALS = ["blue_marble", "amethyst", "sea_crystal", "dense_marble", "fluorite", "clear_marble", "jade", "lime_quartz", "opal", "purple_quartz", "amber", "smooth_pearl", "topaz", "tanzanite", "sulfer"].map(c => c + "_mineral") // "frozen", "blood_crystal", "magnesium",
   const FRAGMENTS = ["sapphire", "emerald", "ruby", "diamond"].map(e => `gathering_${e}_fragments`)
 
-  const [evil_blood, setEvilBlood] = useNumberItemObserver("evil_blood", id);
   const [inventionXp] = useNumberItemObserver("invention_xp", id);
   const [rowBoatTimer] = useNumberItemObserver("row_boat_timer", id);
   const [canoeBoatTimer] = useNumberItemObserver("canoe_boat_timer", id);
@@ -46,10 +45,6 @@ const ConsumeOverview = () => {
 
   const limbClick = (limb: string, amount: number) => {
     sendMessage("GRIND", limb, amount)
-  }
-  const evilBloodClick = () => {
-    setEvilBlood(0)
-    sendMessage("CLEANSE_EVIL_BLOOD", "evil_blood", evil_blood)
   }
 
   const clickBoat = (boat: string) => {
@@ -191,17 +186,10 @@ const ConsumeOverview = () => {
             action={""}
             size={30}
           />
-          <LabeledIPimg
-            name={"evil_blood"}
-            label={evil_blood}
-            size={30}
-            role={"button"}
-            style={{
-              justifyContent: "center",
-              cursor: "pointer",
-              opacity: evil_blood > 0 ? 1 : 0
-            }}
-            onClick={() => evilBloodClick()} />
+          <ObservedLabeledIPimg
+            label={"evil_blood"}
+            action={"CLEANSE_EVIL_BLOOD"}
+            size={30} />
           {limbs.map((limb) => (
             <LimbDisplay
               limb={limb}
@@ -311,7 +299,7 @@ const ConsumeOverview = () => {
           style={{
             display: "grid",
             rowGap: "10px",
-            gridTemplateColumns: "repeat(8, 1fr)",
+            gridAutoFlow: "column",
           }}
         >
           <ObservedLabeledIPimg
@@ -350,7 +338,7 @@ const ConsumeOverview = () => {
             style={{
               display: "grid",
               rowGap: "10px",
-              gridTemplateColumns: "repeat(8, 1fr)",
+              gridAutoFlow: "column",
               border: "1px solid #FBCBD9",
               borderRadius: "4px",
             }}

@@ -74,7 +74,7 @@ const BrewingOverview = ({ }: Props) => {
 
 
   const mixerActionRequired = () => {
-    const EXPENSIVE_POTIONS = ['rocket', 'blue_orb', 'rain', 'combat_loot', 'merchant_speed', 'green_orb', 'ancient', 'guardian_key', 'red_orb', 'stone_converter'].map(e => `${e}_potion`)
+    const EXPENSIVE_POTIONS = ['rocket', 'blue_orb', 'rain', 'combat_loot', 'merchant_speed', 'green_orb', 'ancient', 'guardian_key', 'red_orb', 'stone_converter', 'geode', 'ultra_stardust'].map(e => `${e}_potion`)
     return brewingXpMixerUsed != 5 &&
       (!EXPENSIVE_POTIONS.includes(brewingXpMixerSelected) || // potion is not one of the expensive ones
       brewingXpMixerTimer === 0) // Reroll possible
