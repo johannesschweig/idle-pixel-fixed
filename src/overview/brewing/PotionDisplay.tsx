@@ -123,18 +123,18 @@ const PotionDisplay = ({
   );
 
   const imgProps =
-    view === BrewingView.DRINK
-      ? drinkProps
-      : view === BrewingView.BREW
-        ? brewProps
-        : viewProps;
+    view === BrewingView.FAVORITE
+      ? viewProps
+      : amount >= 1
+        ? drinkProps
+        : brewProps;
 
   const onClick =
-    view === BrewingView.DRINK
-      ? onDrinkClick
-      : view === BrewingView.BREW
-        ? onBrewClick
-        : toggle;
+    view === BrewingView.FAVORITE
+      ? toggle
+      : amount >=1 
+        ? onDrinkClick
+        : onBrewClick
 
 
   return (
@@ -152,26 +152,18 @@ const PotionDisplay = ({
           borderRadius: "4px",
         }}
       >
-        <IPimg
+        {view === BrewingView.FAVORITE && <IPimg
           role="button"
-          name={
-            view === BrewingView.FAVORITE
-              ? "stardust"
-              : "brewing_kit"
-          }
-          style={{
-            visibility: view !== BrewingView.DRINK ? "visible" : "hidden",
-          }}
+          name={"stardust"}
           size={20}
-        />
+        /> }
         <IPimg
           name={potionName}
           size={30}
           onClick={onClick}
           role={"button"}
           style={
-            (view === BrewingView.BREW && getMakeable() === 0) ||
-              (view === BrewingView.DRINK && !isDrinkable)
+            ((view === BrewingView.DRINK && getMakeable() === 0) || (amount >= 1 && !isDrinkable))
               ? {
                 opacity: 0.5,
                 cursor: "default",
@@ -183,6 +175,7 @@ const PotionDisplay = ({
         <span
           style={{
             height: "20px",
+            visibility: amount > 0 ? "visible" : "hidden",
           }}
         >
           {amount}

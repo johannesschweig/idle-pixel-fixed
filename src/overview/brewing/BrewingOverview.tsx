@@ -19,7 +19,6 @@ interface Props { }
 
 export enum BrewingView {
   DRINK = "DRINK",
-  BREW = "BREW",
   FAVORITE = "FAVORITE",
   MIXER = "MIXER",
 }
@@ -116,14 +115,6 @@ const BrewingOverview = ({ }: Props) => {
           />
           <IPimg
             role="button"
-            name={"brewing_kit"}
-            onClick={() => setView(BrewingView.BREW)}
-            size={30}
-            style={viewSelectorStyle(BrewingView.BREW)}
-            {...brewProps}
-          />
-          <IPimg
-            role="button"
             name={"stardust"}
             onClick={() => setView(BrewingView.FAVORITE)}
             size={30}
@@ -175,15 +166,6 @@ const BrewingOverview = ({ }: Props) => {
             >
               {brewingXpMixerUsed} / 5
             </span>
-            { brewingXpMixerUsed != 5 && <PotionDisplay
-              brewingLevel={get_level(brewingXp)}
-              key={brewingXpMixerSelected}
-              potionName={brewingXpMixerSelected}
-              toggle={toggle(brewingXpMixerSelected)}
-              view={BrewingView.BREW}
-              favorite={true}
-              brewingIngredients={brewingIngredients}
-            /> }
             { brewingXpMixerUsed != 5 && <PotionDisplay
               brewingLevel={get_level(brewingXp)}
               key={brewingXpMixerSelected}
