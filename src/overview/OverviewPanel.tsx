@@ -78,7 +78,7 @@ const OverviewPanel = () => {
       style={{
         display: "grid",
         gridTemplateColumns: "3fr 1fr",
-          gap: "16px",
+        gap: "16px",
       }}
     >
       <div
@@ -95,7 +95,7 @@ const OverviewPanel = () => {
         <CraftingOverview />
         <CombatOverview />
         <MiningOverview />
-        <MarketOverview/>
+        <MarketOverview />
         <GatheringOverview />
       </div>
       <div>
