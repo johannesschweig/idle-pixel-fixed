@@ -1,5 +1,5 @@
 import IPimg from "../../util/IPimg";
-import ObserveredLabeledIPimg from "../../util/ObservedLabeledIPimg";
+import ObservedLabeledIPimg from "../../util/ObservedLabeledIPimg";
 import OreDisplay from "./OreDisplay";
 import {
   useItemObserver,
@@ -84,42 +84,16 @@ const CraftingOverview = () => {
     >
       <div
         style={{
-          display: "flex",
-          gap: "10px",
-        }}
-      >
-        {BARS.map((bar) => (
-          <ObserveredLabeledIPimg
-            label={bar}
-            action={view === CraftingView.CONVERTING ? "CONVERT_STARDUST" : "SHOP_SELL"}
-            size={30} />
-        ))}
-      </div>
-      <div
-        style={{
-          display: "flex",
+          display: "grid",
+          gridTemplateColumns: "repeat(8, 1fr)",
+          alignItems: "center",
+          justifyItems: "center",
         }}
       >
         <div
           style={{
-            display: "flex",
-            gap: "10px",
-            flexDirection: "column",
-            width: "100px",
-            justifyContent: "flex-end",
-            alignItems: "center",
-          }}
-        >
-          <IPimg name={"oil"} size={30} />
-          <span>{formatNumber(oil)}</span>
-        </div>
-        <div
-          style={{
-            display: "flex",
-            gap: "10px",
-            flexDirection: "column",
-            alignItems: "center",
-            width: "150px",
+            gridColumn: "1/3",
+            gridRow: "1/3",
           }}
         >
           {view === CraftingView.SMELTING &&
@@ -140,88 +114,59 @@ const CraftingOverview = () => {
               size={50}
               onClick={() => setView(CraftingView.SMELTING)}
             />}
-          <div
-            style={{
-              display: "flex",
-              gap: "5px",
-            }}
-          >
-            {oreType !== "none" ? (
-              <>
-                <IPimg name={oreToBar(oreType)} size={20} style={{}} />
-                {/* <span>{`${oreAmountAt}/${oreAmountSet}`}</span> */}
-                <span>{formatTime(furnaceCountdown + TIME_TO_SMELT[oreType] * (oreAmountSet - oreAmountAt - 1))}</span>
-              </>
-            ) : (
-              <span>Not smelting</span>
-            )}
-          </div>
+          {oreType !== "none" ? (
+            <>
+              <IPimg name={oreToBar(oreType)} size={20}
+                style={{}} />
+              {/* <span>{`${oreAmountAt}/${oreAmountSet}`}</span> */}
+              <span>{formatTime(furnaceCountdown + TIME_TO_SMELT[oreType] * (oreAmountSet - oreAmountAt - 1))}</span>
+            </>
+          ) : (
+            <span>Not smelting</span>
+          )}
         </div>
-        <div
+        {/* RESOURCES */}
+        <LabeledIPimg
+          name={"oil"}
+          label={oil}
+          size={30}
+        />
+        <LabeledIPimg
+          name={"charcoal"}
+          label={charcoal}
+          size={30}
+        />
+        <LabeledIPimg
+          name={"lava"}
+          label={lava}
+          size={30}
+        />
+        <LabeledIPimg
+          name={"plasma"}
+          label={plasma}
+          size={30}
+        />
+        <LabeledIPimg
+          name={"rocket_fuel"}
+          label={rocketFuel}
+          size={30}
+          onClick={() => sendMessage("CRAFT", "rocket_fuel", "1")}
           style={{
-            display: "flex",
-            gap: "10px",
-            width: "100px",
-            alignItems: "center",
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              gap: "10px",
-              flexDirection: "column",
-              width: "50px",
-              justifyContent: "flex-end",
-              alignItems: "center",
-              height: "100%",
-            }}
-          >
-            <IPimg name={"charcoal"} size={30} />
-            <span>{charcoal}</span>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              gap: "10px",
-              flexDirection: "column",
-              width: "50px",
-              justifyContent: "flex-end",
-              alignItems: "center",
-              height: "100%",
-            }}
-          >
-            <IPimg name={"lava"} size={30} />
-            <span>{lava}</span>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              gap: "10px",
-              flexDirection: "column",
-              width: "50px",
-              justifyContent: "flex-end",
-              alignItems: "center",
-              height: "100%",
-            }}
-          >
-            <IPimg name={"plasma"} size={30} />
-            <span>{plasma}</span>
-          </div>
-          <LabeledIPimg
-            name={"rocket_fuel"}
-            label={rocketFuel}
+            cursor: "pointer",
+            opacity: (oil >= 5000 && charcoal >= 20 && lava >= 1) ? 1 : 0.5,
+          }} />
+        {/* BARS */}
+        {BARS.map((bar) => (
+          <ObservedLabeledIPimg
+            label={bar}
+            action={view === CraftingView.CONVERTING ? "CONVERT_STARDUST" : "SHOP_SELL"}
             size={30}
-            onClick={() => sendMessage("CRAFT", "rocket_fuel", "1")} />
-        </div>
-      </div>
-
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(5, 1fr)",
-          gap: "10px",
-        }}
-      >
+            style={{
+              gridRow: "2/3",
+            }}
+            />
+        ))}
+        {/* ORES */}
         {ORES.map((ore) => (
           <OreDisplay
             ore={ore}

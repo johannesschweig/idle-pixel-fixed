@@ -39,9 +39,11 @@ const ConsumeOverview = () => {
   const [heat] = useNumberItemObserver("heat", id)
   const [treasureChest] = useNumberItemObserver("treasure_chest", id)
   const [greenTreasureChest] = useNumberItemObserver("green_treasure_chest", id)
+  const [redTreasureChest] = useNumberItemObserver("red_treasure_chest", id)
   const [goldBar] = useNumberItemObserver("gold_bar", id)
   const [emerald] = useNumberItemObserver("emerald", id)
   const [promethiumBar] = useNumberItemObserver("promethium_bar", id)
+  const [titaniumBar] = useNumberItemObserver("titanium_bar", id)
 
   const limbClick = (limb: string, amount: number) => {
     sendMessage("GRIND", limb, amount)
@@ -84,6 +86,11 @@ const ConsumeOverview = () => {
   const openGreenTreasureChest = () => {
     sendMessage('CRAFT', 'promethium_emerald_key', '1')
     sendMessage('OPEN_TREASURE_CHEST', 'promethium_emerald_key')
+  }
+  
+  const openRedTreasureChest = () => {
+    sendMessage('CRAFT', 'titanium_emerald_key', '1')
+    sendMessage('OPEN_TREASURE_CHEST', 'titanium_emerald_key')
   }
 
   const boatsOut = () => {
@@ -223,6 +230,17 @@ const ConsumeOverview = () => {
               onClick={() => openGreenTreasureChest()}
               style={{
                 opacity: (promethiumBar >= 5 && emerald >= 1) ? 1 : 0.5,
+                cursor: "pointer",
+              }}
+            />
+          }
+          {redTreasureChest > 0 &&
+            <LabeledIPimg
+              name={"red_treasure_chest"}
+              label={redTreasureChest}
+              onClick={() => openRedTreasureChest()}
+              style={{
+                opacity: (titaniumBar >= 5 && emerald >= 1) ? 1 : 0.5,
                 cursor: "pointer",
               }}
             />

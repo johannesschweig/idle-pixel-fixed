@@ -132,11 +132,12 @@ const OreDisplay = ({
   return (
     <div
       style={{
-        display: "flex",
+        display: amount > 0 ? "flex" : "none",
         flexDirection: "column",
         gap: "10px",
         width: "50px",
         alignItems: "center",
+        gridRow: "3/4",
       }}
     >
       <IPimg

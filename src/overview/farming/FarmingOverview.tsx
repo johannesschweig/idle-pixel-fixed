@@ -70,7 +70,7 @@ const FarmingOverview = () => {
         <LabeledIPimg
           name={"bonemeal_bin"}
           label={bonemeal}
-          size={50}
+          size={30}
           style={{ justifyContent: "center" }}
         />
         <div

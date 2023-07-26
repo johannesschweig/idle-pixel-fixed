@@ -19,7 +19,7 @@ interface Props {
 }
 
 const id = "ObservedLabeledIPimg"
-const ObserveredLabeledIPimg = ({
+const ObservedLabeledIPimg = ({
   label,
   action,
   size,
@@ -66,9 +66,10 @@ const ObserveredLabeledIPimg = ({
   return (
     <div
       style={{
-        display: value > retain ? "flex" : "none",
+        display: value > retain ? "grid" : "none",
         position: 'relative',
         cursor: "pointer",
+        ...style
       }}
       onClick={() => imgClick()}
       {...imgProps}
@@ -90,7 +91,6 @@ const ObserveredLabeledIPimg = ({
         label={value}
         style={{
           backgroundColor: label.includes('shiny') ? "rgb(107, 107, 107)" : "transparent",
-          ...style
         }}
         {...rest} />
       {tooltipText && <ImgToolTip />}
@@ -98,4 +98,4 @@ const ObserveredLabeledIPimg = ({
   );
 };
 
-export default ObserveredLabeledIPimg;
+export default ObservedLabeledIPimg;

@@ -82,6 +82,10 @@ export const POTIONS: Record<string, PotionData> = {
     level: 40,
     ...getData("promethium_potion")
   },
+  oil_potion: {
+    level: 42,
+    ...getData("oil_potion")
+  },
   super_rare_monster_potion: {
     level: 45,
     ...getData("super_rare_monster_potion")
@@ -105,6 +109,10 @@ export const POTIONS: Record<string, PotionData> = {
   geode_potion: {
     level: 62,
     ...getData("geode_potion")
+  },
+  magic_crystal_ball_potion: {
+    level: 64,
+    ...getData("magic_crystal_ball_potion")
   },
   stone_converter_potion: {
     level: 65,

@@ -49,8 +49,7 @@ export const useBrewingIngredientsObserver = (
   const [maggots, setMaggots] = useNumberItemObserver(`maggots`, hookId);
   const [fruitSkin, setFruitSkin] = useNumberItemObserver(`fruit_skin`, hookId);
   const [superBait, setSuperBait] = useNumberItemObserver(`super_bait`, hookId);
-
-
+  const [charcoal, setCharcoal] = useNumberItemObserver(`charcoal`, hookId);
 
   return {
     dotted_green_leaf: {
@@ -141,5 +140,9 @@ export const useBrewingIngredientsObserver = (
       value: redShootingStar,
       setValue: setRedShottingStar,
     },
+    charcoal: {
+      value: charcoal,
+      setValue: setCharcoal,
+    }
   };
 };
