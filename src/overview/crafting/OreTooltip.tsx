@@ -26,7 +26,7 @@ const OreTooltip = ({
   const getAction = () => {
     switch (view) {
       case CraftingView.CONVERTING: return "Convert"
-      case CraftingView.SMELTING: return "Smelt"
+      case CraftingView.SMELTING: return amount > 0 ? "Smelt" : "Can't Smelt"
       case CraftingView.SELLING: return "Sell"
     }
   }
@@ -41,8 +41,9 @@ const OreTooltip = ({
       }}
     >
       <div>
-        {getAction()} {amount} {Items.get_pretty_item_name(ore)}
-        { view === CraftingView.SMELTING && Object.keys(TIME_TO_SMELT).includes(ore) && <span> ({ formatTime(amount*TIME_TO_SMELT[ore]) })</span> }
+        {getAction()}
+          { amount } {Items.get_pretty_item_name(ore)}
+        {view === CraftingView.SMELTING && Object.keys(TIME_TO_SMELT).includes(ore) && ` in ${formatTime(amount * TIME_TO_SMELT[ore])}`}
       </div>
       {view === CraftingView.SMELTING &&
         <div style={{ display: "flex", justifyContent: "space-evenly" }}>

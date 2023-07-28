@@ -68,7 +68,6 @@ const CraftingOverview = () => {
   const [charcoal, setCharcoal] = useNumberItemObserver("charcoal", id);
   const [lava, setLava] = useNumberItemObserver("lava", id);
   const [plasma, setPlasma] = useNumberItemObserver("plasma", id);
-  const [craftingXp] = useNumberItemObserver("crafting_xp", id);
   const [furnaceCountdown] = useNumberItemObserver("furnace_countdown", id);
   const [rocketFuel] = useNumberItemObserver("rocket_fuel", id)
 
@@ -79,9 +78,7 @@ const CraftingOverview = () => {
   };
 
   return (
-    <OverviewBox
-      xp={craftingXp}
-    >
+    <OverviewBox >
       <div
         style={{
           display: "grid",

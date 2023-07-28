@@ -44,6 +44,7 @@ const ConsumeOverview = () => {
   const [emerald] = useNumberItemObserver("emerald", id)
   const [promethiumBar] = useNumberItemObserver("promethium_bar", id)
   const [titaniumBar] = useNumberItemObserver("titanium_bar", id)
+  const [heatPending] = useNumberItemObserver("heat_pending", id)
 
   const limbClick = (limb: string, amount: number) => {
     sendMessage("GRIND", limb, amount)
@@ -78,19 +79,18 @@ const ConsumeOverview = () => {
 
   // CRAFT=gold_emerald_key~1
   // OPEN_TREASURE_CHEST=gold_emerald_key
-  const openTreasureChest = () => {
-    sendMessage('CRAFT', 'gold_emerald_key', '1')
-    sendMessage('OPEN_TREASURE_CHEST', 'gold_emerald_key')
-  }
-
-  const openGreenTreasureChest = () => {
-    sendMessage('CRAFT', 'promethium_emerald_key', '1')
-    sendMessage('OPEN_TREASURE_CHEST', 'promethium_emerald_key')
-  }
-  
-  const openRedTreasureChest = () => {
-    sendMessage('CRAFT', 'titanium_emerald_key', '1')
-    sendMessage('OPEN_TREASURE_CHEST', 'titanium_emerald_key')
+  const openTreasureChest = (color: string) => {
+    let key = ''
+    switch (color) {
+      case "brown": key = 'gold_emerald_key'
+        break
+      case "green": key = 'promethium_emerald_key'
+        break
+      case "red": key = 'titanium_emerald_key'
+        break
+    }
+    sendMessage('CRAFT', key, '1')
+    setTimeout(() => sendMessage('OPEN_TREASURE_CHEST', key), 500)
   }
 
   const boatsOut = () => {
@@ -119,265 +119,259 @@ const ConsumeOverview = () => {
       xp={inventionXp}
       gridColumn={"1/4"}
     >
-      <div>
-        <div
-          style={{
-            display: "flex",
-            gap: "10px",
-          }}
-        >
-          <RocketDisplay />
-          {['novice', 'warrior', 'master', 'elite'].map(wave => (
-            <ObservedLabeledIPimg
-              label={`robot_${wave}_loot`}
-              action={''}
-              action_override={['OPEN_ROBOT_LOOT', wave]}
-            />
-          ))}
+      <div
+        style={{
+          display: "flex",
+          gap: "10px",
+        }}
+      >
+        <RocketDisplay />
+        {['novice', 'warrior', 'master', 'elite'].map(wave => (
+          <ObservedLabeledIPimg
+            label={`robot_${wave}_loot`}
+            action={''}
+            action_override={['OPEN_ROBOT_LOOT', wave]}
+          />
+        ))}
 
-          {STARDUST_PRISMS.map((prism) => (
-            <ObservedLabeledIPimg
-              label={prism}
-              action={"SMASH_STARDUST_PRISM"}
-              size={30} />
-          ))}
-          {GEODES.map((geode) => (
-            <ObservedLabeledIPimg
-              label={geode}
-              action={"CRACK_GEODE"}
-              size={30} />
-          ))}
-          {MINERALS.map((mineral) => (
-            <ObservedLabeledIPimg
-              label={mineral}
-              action={"MINERAL_XP"}
-              size={30} />
-          ))}
+        {STARDUST_PRISMS.map((prism) => (
           <ObservedLabeledIPimg
-            label={"meteor"}
-            action={"MINE_METEOR"}
+            label={prism}
+            action={"SMASH_STARDUST_PRISM"}
             size={30} />
+        ))}
+        {GEODES.map((geode) => (
           <ObservedLabeledIPimg
-            label={"tnt"}
-            action={"USE_TNT"}
+            label={geode}
+            action={"CRACK_GEODE"}
             size={30} />
+        ))}
+        {MINERALS.map((mineral) => (
           <ObservedLabeledIPimg
-            label={"bomb"}
-            action={"USE_BOMB"}
+            label={mineral}
+            action={"MINERAL_XP"}
             size={30} />
-          {FRAGMENTS.map((fragment) => (
-            <ObservedLabeledIPimg
-              label={fragment}
-              action={"COMBINE_GEM_FRAGMENTS"}
-              action_override={["COMBINE_GEM_FRAGMENTS", fragment]}
-              size={30}
-              retain={9} />
-          ))}
+        ))}
+        <ObservedLabeledIPimg
+          label={"meteor"}
+          action={"MINE_METEOR"}
+          size={30} />
+        <ObservedLabeledIPimg
+          label={"tnt"}
+          action={"USE_TNT"}
+          size={30} />
+        <ObservedLabeledIPimg
+          label={"bomb"}
+          action={"USE_BOMB"}
+          size={30} />
+        {FRAGMENTS.map((fragment) => (
           <ObservedLabeledIPimg
-            label={"sapphire"}
-            action={"SHOP_SELL"}
+            label={fragment}
+            action={"COMBINE_GEM_FRAGMENTS"}
+            action_override={["COMBINE_GEM_FRAGMENTS", fragment]}
+            size={30}
+            retain={9} />
+        ))}
+        <ObservedLabeledIPimg
+          label={"sapphire"}
+          action={"SHOP_SELL"}
+          size={30}
+        />
+        <ObservedLabeledIPimg
+          label={"emerald"}
+          action={"SHOP_SELL"}
+          size={30}
+        />
+        <ObservedLabeledIPimg
+          label={"ruby"}
+          action={""}
+          size={30}
+        />
+        <ObservedLabeledIPimg
+          label={"diamond"}
+          action={""}
+          size={30}
+        />
+        {limbs.map((limb) => (
+          <LimbDisplay
+            limb={limb}
+            limbClick={(limb: string, amount: number) => limbClick(limb, amount)}
+            {...LIMBS[limb]}
+            key={limb}
+          />
+        ))}
+        <ObservedLabeledIPimg
+          label={"evil_blood"}
+          action={"CLEANSE_EVIL_BLOOD"}
+          size={30}
+        />
+        {WEAPONS.map((weapon) => (
+          <ObservedLabeledIPimg
+            label={weapon}
+            action="INVENTION_DISASSEMBLE"
             size={30}
           />
-          <ObservedLabeledIPimg
-            label={"emerald"}
-            action={"SHOP_SELL"}
+        ))}
+        {treasureChest > 0 &&
+          <LabeledIPimg
+            name={"treasure_chest"}
+            label={treasureChest}
             size={30}
+            onClick={() => openTreasureChest('brown')}
+            style={{
+              opacity: (goldBar >= 5 && emerald >= 1) ? 1 : 0.5,
+              cursor: "pointer",
+            }}
           />
-          <ObservedLabeledIPimg
-            label={"ruby"}
-            action={""}
+        }
+        {greenTreasureChest > 0 &&
+          <LabeledIPimg
+            name={"green_treasure_chest"}
+            label={greenTreasureChest}
             size={30}
+            onClick={() => openTreasureChest('green')}
+            style={{
+              opacity: (promethiumBar >= 5 && emerald >= 1) ? 1 : 0.5,
+              cursor: "pointer",
+            }}
           />
-          <ObservedLabeledIPimg
-            label={"diamond"}
-            action={""}
+        }
+        {redTreasureChest > 0 &&
+          <LabeledIPimg
+            name={"red_treasure_chest"}
+            label={redTreasureChest}
             size={30}
+            onClick={() => openTreasureChest('red')}
+            style={{
+              opacity: (titaniumBar >= 5 && emerald >= 1) ? 1 : 0.5,
+              cursor: "pointer",
+            }}
           />
-          <ObservedLabeledIPimg
-            label={"evil_blood"}
-            action={"CLEANSE_EVIL_BLOOD"}
-            size={30} />
-          {limbs.map((limb) => (
-            <LimbDisplay
-              limb={limb}
-              limbClick={(limb: string, amount: number) => limbClick(limb, amount)}
-              {...LIMBS[limb]}
-              key={limb}
-            />
-          ))}
-          {WEAPONS.map((weapon) => (
-            <ObservedLabeledIPimg
-              label={weapon}
-              action="INVENTION_DISASSEMBLE"
-              size={30}
-            />
-          ))}
-          {treasureChest > 0 &&
-            <LabeledIPimg
-              name={"treasure_chest"}
-              label={treasureChest}
-              onClick={() => openTreasureChest()}
-              style={{
-                opacity: (goldBar >= 5 && emerald >= 1) ? 1 : 0.5,
-                cursor: "pointer",
-              }}
-            />
-          }
-          {greenTreasureChest > 0 &&
-            <LabeledIPimg
-              name={"green_treasure_chest"}
-              label={greenTreasureChest}
-              onClick={() => openGreenTreasureChest()}
-              style={{
-                opacity: (promethiumBar >= 5 && emerald >= 1) ? 1 : 0.5,
-                cursor: "pointer",
-              }}
-            />
-          }
-          {redTreasureChest > 0 &&
-            <LabeledIPimg
-              name={"red_treasure_chest"}
-              label={redTreasureChest}
-              onClick={() => openRedTreasureChest()}
-              style={{
-                opacity: (titaniumBar >= 5 && emerald >= 1) ? 1 : 0.5,
-                cursor: "pointer",
-              }}
-            />
-          }
-          {canoeBoatTimer <= 1 && boatsOut() < 2 && <LabeledIPimg
-            name="canoe_boat"
-            label={canoeBoatTimer === 1 ? "Collect" : "Send out"}
-            size={50}
-            onClick={() => clickBoat("canoe_boat")}
-            style={boatStyle(canoeBoatTimer)} />}
-          {stardustBoatTimer <= 1 && boatsOut() < 2 && <LabeledIPimg
-            name="stardust_boat"
-            label={stardustBoatTimer === 1 ? "Collect" : "Send out"}
-            size={50}
-            onClick={() => clickBoat("stardust_boat")}
-            style={boatStyle(stardustBoatTimer)} />}
-          {pirateShipTimer <= 1 && boatsOut() < 2 && <LabeledIPimg
-            name="pirate_ship"
-            label={pirateShipTimer === 1 ? "Collect" : "Send out"}
-            size={50}
-            onClick={() => clickBoat("pirate_ship")}
-            style={boatStyle(pirateShipTimer)} />}
-          {aquariumTimer === 0 &&
-            <LabeledIPimg
-              name="aquarium"
-              label={"Feed"}
-              size={20}
-              onClick={() => sendMessage("FEED_FISH", "maggots")}
-              style={{
-                cursor: "pointer",
-              }}
-            />
-          }
-          <ObservedLabeledIPimg
-            label={"bait"}
-            action={""}
-            size={30}
-            action_override={["THROW_BAIT"]}
-          />
-          <ObservedLabeledIPimg
-            label={"super_bait"}
-            action={""}
-            retain={3}
-            size={30}
-            action_override={["THROW_SUPER_BAIT"]}
-          />
-          {cooksBookTimer === 1 && <LabeledIPimg
-            name={cooksBookItem}
-            label={"Collect"}
-            size={50}
-            onClick={() => sendMessage("COOKS_BOOK_READY")}
+        }
+        {canoeBoatTimer <= 1 && boatsOut() < 2 && <LabeledIPimg
+          name="canoe_boat"
+          label={canoeBoatTimer === 1 ? "Collect" : "Send out"}
+          size={50}
+          onClick={() => clickBoat("canoe_boat")}
+          style={boatStyle(canoeBoatTimer)} />}
+        {stardustBoatTimer <= 1 && boatsOut() < 2 && <LabeledIPimg
+          name="stardust_boat"
+          label={stardustBoatTimer === 1 ? "Collect" : "Send out"}
+          size={50}
+          onClick={() => clickBoat("stardust_boat")}
+          style={boatStyle(stardustBoatTimer)} />}
+        {pirateShipTimer <= 1 && boatsOut() < 2 && <LabeledIPimg
+          name="pirate_ship"
+          label={pirateShipTimer === 1 ? "Collect" : "Send out"}
+          size={50}
+          onClick={() => clickBoat("pirate_ship")}
+          style={boatStyle(pirateShipTimer)} />}
+        {aquariumTimer === 0 &&
+          <LabeledIPimg
+            name="aquarium"
+            label={"Feed"}
+            size={20}
+            onClick={() => sendMessage("FEED_FISH", "maggots")}
             style={{
               cursor: "pointer",
-              backgroundColor: "lightyellow",
-            }} />}
-          {(coconut >= 10 || banana >= 10) && cooksBookTimer === 0 && <LabeledIPimg
-            name={"cooks_book"}
-            label={coconut >= 10 ? "Make coconut stew" : "Make banana jello"}
-            size={50}
-            onClick={() => clickCooksBook()}
-            style={{
-              cursor: "pointer",
-            }} />}
-          {areas.map((area) => (
-            <GatheringBagDisplay area={area} key={area} />
-          ))}
-          {/* <ObservedLabeledIPimg
+            }}
+          />
+        }
+        <ObservedLabeledIPimg
+          label={"bait"}
+          action={""}
+          size={30}
+          action_override={["THROW_BAIT"]}
+        />
+        <ObservedLabeledIPimg
+          label={"super_bait"}
+          action={""}
+          retain={3}
+          size={30}
+          action_override={["THROW_SUPER_BAIT"]}
+        />
+        {cooksBookTimer === 1 && <LabeledIPimg
+          name={cooksBookItem}
+          label={"Collect"}
+          size={50}
+          onClick={() => sendMessage("COOKS_BOOK_READY")}
+          style={{
+            cursor: "pointer",
+            backgroundColor: "lightyellow",
+          }} />}
+        {(coconut >= 10 || banana >= 10) && cooksBookTimer === 0 && <LabeledIPimg
+          name={"cooks_book"}
+          label={coconut >= 10 ? "Make coconut stew" : "Make banana jello"}
+          size={50}
+          onClick={() => clickCooksBook()}
+          style={{
+            cursor: "pointer",
+          }} />}
+        {areas.map((area) => (
+          <GatheringBagDisplay area={area} key={area} />
+        ))}
+        {/* <ObservedLabeledIPimg
           label={"machete_unclaimed"}
           action={""}
           size={30}
         /> */}
-        </div>
+        <ObservedLabeledIPimg
+          label={"banana"}
+          size={30}
+          action={"CONSUME"}
+          retain={20}
+        />
+        <ObservedLabeledIPimg
+          label={"apple"}
+          size={30}
+          action={"CONSUME"}
+          retain={2}
+        />
+        <ObservedLabeledIPimg
+          label={"coconut"}
+          size={30}
+          action={"CONSUME"}
+          retain={50}
+        />
+        <ObservedLabeledIPimg
+          label={"combat_xp_lamp"}
+          size={30}
+          action={""}
+          action_override={['COMBAT_XP_LAMP', 'magic']} />
+        {COOKED_FOOD.map((food) => (
+          <ObservedLabeledIPimg
+            label={food}
+            size={30}
+            action={"CONSUME"}
+          />
+        ))}
+      </div>
+      {heat > 50 &&
         <div
           style={{
-            display: "grid",
-            rowGap: "10px",
-            gridAutoFlow: "column",
+            display: "flex",
+            gap: "10px",
+            border: "1px solid #FBCBD9",
+            borderRadius: "4px",
           }}
         >
-          <ObservedLabeledIPimg
-            label={"banana"}
+          <LabeledIPimg
+            name={"heat"}
+            label={heatPending > 0 ? "Heating" : heat}
             size={30}
-            action={"CONSUME"}
-            retain={20}
+            className={heatPending > 0 ? "shake" : ""}
           />
-          <ObservedLabeledIPimg
-            label={"apple"}
-            size={30}
-            action={"CONSUME"}
-            retain={2}
-          />
-          <ObservedLabeledIPimg
-            label={"coconut"}
-            size={30}
-            action={"CONSUME"}
-            retain={50}
-          />
-          <ObservedLabeledIPimg
-            label={"combat_xp_lamp"}
-            size={30}
-            action={""}
-            action_override={['COMBAT_XP_LAMP', 'magic']} />
-          {COOKED_FOOD.map((food) => (
+          {RAW_FOOD.sort((a, b) => (b.energy / b.heat) - (a.energy / a.heat)).map(f =>
             <ObservedLabeledIPimg
-              label={food}
+              label={f.name}
               size={30}
-              action={"CONSUME"}
-            />
-          ))}
+              action={'COOK'}
+              max_value={Math.floor(heat / f.heat)}
+              tooltipText={f.heat.toString()}
+              tooltipIcon={'heat'}
+            />)}
         </div>
-        {heat > 50 &&
-          <div
-            style={{
-              display: "grid",
-              rowGap: "10px",
-              gridAutoFlow: "column",
-              border: "1px solid #FBCBD9",
-              borderRadius: "4px",
-            }}
-          >
-            <LabeledIPimg
-              name={"heat"}
-              label={heat}
-              size={30}
-            />
-            {RAW_FOOD.sort((a, b) => (b.energy / b.heat) - (a.energy / a.heat)).map(f =>
-              <ObservedLabeledIPimg
-                label={f.name}
-                size={30}
-                action={'COOK'}
-                max_value={Math.floor(heat / f.heat)}
-                tooltipText={f.heat.toString()}
-                tooltipIcon={'heat'}
-              />)}
-          </div>
-        }
-      </div>
+      }
     </OverviewBox>
   );
 };

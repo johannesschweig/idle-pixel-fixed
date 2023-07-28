@@ -89,8 +89,9 @@ const CombatOverview = () => {
         </button>
         {robotWaveTimer === 0 && <LabeledIPimg
           name={"robot_active"}
-          label={"Robot (master)"}
-          onClick={() => sendMessage('ROBOT_WAVES', 'master')} // novice, warrior, master, elite
+          label={"Robot (warrior)"}
+          size={30}
+          onClick={() => sendMessage('ROBOT_WAVES', 'warrior')} // novice, warrior, master, elite
           style={{
             cursor: "pointer",
           }}

@@ -8,6 +8,7 @@ import IPimg from "../../util/IPimg";
 import { sendMessage } from "../../util/websocket/useWebsocket";
 import { useNumberItemObserver } from "../setItems/useSetItemsObserver";
 import { CSSProperties, useState } from "react";
+import { formatNumber } from "../../util/numberUtils";
 
 export enum LogAction {
   OVEN = "OVEN",
@@ -83,7 +84,7 @@ const WoodcuttingOverview = () => {
     if (foundryAmount > 0) {
       return `Charring: ${foundryAmount} logs`
     }
-    return `${getHeat()} heat`
+    return `${formatNumber(getHeat())} heat`
   }
 
   return (

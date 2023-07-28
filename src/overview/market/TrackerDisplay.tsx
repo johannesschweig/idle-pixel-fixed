@@ -58,7 +58,7 @@ const TrackerDisplay = ({
       />
       {isActive() ?
         <span>{formatNumber(prices[0])}</span> :
-        <span><i>{`${formatNumber(threshold)} (now: ${formatNumber(prices[0])})`}</i></span>
+        <span><i>{`${formatNumber(threshold)}`}{prices.length > 0 && ` (now: ${formatNumber(prices[0])})`}</i></span>
       }
       <button
         style={buttonStyle}

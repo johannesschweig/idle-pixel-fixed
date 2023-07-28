@@ -3,8 +3,8 @@ import { useTooltip } from "../../util/tooltip/useTooltip";
 
 interface Props {
   type: string;
-  stage: number;
-  timer: number;
+  stage: number; // 0: nothing, 3; growing, 4: done
+  timer: number; // 0: nothing, 1: done, >1: growing
   shiny: number;
   plotClick: () => void;
 }

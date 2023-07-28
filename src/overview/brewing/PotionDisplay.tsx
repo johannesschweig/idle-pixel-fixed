@@ -80,6 +80,7 @@ const PotionDisplay = ({
       } else {
         sendMessage("DRINK", potionName);
       }
+      hideDrinkTooltip()
     }
   };
 
@@ -92,13 +93,17 @@ const PotionDisplay = ({
       } else if (event.ctrlKey) {
         making = Math.min(5, makeable);
       }
+      hideBrewTooltip()
       setAmount(amount + making);
       sendMessage("BREW", potionName, making);
     }
   };
 
-  const [drinkProps, DrinkToolTip] = useTooltip(
-    <span>Drink {Items.get_pretty_item_name(potionName)}</span>
+  const [drinkProps, DrinkToolTip, hideDrinkTooltip] = useTooltip(
+    <span>
+      {isDrinkable ? "Drink " : "Can't Drink "}
+      {Items.get_pretty_item_name(potionName)}
+      </span>
   );
 
   const tooltipProps = {
@@ -110,7 +115,7 @@ const PotionDisplay = ({
     level,
   };
 
-  const [brewProps, BrewToolTip] = useTooltip(
+  const [brewProps, BrewToolTip, hideBrewTooltip] = useTooltip(
     <BrewingTooltip amount={Math.min(1, getMakeable())} {...tooltipProps} />,
     <BrewingTooltip amount={getMakeable()} {...tooltipProps} />,
     <BrewingTooltip amount={Math.min(5, getMakeable())} {...tooltipProps} />
@@ -129,63 +134,79 @@ const PotionDisplay = ({
         ? drinkProps
         : brewProps;
 
-  const onClick =
-    view === BrewingView.FAVORITE
-      ? toggle
-      : amount >=1 
-        ? onDrinkClick
-        : onBrewClick
+  const onClick = (event: MouseEvent) => {
+    if (view === BrewingView.FAVORITE) {
+      toggle()
+    } else if (amount >= 1) {
+      onDrinkClick()
+    } else {
+      onBrewClick(event)
+    }
+  }
 
+  const isDisabled = () => {
+    if (view === BrewingView.DRINK && amount >= 1) { // mode drinking
+      if (!isDrinkable) { // cannot drink
+        return true
+      } else { // can drink
+        return false
+      }
+    } else if (view === BrewingView.DRINK && getMakeable() === 0) { // mode brewing
+      return true
+    } else {
+      return false
+    }
+  }
 
-  return (
-    <>
-      <div
+return (
+  <>
+    <div
+      style={{
+        width: "50px",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        height: "70px",
+        opacity: favorite ? 1 : 0.5,
+        backgroundColor: timer > 0 ? "lightskyblue" : "transparent",
+        borderRadius: "4px",
+      }}
+    >
+      {view === BrewingView.FAVORITE && <IPimg
+        role="button"
+        name={"stardust"}
+        size={20}
+      />}
+      <IPimg
+        name={potionName}
+        size={30}
+        onClick={onClick}
+        role={"button"}
+        style={
+            isDisabled()
+            ? {
+              opacity: 0.5,
+              cursor: "default",
+            }
+            : undefined
+        }
+        {...imgProps}
+      />
+      <span
         style={{
-          width: "50px",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          height: "70px",
-          opacity: favorite ? 1 : 0.5,
-          backgroundColor: timer > 0 ? "lightskyblue" : "transparent",
-          borderRadius: "4px",
+          height: "20px",
+          visibility: amount > 0 ? "visible" : "hidden",
         }}
       >
-        {view === BrewingView.FAVORITE && <IPimg
-          role="button"
-          name={"stardust"}
-          size={20}
-        /> }
-        <IPimg
-          name={potionName}
-          size={30}
-          onClick={onClick}
-          role={"button"}
-          style={
-            ((view === BrewingView.DRINK && getMakeable() === 0) || (amount >= 1 && !isDrinkable))
-              ? {
-                opacity: 0.5,
-                cursor: "default",
-              }
-              : undefined
-          }
-          {...imgProps}
-        />
-        <span
-          style={{
-            height: "20px",
-            visibility: amount > 0 ? "visible" : "hidden",
-          }}
-        >
-          {amount}
-        </span>
-      </div>
-      {isDrinkable && <DrinkToolTip />}
-      <BrewToolTip />
-      <ViewToolTip />
-    </>
-  );
+        {amount}
+      </span>
+    </div>
+    <DrinkToolTip />
+    <BrewToolTip />
+    <ViewToolTip />
+  </>
+);
 };
 
 export default PotionDisplay;

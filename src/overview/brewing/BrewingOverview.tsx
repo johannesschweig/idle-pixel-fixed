@@ -67,13 +67,12 @@ const BrewingOverview = ({ }: Props) => {
   useWebsocket(blockPopup, 1, id);
 
   const [drinkProps, DrinkToolTip] = useTooltip(<span>Drink potions</span>);
-  const [brewProps, BrewToolTip] = useTooltip(<span>Brew potions</span>);
   const [viewProps, ViewToolTip] = useTooltip(<span>Favorite potions</span>);
   const [mixerProps, MixerToolTip] = useTooltip(<span>Brewing XP Mixer</span>);
 
 
   const mixerActionRequired = () => {
-    const EXPENSIVE_POTIONS = ['rocket', 'blue_orb', 'rain', 'combat_loot', 'merchant_speed', 'green_orb', 'ancient', 'guardian_key', 'red_orb', 'stone_converter', 'geode', 'ultra_stardust'].map(e => `${e}_potion`)
+    const EXPENSIVE_POTIONS = ['rocket', 'blue_orb', 'rain', 'combat_loot', 'merchant_speed', 'green_orb', 'ancient', 'guardian_key', 'red_orb', 'stone_converter', 'geode', 'ultra_stardust', 'magic_crystal_ball'].map(e => `${e}_potion`)
     return brewingXpMixerUsed != 5 &&
       (!EXPENSIVE_POTIONS.includes(brewingXpMixerSelected) || // potion is not one of the expensive ones
       brewingXpMixerTimer === 0) // Reroll possible
@@ -209,7 +208,6 @@ const BrewingOverview = ({ }: Props) => {
         }
       </div>
       <DrinkToolTip />
-      <BrewToolTip />
       <ViewToolTip />
       <MixerToolTip />
     </OverviewBox >

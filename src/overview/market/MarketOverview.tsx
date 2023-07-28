@@ -1,7 +1,7 @@
 import OverviewBox from "../OverviewBox";
 import { sendMessage } from "../../util/websocket/useWebsocket";
 import { useMarketSlotDataObserver } from "../setItems/useSetItemsObserver";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import MarketSlotDisplay from "./MarketSlotDisplay";
 import MarketSlotPlaceholder from "./MarketSlotPlaceholder";
 import TrackerDisplay from './TrackerDisplay'

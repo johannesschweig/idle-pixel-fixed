@@ -49,21 +49,15 @@ const OreDisplay = ({
   const plasmaPerBar = Crafting.getPlasmaPerBar(ore);
 
   const getSmeltable = () => {
-    const maxAmountOil = Math.floor(
-      Math.min(oil / oilPerBar || Infinity, amount)
-    );
-    const maxAmountCharcoal = Math.floor(
-      Math.min(charcoal / charcoalPerBar || Infinity, amount)
-    );
-    const maxAmountLava = Math.floor(
-      Math.min(lava / lavaPerBar || Infinity, amount)
-    );
-    const maxAmountPlasma = Math.floor(
-      Math.min(plasma / plasmaPerBar || Infinity, amount)
-    );
-    const maxAmount = Math.min(maxAmountOil, maxAmountCharcoal, maxAmountLava, maxAmountPlasma);
-    return Math.min(furnaceCapacity, maxAmount);
-  };
+    var maxAmount: number[] = []
+    const input = [oil, oilPerBar, charcoal, charcoalPerBar, lava, lavaPerBar, plasma, plasmaPerBar]
+    for (let i = 0; i < input.length; i = i + 2) {
+      if (input[i+1] !== 0) { // perBar
+        maxAmount.push(input[i] / input[i+1]) // oil / oilPerBar
+      }
+    }
+    return Math.floor(Math.min(furnaceCapacity, amount, ...maxAmount))
+  }
 
   const onClick = (event: MouseEvent) => {
     if (view === "SMELTING") {
@@ -79,7 +73,7 @@ const OreDisplay = ({
           amountAt: 0,
           amountSet: making,
         });
-        if(amount === making){
+        if (amount === making) {
           hideTooltip();
         }
         setAmount(amount - making);
@@ -122,9 +116,9 @@ const OreDisplay = ({
     (
       view === CraftingView.SMELTING &&
       (oil < oilPerBar ||
-      charcoal < charcoalPerBar ||
-      lava < lavaPerBar || 
-      plasma < plasmaPerBar)
+        charcoal < charcoalPerBar ||
+        lava < lavaPerBar ||
+        plasma < plasmaPerBar)
     );
 
   const formattedAmount = formatNumber(amount);
@@ -147,16 +141,16 @@ const OreDisplay = ({
         style={
           unselectable
             ? {
-                opacity: 0.5,
-                cursor: "default",
-              }
+              opacity: 0.5,
+              cursor: "default",
+            }
             : undefined
         }
         onClick={unselectable ? undefined : onClick}
         {...oreProps}
       />
       <span>{formattedAmount}</span>
-      {!unselectable && <OreToolTips />}
+      <OreToolTips />
     </div>
   );
 };

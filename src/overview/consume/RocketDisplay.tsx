@@ -34,6 +34,7 @@ const RocketDisplay = () => {
   const [rocketKm] = useNumberItemObserver("rocket_km", id);
   const [rocketStatus] = useItemObserver("rocket_status", id)
   const [sunDistance] = useRocketObserver("sun", id)
+  const [rocketFuel] = useRocketObserver("rocket_fuel", id)
 
   useEffect(() => {
     sendMessage('CLICKS_ROCKET', '0')
@@ -60,7 +61,12 @@ const RocketDisplay = () => {
 
   const getRocketStatus = (): RocketData => {
     if (rocketStatus === "none") {
-      if (sunDistance > 2 * 6 * 3600 * BOOSTED_SPEED) { // too far away, > 110.160.000
+      if (rocketFuel === 0) { // needs rocket fuel to determine distance (otherwise the dialog does not show)
+        return {
+          label: "No rocket fuel",
+          style: activeStyle,
+        }
+      } else if (sunDistance > 2 * 6 * 3600 * BOOSTED_SPEED) { // too far away, > 110.160.000
         return {
           label: `Too far (${formatNumber(sunDistance)})`,
           style: passiveStyle,
