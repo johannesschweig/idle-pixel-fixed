@@ -24,7 +24,9 @@ interface Props {
   lava: number;
   setLava: (lava: number) => void;
   plasma: number;
-  setPlasma: (lava: number) => void;
+  setPlasma: (plasma: number) => void;
+  dragonFire: number;
+  setDragonFire: (dragonFire: number) => void;
 }
 
 const OreDisplay = ({
@@ -40,6 +42,8 @@ const OreDisplay = ({
   setLava,
   plasma,
   setPlasma,
+  dragonFire,
+  setDragonFire
 }: Props) => {
   const furnaceCapacity = Number(Furnace.getFurnaceCapacity());
   const [amount, setAmount] = useNumberItemObserver(ore, `OreDisplay-${ore}`);
@@ -47,6 +51,7 @@ const OreDisplay = ({
   const charcoalPerBar = Crafting.getCharcoalPerBar(ore);
   const lavaPerBar = Crafting.getLavaPerBar(ore);
   const plasmaPerBar = Crafting.getPlasmaPerBar(ore);
+  const dragonFirePerBar = Crafting.getDragonFirePerBar(ore);
 
   const getSmeltable = () => {
     var maxAmount: number[] = []
@@ -98,6 +103,7 @@ const OreDisplay = ({
     charcoalPerBar,
     lavaPerBar,
     plasmaPerBar,
+    dragonFirePerBar,
     view,
   };
 
@@ -118,7 +124,8 @@ const OreDisplay = ({
       (oil < oilPerBar ||
         charcoal < charcoalPerBar ||
         lava < lavaPerBar ||
-        plasma < plasmaPerBar)
+        plasma < plasmaPerBar) ||
+        dragonFire < dragonFirePerBar
     );
 
   const formattedAmount = formatNumber(amount);

@@ -11,6 +11,7 @@ interface Props {
   charcoalPerBar: number;
   lavaPerBar: number;
   plasmaPerBar: number;
+  dragonFirePerBar: number;
   view: CraftingView;
 }
 
@@ -21,13 +22,14 @@ const OreTooltip = ({
   charcoalPerBar,
   lavaPerBar,
   plasmaPerBar,
+  dragonFirePerBar,
   view,
 }: Props) => {
   const getAction = () => {
     switch (view) {
-      case CraftingView.CONVERTING: return "Convert"
-      case CraftingView.SMELTING: return amount > 0 ? "Smelt" : "Can't Smelt"
-      case CraftingView.SELLING: return "Sell"
+      case CraftingView.CONVERTING: return "Convert "
+      case CraftingView.SMELTING: return amount > 0 ? "Smelt " : "Can't Smelt "
+      case CraftingView.SELLING: return "Sell "
     }
   }
 
@@ -42,7 +44,7 @@ const OreTooltip = ({
     >
       <div>
         {getAction()}
-          { amount } {Items.get_pretty_item_name(ore)}
+        {amount} {Items.get_pretty_item_name(ore)}
         {view === CraftingView.SMELTING && Object.keys(TIME_TO_SMELT).includes(ore) && ` in ${formatTime(amount * TIME_TO_SMELT[ore])}`}
       </div>
       {view === CraftingView.SMELTING &&
@@ -62,6 +64,9 @@ const OreTooltip = ({
           )}
           {plasmaPerBar > 0 && (
             <LabeledIPimg name={"plasma"} size={30} label={plasmaPerBar * amount} />
+          )}
+          {dragonFirePerBar > 0 && (
+            <LabeledIPimg name={"dragon_fire"} size={30} label={dragonFirePerBar * amount} />
           )}
         </div>
       }

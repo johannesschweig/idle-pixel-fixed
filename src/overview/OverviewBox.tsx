@@ -73,7 +73,7 @@ const OverviewBox = ({ xp, children, ...style }: PropsWithChildren<Props> & CSSP
       style={{
         gap: "5px",
         backgroundColor: "#b1d6dc",
-        padding: "0 10px 10px 10px",
+        padding: xp ? "0 10px 10px 10px" : "10px",
         ...style
       }}
     >

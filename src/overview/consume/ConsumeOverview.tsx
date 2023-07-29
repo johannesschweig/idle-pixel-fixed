@@ -370,6 +370,12 @@ const ConsumeOverview = () => {
               tooltipText={f.heat.toString()}
               tooltipIcon={'heat'}
             />)}
+          <ObservedLabeledIPimg
+            label={"chefs_hat_unclaimed"}
+            action={''}
+            action_override={["GATHERING_OPEN_UNIQUE", "kitchen", "chefs_hat_unclaimed"]}
+          />
+
         </div>
       }
     </OverviewBox>

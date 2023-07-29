@@ -68,6 +68,7 @@ const CraftingOverview = () => {
   const [charcoal, setCharcoal] = useNumberItemObserver("charcoal", id);
   const [lava, setLava] = useNumberItemObserver("lava", id);
   const [plasma, setPlasma] = useNumberItemObserver("plasma", id);
+  const [dragonFire, setDragonFire] = useNumberItemObserver("dragon_fire", id);
   const [furnaceCountdown] = useNumberItemObserver("furnace_countdown", id);
   const [rocketFuel] = useNumberItemObserver("rocket_fuel", id)
 
@@ -144,6 +145,11 @@ const CraftingOverview = () => {
           size={30}
         />
         <LabeledIPimg
+          name={"dragon_fire"}
+          label={dragonFire}
+          size={30}
+        />
+        <LabeledIPimg
           name={"rocket_fuel"}
           label={rocketFuel}
           size={30}
@@ -161,7 +167,7 @@ const CraftingOverview = () => {
             style={{
               gridRow: "2/3",
             }}
-            />
+          />
         ))}
         {/* ORES */}
         {ORES.map((ore) => (
@@ -178,6 +184,8 @@ const CraftingOverview = () => {
             setLava={setLava}
             plasma={plasma}
             setPlasma={setPlasma}
+            dragonFire={dragonFire}
+            setDragonFire={setDragonFire}
             key={ore}
           />
         ))}

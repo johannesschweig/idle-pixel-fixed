@@ -88,7 +88,7 @@ const ObservedLabeledIPimg = ({
       <LabeledIPimg
         name={label.replace('_shiny', '')}
         size={size}
-        label={value}
+        label={value - retain}
         style={{
           backgroundColor: label.includes('shiny') ? "rgb(107, 107, 107)" : "transparent",
         }}

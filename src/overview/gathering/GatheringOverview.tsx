@@ -5,6 +5,7 @@ import { keysOf } from "../../util/typeUtils";
 import GatheringAreaDisplay from "./GatheringAreaDisplay";
 import { AREAS } from "./areas";
 import LabeledIPimg from "../../util/LabeledIPimg";
+import ObservedLabeledIPimg from "../../util/ObservedLabeledIPimg";
 
 const id = "GatheringOverview";
 const GatheringOverview = () => {
