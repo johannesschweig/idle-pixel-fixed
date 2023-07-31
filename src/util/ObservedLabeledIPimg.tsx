@@ -45,6 +45,27 @@ const ObservedLabeledIPimg = ({
     }
   }
 
+  const getStyle = () => {
+    if (label.includes("mega_shiny")) {
+      return {
+        name: label.replace("_mega_shiny", ""),
+        bg: "rgb(90, 90, 90)",
+        img: 'images/mega_shiny.gif'
+      }
+    } else if (label.includes("shiny")) {
+      return {
+        name: label.replace("_shiny", ""),
+        bg: "rgb(120, 120, 120)",
+        img: 'images/shiny.gif'
+      }
+    } else {
+      return {
+        name: label,
+        bg: "transparent",
+        img: "none"
+      }
+    }
+  }
 
   const [imgProps, ImgToolTip] = useTooltip(
     <div
@@ -76,7 +97,7 @@ const ObservedLabeledIPimg = ({
     >
       {label.includes('shiny') &&
         <img
-          src={get_image(`images/shiny.gif`)}
+          src={get_image(getStyle().img)}
           alt={label}
           style={{
             width: `${size}px`,
@@ -86,11 +107,11 @@ const ObservedLabeledIPimg = ({
         />
       }
       <LabeledIPimg
-        name={label.replace('_shiny', '')}
+        name={getStyle().name}
         size={size}
         label={value - retain}
         style={{
-          backgroundColor: label.includes('shiny') ? "rgb(107, 107, 107)" : "transparent",
+          backgroundColor: getStyle().bg,
         }}
         {...rest} />
       {tooltipText && <ImgToolTip />}

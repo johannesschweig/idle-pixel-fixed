@@ -50,6 +50,10 @@ const ToastEntry = ({ content, timestamp }: Props) => {
         bg: "#FBCBD9",
         icon: "red_treasure_chest"
       }
+      case "achievements": return {
+        bg: "lightgreen",
+        icon: "achievements"
+      }
       default: return {
         bg: "white",
         icon: "",

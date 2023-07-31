@@ -6,7 +6,6 @@ import { hideElementById } from "../../util/domOperations";
 import { SEEDS } from "./seeds";
 import OverviewBox from "../OverviewBox";
 import LabeledIPimg from "../../util/LabeledIPimg";
-import IPimg from "../../util/IPimg";
 import { useNumberItemObserver } from "../setItems/useSetItemsObserver";
 import { keysOf } from "../../util/typeUtils";
 import { BONES } from "./bonemeal/bones";
@@ -65,7 +64,6 @@ const FarmingOverview = () => {
   return (
     <OverviewBox
       justifyContent={"space-between"}
-      xp={farmingXp}
     >
       <div style={{ display: "flex" }}>
         <LabeledIPimg

@@ -20,7 +20,8 @@ const ConsumeOverview = () => {
     "shrimp", "anchovy", "sardine", "crab", "piranha", "salmon", "trout", "pike", "rainbow_fish", "eel", "tuna", "swordfish", "manta_ray", "shark", "whale", "small_stardust_fish", "medium_stardust_fish", "large_stardust_fish",
   ].map(fish => "cooked_" + fish)
   const COOKED_SHINY_FISH = COOKED_FISH.map(fish => fish + "_shiny")
-  const COOKED_FOOD = ['cooked_chicken', 'cooked_meat', "orange", "egg", "maple_syrup", "chocolate", "cheese", "honey", "coconut_stew", "banana_jello"].concat(COOKED_FISH, COOKED_SHINY_FISH)
+  const COOKED_MEGA_SHINY_FISH = COOKED_FISH.map(fish => fish + "_mega_shiny")
+  const COOKED_FOOD = ['cooked_chicken', 'cooked_meat', "orange", "egg", "maple_syrup", "chocolate", "cheese", "honey", "coconut_stew", "banana_jello"].concat(COOKED_FISH, COOKED_SHINY_FISH, COOKED_MEGA_SHINY_FISH)
   const STARDUST_PRISMS = ["small", "medium", "large", "huge"].map(e => e + "_stardust_prism")
   const GEODES = ["grey", "blue", "green", "red", "cyan", "ancient"].map(c => c + "_geode")
   const MINERALS = ["blue_marble", "amethyst", "sea_crystal", "dense_marble", "fluorite", "clear_marble", "jade", "lime_quartz", "opal", "purple_quartz", "amber", "smooth_pearl", "topaz", "tanzanite", "sulfer"].map(c => c + "_mineral") // "frozen", "blood_crystal", "magnesium",
@@ -45,6 +46,7 @@ const ConsumeOverview = () => {
   const [promethiumBar] = useNumberItemObserver("promethium_bar", id)
   const [titaniumBar] = useNumberItemObserver("titanium_bar", id)
   const [heatPending] = useNumberItemObserver("heat_pending", id)
+  const [ironBar] = useNumberItemObserver("iron_bar", id)
 
   const limbClick = (limb: string, amount: number) => {
     sendMessage("GRIND", limb, amount)
@@ -133,7 +135,12 @@ const ConsumeOverview = () => {
             action_override={['OPEN_ROBOT_LOOT', wave]}
           />
         ))}
-
+        {ironBar >= 10 && <ObservedLabeledIPimg
+          label={"cannonball_mould"}
+          action={''}
+          size={30}
+          action_override={["CRAFT", "iron_cannonball", '1']}
+        />}
         {STARDUST_PRISMS.map((prism) => (
           <ObservedLabeledIPimg
             label={prism}
@@ -270,7 +277,7 @@ const ConsumeOverview = () => {
           <LabeledIPimg
             name="aquarium"
             label={"Feed"}
-            size={20}
+            size={30}
             onClick={() => sendMessage("FEED_FISH", "maggots")}
             style={{
               cursor: "pointer",
@@ -289,6 +296,12 @@ const ConsumeOverview = () => {
           retain={3}
           size={30}
           action_override={["THROW_SUPER_BAIT"]}
+        />
+        <ObservedLabeledIPimg
+          label={"mega_bait"}
+          action={""}
+          size={30}
+          action_override={["THROW_MEGA_BAIT"]}
         />
         {cooksBookTimer === 1 && <LabeledIPimg
           name={cooksBookItem}
@@ -370,14 +383,13 @@ const ConsumeOverview = () => {
               tooltipText={f.heat.toString()}
               tooltipIcon={'heat'}
             />)}
-          <ObservedLabeledIPimg
+        </div>
+      }
+      {/* <ObservedLabeledIPimg
             label={"chefs_hat_unclaimed"}
             action={''}
             action_override={["GATHERING_OPEN_UNIQUE", "kitchen", "chefs_hat_unclaimed"]}
-          />
-
-        </div>
-      }
+          /> */}
     </OverviewBox>
   );
 };

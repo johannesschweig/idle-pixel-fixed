@@ -78,6 +78,24 @@ const CraftingOverview = () => {
     setOreAmountSet(smelting.amountSet);
   };
 
+  const getActionIcon =
+    view === CraftingView.SMELTING
+      ? furnace
+      : view === CraftingView.CONVERTING
+        ? "stardust"
+        : "coins"
+
+  const toggleAction = () => {
+    switch(view) {
+      case CraftingView.SMELTING: setView(CraftingView.CONVERTING)
+      break
+      case CraftingView.CONVERTING: setView(CraftingView.SELLING)
+      break
+      case CraftingView.SELLING: setView(CraftingView.SMELTING)
+      break
+    }
+  }
+
   return (
     <OverviewBox >
       <div
@@ -94,29 +112,19 @@ const CraftingOverview = () => {
             gridRow: "1/3",
           }}
         >
-          {view === CraftingView.SMELTING &&
-            <IPimg
-              name={furnace}
-              size={50}
-              onClick={() => setView(CraftingView.CONVERTING)}
-            />}
-          {view === CraftingView.CONVERTING &&
-            <IPimg
-              name={"stardust"}
-              size={50}
-              onClick={() => setView(CraftingView.SELLING)}
-            />}
-          {view === CraftingView.SELLING &&
-            <IPimg
-              name={"coins"}
-              size={50}
-              onClick={() => setView(CraftingView.SMELTING)}
-            />}
+          <IPimg
+            name={getActionIcon}
+            size={50}
+            onClick={toggleAction}
+            style={{
+              display: "block",
+              margin: "0 auto",
+            }}
+          />
           {oreType !== "none" ? (
             <>
               <IPimg name={oreToBar(oreType)} size={20}
                 style={{}} />
-              {/* <span>{`${oreAmountAt}/${oreAmountSet}`}</span> */}
               <span>{formatTime(furnaceCountdown + TIME_TO_SMELT[oreType] * (oreAmountSet - oreAmountAt - 1))}</span>
             </>
           ) : (

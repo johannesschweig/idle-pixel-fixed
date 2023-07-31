@@ -193,4 +193,95 @@ export const RAW_FOOD : FoodData[] = [{
   name: 'raw_large_stardust_fish_shiny',
   energy:  25000,
   heat:  2000
-}]
+},
+{
+  name: 'raw_rainbow_fish_mega_shiny',
+  energy:  750000,
+  heat:  840
+},
+{
+  name: 'raw_swordfish_mega_shiny',
+  energy:  75000,
+  heat:  220
+},
+{
+  name: 'raw_eel_mega_shiny',
+  energy:  75000,
+  heat:  280
+},
+{
+  name: 'raw_piranha_mega_shiny',
+  energy:  25000,
+  heat:  110
+},
+{
+  name: 'raw_pike_mega_shiny',
+  energy:  25000,
+  heat:  120
+},
+{
+  name: 'raw_whale_mega_shiny',
+  energy:  1000000,
+  heat:  5000
+},
+{
+  name: 'raw_trout_mega_shiny',
+  energy:  7500,
+  heat:  40
+},
+{
+  name: 'raw_manta_ray_mega_shiny',
+  energy:  225000,
+  heat:  1200
+},
+{
+  name: 'raw_crab_mega_shiny',
+  energy:  12500,
+  heat:  75
+},
+{
+  name: 'raw_tuna_mega_shiny',
+  energy:  12500,
+  heat:  75
+},
+{
+  name: 'raw_shark_mega_shiny',
+  energy:  500000,
+  heat:  3000
+},
+{
+  name: 'raw_anchovy_mega_shiny',
+  energy:  2500,
+  heat:  20
+},
+{
+  name: 'raw_salmon_mega_shiny',
+  energy:  2500,
+  heat:  20
+},
+{
+  name: 'raw_sardine_mega_shiny',
+  energy:  5000,
+  heat:  40
+},
+{
+  name: 'raw_medium_stardust_fish_mega_shiny',
+  energy:  62500,
+  heat:  600
+},
+{
+  name: 'raw_small_stardust_fish_mega_shiny',
+  energy:  25000,
+  heat:  300
+},
+{
+  name: 'raw_shrimp_mega_shiny',
+  energy:  625,
+  heat:  10
+},
+{
+  name: 'raw_large_stardust_fish_mega_shiny',
+  energy:  125000,
+  heat:  2000
+},
+]

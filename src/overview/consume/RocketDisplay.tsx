@@ -34,7 +34,7 @@ const RocketDisplay = () => {
   const [rocketKm] = useNumberItemObserver("rocket_km", id);
   const [rocketStatus] = useItemObserver("rocket_status", id)
   const [sunDistance] = useRocketObserver("sun", id)
-  const [rocketFuel] = useRocketObserver("rocket_fuel", id)
+  const [rocketFuel] = useNumberItemObserver("rocket_fuel", id)
 
   useEffect(() => {
     sendMessage('CLICKS_ROCKET', '0')
@@ -72,9 +72,16 @@ const RocketDisplay = () => {
           style: passiveStyle,
         }
       } else { // <110Mio km
-        return {
-          label: `GO (${formatNumber(sunDistance)})`,
-          style: activeStyle,
+        if (rocketFuel >= 5) {
+          return {
+            label: `GO (${formatNumber(sunDistance)})`,
+            style: activeStyle,
+          }
+        } else {
+          return {
+            label: `<5 RF (${formatNumber(sunDistance)})`,
+            style: activeStyle,
+          }
         }
       }
     } else if (rocketKm === rocketDistanceRequired) {
