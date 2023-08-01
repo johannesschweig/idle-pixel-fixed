@@ -1,11 +1,16 @@
 import { CSSProperties, PropsWithChildren } from "react";
 import { formatNumber } from "../util/numberUtils";
 
+interface Skill {
+    name: string;
+    xp: number;
+}
 interface Props {
-  xp?: number;
+  skill?: Skill
 }
 
-const XpBar = (xp: number) => {
+const XpBar = (skill: Skill) => {
+
   const xpNext = (xp: number) => {
     let cLevel = get_level(xp)
     if (cLevel === 100) {
@@ -43,16 +48,16 @@ const XpBar = (xp: number) => {
           zIndex: 1,
           padding: "0 4px",
         }}>
-        LEVEL {get_level(xp)}
+        {`${skill.name} ☆${get_level(skill.xp)}`}
       </span>
       <div
         style={{
           backgroundColor: "#00FF00",
-          width: xpNext(xp).progress + "%",
+          width: xpNext(skill.xp).progress + "%",
           height: "15px",
           position: "absolute",
         }} />
-      { xpNext(xp).next > 0 && <span
+      {xpNext(skill.xp).next > 0 && <span
         style={{
           lineHeight: "16px",
           padding: "0 4px",
@@ -60,24 +65,24 @@ const XpBar = (xp: number) => {
           zIndex: 1,
           right: "0px",
         }}>
-        {formatNumber(xpNext(xp).next)} xp
-      </span> }
+        {formatNumber(xpNext(skill.xp).next)} xp
+      </span>}
     </div>
   )
 }
 
-const OverviewBox = ({ xp, children, ...style }: PropsWithChildren<Props> & CSSProperties) => {
+const OverviewBox = ({ skill, children, ...style }: PropsWithChildren<Props> & CSSProperties) => {
 
   return (
     <div
       style={{
         gap: "5px",
         backgroundColor: "#b1d6dc",
-        padding: xp ? "0 10px 10px 10px" : "10px",
+        padding: skill ? "0 10px 10px 10px" : "10px",
         ...style
       }}
     >
-      {xp && XpBar(xp)}
+      {skill && XpBar(skill)}
       {children}
     </div>
   );

@@ -59,7 +59,10 @@ const CombatOverview = () => {
 
   return (
     <OverviewBox
-      xp={magicXp}
+      skill={{
+        name: "Magic",
+        xp: magicXp
+      }}
       display={'block'}
     >
       <div
@@ -101,7 +104,7 @@ const CombatOverview = () => {
           action={"FIGHT_EVIL_PIRATE"}
           action_override={["FIGHT_EVIL_PIRATE"]}
           size={30}
-        /> }
+        />}
       </div>
     </OverviewBox>
   );

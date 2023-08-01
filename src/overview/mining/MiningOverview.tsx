@@ -18,7 +18,10 @@ const MiningOverview = () => {
 
   return (
     <OverviewBox
-      xp={miningXp}
+      skill={{
+        name: "Mining",
+        xp: miningXp
+      }}
     >
       <div
         style={{

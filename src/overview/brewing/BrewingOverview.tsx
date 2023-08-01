@@ -82,7 +82,10 @@ const BrewingOverview = ({ }: Props) => {
     <OverviewBox
       flexDirection={"column"}
       alignItems={"stretch"}
-      xp={brewingXp}
+      skill={{
+        name: "Brewing",
+        xp: brewingXp
+      }}
     >
       <div
         style={{

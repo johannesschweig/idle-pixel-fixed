@@ -118,7 +118,10 @@ const ConsumeOverview = () => {
 
   return (
     <OverviewBox
-      xp={inventionXp}
+     skill={{
+        name: "Invention",
+        xp: inventionXp
+      }}
       gridColumn={"1/4"}
     >
       <div
