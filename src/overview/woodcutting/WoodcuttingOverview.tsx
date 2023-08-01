@@ -9,6 +9,7 @@ import { sendMessage } from "../../util/websocket/useWebsocket";
 import { useNumberItemObserver } from "../setItems/useSetItemsObserver";
 import { CSSProperties, useState } from "react";
 import { formatNumber } from "../../util/numberUtils";
+import { formatTime } from "../../util/timeUtils";
 
 export enum LogAction {
   OVEN = "OVEN",
@@ -63,7 +64,7 @@ const WoodcuttingOverview = () => {
         break
       case LogAction.FOUNDRY:
         if (foundryAmount === 0) {
-          amount = Math.min(amount, 100, Math.floor(oil / 10))
+          amount = Math.min(amount, 1000, Math.floor(oil / 10))
           sendMessage("FOUNDRY", log, amount);
         }
         break
@@ -82,7 +83,7 @@ const WoodcuttingOverview = () => {
   }
   const getLabel = () => {
     if (foundryAmount > 0) {
-      return `Charring: ${foundryAmount} logs`
+      return `Charring: ${formatTime(foundryAmount)} left`
     }
     return `${formatNumber(getHeat())} heat`
   }
