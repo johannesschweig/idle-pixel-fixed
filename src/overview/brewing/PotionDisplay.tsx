@@ -74,7 +74,7 @@ const PotionDisplay = ({
       if (potionName === "rotten_potion") {
         sendMessage("BREWING_DRINK_ROTTEN_POTION")
       } else if (potionName === 'rare_monster_potion') {
-        sendMessage('DRINK_SELECT_POTION', 'skeleton')
+        sendMessage('DRINK_SELECT_POTION', 'forest_ent')
       } else if (potionName === 'super_rare_monster_potion') {
         sendMessage('DRINK_SUPER_SELECT_POTION', 'ice_hawk')
       } else {

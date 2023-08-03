@@ -7,6 +7,7 @@ import CombatAreaDisplay from "./CombatAreaDisplay";
 import { useState } from "react";
 import LabeledIPimg from "../../util/LabeledIPimg";
 import ObservedLabeledIPimg from "../../util/ObservedLabeledIPimg";
+import { formatNumber } from "../../util/numberUtils";
 
 
 // START_FIGHT=blood_field
@@ -72,6 +73,11 @@ const CombatOverview = () => {
           marginTop: '20px',
           gap: "12px",
         }}>
+        <LabeledIPimg
+        name={"fight_points"}
+        label={fightPoints === 12000 ? "Full" : formatNumber(fightPoints)}
+        size={30}
+        />
         {AREAS.map((a) => (
           <CombatAreaDisplay
             name={formatAreaName(a.name)}

@@ -8,8 +8,7 @@ import IPimg from "../../util/IPimg";
 import { sendMessage } from "../../util/websocket/useWebsocket";
 import { useNumberItemObserver } from "../setItems/useSetItemsObserver";
 import { CSSProperties, useState } from "react";
-import { formatNumber } from "../../util/numberUtils";
-import { formatTime } from "../../util/timeUtils";
+import HeatIndicator from "./HeatIndicator"
 
 export enum LogAction {
   OVEN = "OVEN",
@@ -30,13 +29,7 @@ const WoodcuttingOverview = () => {
   );
 
   const [oil] = useNumberItemObserver("oil", id);
-  const [logs] = useNumberItemObserver('logs', id)
-  const [oak_logs] = useNumberItemObserver('oak_logs', id)
-  const [willow_logs] = useNumberItemObserver('willow_logs', id)
-  const [maple_logs] = useNumberItemObserver('maple_logs', id)
-  const [stardust_logs] = useNumberItemObserver('stardust_logs', id)
-  const [pine_logs] = useNumberItemObserver('pine_logs', id)
-  const [redwood_logs] = useNumberItemObserver('redwood_logs', id)
+  
   const [action, setAction] = useState(LogAction.OVEN);
   const [foundryAmount] = useNumberItemObserver('foundry_amount', id)
   const [treeSpeedPotiontimer] = useNumberItemObserver("tree_speed_potion_timer", id);
@@ -70,23 +63,7 @@ const WoodcuttingOverview = () => {
         break
     }
   };
-  const getHeat = () => {
-    const heat = logs * (Cooking.LOG_HEAT_MAP['logs'] + 1) +
-      oak_logs * (Cooking.LOG_HEAT_MAP['oak_logs'] + 1) +
-      willow_logs * (Cooking.LOG_HEAT_MAP['willow_logs'] + 1) +
-      maple_logs * (Cooking.LOG_HEAT_MAP['maple_logs'] + 1) +
-      stardust_logs * (Cooking.LOG_HEAT_MAP['stardust_logs'] + 1) +
-      pine_logs * (Cooking.LOG_HEAT_MAP['pine_logs'] + 1) +
-      redwood_logs * (Cooking.LOG_HEAT_MAP['redwood_logs'] + 1)
-
-    return heat
-  }
-  const getLabel = () => {
-    if (foundryAmount > 0) {
-      return `Charring: ${formatTime(foundryAmount)} left`
-    }
-    return `${formatNumber(getHeat())} heat`
-  }
+  
 
   return (
     <OverviewBox
@@ -113,13 +90,7 @@ const WoodcuttingOverview = () => {
             size={30}
             onClick={() => setAction(LogAction.FOUNDRY)}
             style={actionStyle(LogAction.FOUNDRY)} />
-          <span
-            style={{
-              opacity: getHeat() >= 6000 ? 1 : 0.5,
-              color: getHeat() >= 6000 ? 'red' : 'black',
-              fontSize: 14,
-            }}>
-            {getLabel()}</span>
+          <HeatIndicator />
         </div>
         <div
           style={{
