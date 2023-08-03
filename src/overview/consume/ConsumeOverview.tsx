@@ -10,6 +10,7 @@ import { AREAS } from "../gathering/areas";
 import { keysOf } from "../../util/typeUtils";
 import GatheringBagDisplay from "../gathering/GatheringBagDisplay";
 import RocketDisplay from "./RocketDisplay";
+import CookBook from "./CookBook";
 
 const id = "ConsumeOverview";
 const ConsumeOverview = () => {
@@ -33,10 +34,6 @@ const ConsumeOverview = () => {
   const [stardustBoatTimer] = useNumberItemObserver("stardust_boat_timer", id);
   const [pirateShipTimer] = useNumberItemObserver("pirate_ship_timer", id);
   const [aquariumTimer] = useNumberItemObserver("aquarium_timer", id)
-  const [cooksBookTimer] = useNumberItemObserver("cooks_book_timer", id)
-  const [cooksBookItem] = useItemObserver("cooks_book_item", id)
-  const [coconut] = useNumberItemObserver("coconut", id)
-  const [banana] = useNumberItemObserver("banana", id)
   const [heat] = useNumberItemObserver("heat", id)
   const [treasureChest] = useNumberItemObserver("treasure_chest", id)
   const [greenTreasureChest] = useNumberItemObserver("green_treasure_chest", id)
@@ -68,14 +65,6 @@ const ConsumeOverview = () => {
       sendMessage("BOAT_COLLECT", boat)
     } else {
       sendMessage("BOAT_SEND", boat)
-    }
-  }
-
-  const clickCooksBook = () => {
-    if (coconut >= 10) {
-      sendMessage("COOKS_BOOK", "coconut_stew")
-    } else if (banana >= 10) {
-      sendMessage("COOKS_BOOK", "banana_jello")
     }
   }
 
@@ -138,6 +127,16 @@ const ConsumeOverview = () => {
             action_override={['OPEN_ROBOT_LOOT', wave]}
           />
         ))}
+        <ObservedLabeledIPimg
+          label={"ghost_essence"}
+          action={''}
+          size={30}
+          style={{
+            opacity: 0.5,
+            cursor: 'auto',
+          }}
+        />
+        <CookBook />
         {ironBar >= 10 && <ObservedLabeledIPimg
           label={"cannonball_mould"}
           action={''}
@@ -306,23 +305,6 @@ const ConsumeOverview = () => {
           size={30}
           action_override={["THROW_MEGA_BAIT"]}
         />
-        {cooksBookTimer === 1 && <LabeledIPimg
-          name={cooksBookItem}
-          label={"Collect"}
-          size={50}
-          onClick={() => sendMessage("COOKS_BOOK_READY")}
-          style={{
-            cursor: "pointer",
-            backgroundColor: "lightyellow",
-          }} />}
-        {(coconut >= 10 || banana >= 10) && cooksBookTimer === 0 && <LabeledIPimg
-          name={"cooks_book"}
-          label={coconut >= 10 ? "Make coconut stew" : "Make banana jello"}
-          size={50}
-          onClick={() => clickCooksBook()}
-          style={{
-            cursor: "pointer",
-          }} />}
         {areas.map((area) => (
           <GatheringBagDisplay area={area} key={area} />
         ))}
