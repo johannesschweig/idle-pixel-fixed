@@ -75,6 +75,11 @@ export const RAW_FOOD : FoodData[] = [{
   heat:  40
 },
 {
+  name: 'raw_bird_meat',
+  energy: 100,
+  heat: 20,
+},
+{
   name: 'raw_meat',
   energy:  200,
   heat:  40

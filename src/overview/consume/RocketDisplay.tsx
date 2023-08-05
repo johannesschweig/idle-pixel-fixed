@@ -26,7 +26,7 @@ interface RocketData {
 const id = "RocketDisplay";
 const RocketDisplay = () => {
 
-  const BASE_SPEED = 255;
+  const BASE_SPEED = 255 * 2;
   const BOOSTED_SPEED = BASE_SPEED * 10;
 
   const [rocketPotionTimer] = useNumberItemObserver("rocket_potion_timer", id)

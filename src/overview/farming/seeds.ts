@@ -150,6 +150,12 @@ export const SEEDS: Record<string, SeedData> = {
     time: 18 * 60,
     bonemealCost: 0
   },
+  dragon_fruit_tree_seeds: {
+    level: 90,
+    stopsDying: 100,
+    time: 24 * 60,
+    bonemealCost: 500,
+  },
   strange_tree_seeds: {
     level: 92,
     stopsDying: 100,

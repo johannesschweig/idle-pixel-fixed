@@ -22,7 +22,7 @@ const ConsumeOverview = () => {
   ].map(fish => "cooked_" + fish)
   const COOKED_SHINY_FISH = COOKED_FISH.map(fish => fish + "_shiny")
   const COOKED_MEGA_SHINY_FISH = COOKED_FISH.map(fish => fish + "_mega_shiny")
-  const COOKED_FOOD = ['cooked_chicken', 'cooked_meat', "orange", "egg", "maple_syrup", "chocolate", "cheese", "honey", "coconut_stew", "banana_jello"].concat(COOKED_FISH, COOKED_SHINY_FISH, COOKED_MEGA_SHINY_FISH)
+  const COOKED_FOOD = ['cooked_chicken', 'cooked_meat', 'cooked_bird_meat', "orange", "egg", "maple_syrup", "chocolate", "cheese", "honey", "coconut_stew", "banana_jello"].concat(COOKED_FISH, COOKED_SHINY_FISH, COOKED_MEGA_SHINY_FISH)
   const STARDUST_PRISMS = ["small", "medium", "large", "huge"].map(e => e + "_stardust_prism")
   const GEODES = ["grey", "blue", "green", "red", "cyan", "ancient"].map(c => c + "_geode")
   const MINERALS = ["blue_marble", "amethyst", "sea_crystal", "dense_marble", "fluorite", "clear_marble", "jade", "lime_quartz", "opal", "purple_quartz", "amber", "smooth_pearl", "topaz", "tanzanite", "sulfer"].map(c => c + "_mineral") // "frozen", "blood_crystal", "magnesium",
@@ -44,6 +44,9 @@ const ConsumeOverview = () => {
   const [titaniumBar] = useNumberItemObserver("titanium_bar", id)
   const [heatPending] = useNumberItemObserver("heat_pending", id)
   const [ironBar] = useNumberItemObserver("iron_bar", id)
+  const [treasureMap] = useNumberItemObserver("treasure_map", id)
+  const [greenTreasureMap] = useNumberItemObserver("green_treasure_map", id)
+  const [redTreasureMap] = useNumberItemObserver("red_treasure_map", id)
 
   const limbClick = (limb: string, amount: number) => {
     sendMessage("GRIND", limb, amount)
@@ -73,7 +76,7 @@ const ConsumeOverview = () => {
   const openTreasureChest = (color: string) => {
     let key = ''
     switch (color) {
-      case "brown": key = 'gold_emerald_key'
+      case "brown": key = 'gold_sapphire_key'
         break
       case "green": key = 'promethium_emerald_key'
         break
@@ -107,7 +110,7 @@ const ConsumeOverview = () => {
 
   return (
     <OverviewBox
-     skill={{
+      skill={{
         name: "Invention",
         xp: inventionXp
       }}
@@ -120,22 +123,6 @@ const ConsumeOverview = () => {
         }}
       >
         <RocketDisplay />
-        {['novice', 'warrior', 'master', 'elite'].map(wave => (
-          <ObservedLabeledIPimg
-            label={`robot_${wave}_loot`}
-            action={''}
-            action_override={['OPEN_ROBOT_LOOT', wave]}
-          />
-        ))}
-        <ObservedLabeledIPimg
-          label={"ghost_essence"}
-          action={''}
-          size={30}
-          style={{
-            opacity: 0.5,
-            cursor: 'auto',
-          }}
-        />
         <CookBook />
         {ironBar >= 10 && <ObservedLabeledIPimg
           label={"cannonball_mould"}
@@ -221,6 +208,36 @@ const ConsumeOverview = () => {
             size={30}
           />
         ))}
+        {/* Loot box, treasure maps & chests */}
+        {['novice', 'warrior', 'master', 'elite'].map(wave => (
+          <ObservedLabeledIPimg
+            label={`robot_${wave}_loot`}
+            action={''}
+            size={30}
+            action_override={['OPEN_ROBOT_LOOT', wave]}
+          />
+        ))}
+        {treasureMap > 0 &&
+          <LabeledIPimg
+            name={"treasure_map"}
+            label={`#${treasureMap}`}
+            size={30}
+          />
+        }
+        {greenTreasureMap > 0 &&
+          <LabeledIPimg
+            name={"green_treasure_map"}
+            label={`#${greenTreasureMap}`}
+            size={30}
+          />
+        }
+        {redTreasureMap > 0 &&
+          <LabeledIPimg
+            name={"red_treasure_map"}
+            label={`#${redTreasureMap}`}
+            size={30}
+          />
+        }
         {treasureChest > 0 &&
           <LabeledIPimg
             name={"treasure_chest"}
@@ -257,6 +274,7 @@ const ConsumeOverview = () => {
             }}
           />
         }
+        {/* Boats */}
         {canoeBoatTimer <= 1 && boatsOut() < 2 && <LabeledIPimg
           name="canoe_boat"
           label={canoeBoatTimer === 1 ? "Collect" : "Send out"}
