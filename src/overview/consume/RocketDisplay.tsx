@@ -66,7 +66,7 @@ const RocketDisplay = () => {
           label: "No rocket fuel",
           style: activeStyle,
         }
-      } else if (sunDistance > 2 * 6 * 3600 * BOOSTED_SPEED) { // too far away, > 110.160.000
+      } else if (sunDistance > 122000000) { // too far away (12h with one pot), > 110.160.000 (2 * 6 * 3600 * BOOSTED_SPEED)
         return {
           label: `Too far (${formatNumber(sunDistance)})`,
           style: passiveStyle,

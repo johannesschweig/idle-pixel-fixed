@@ -87,9 +87,7 @@ const CraftingOverview = () => {
 
   const toggleAction = () => {
     switch(view) {
-      case CraftingView.SMELTING: setView(CraftingView.CONVERTING)
-      break
-      case CraftingView.CONVERTING: setView(CraftingView.SELLING)
+      case CraftingView.SMELTING: setView(CraftingView.SELLING)
       break
       case CraftingView.SELLING: setView(CraftingView.SMELTING)
       break

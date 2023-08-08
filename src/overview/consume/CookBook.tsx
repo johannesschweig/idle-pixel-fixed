@@ -55,11 +55,11 @@ const CookBook = ({
                 ? "coconut"
                 : banana >= 10
                   ? "banana"
-                  : ""
+                  : "nothing"
 
   const label = cooksBookTimer === 1 ? `Collect ${cooksBookItem}` : `Cook ${name}s`
 
-  return cooksBookTimer <= 1 ? (
+  return (cooksBookTimer <= 1 && name != "nothing") ? (
     <LabeledIPimg
       name={name}
       label={label}

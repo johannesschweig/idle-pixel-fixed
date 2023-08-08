@@ -11,6 +11,7 @@ import { keysOf } from "../../util/typeUtils";
 import GatheringBagDisplay from "../gathering/GatheringBagDisplay";
 import RocketDisplay from "./RocketDisplay";
 import CookBook from "./CookBook";
+import CrystalBall from "./CrystalBall";
 
 const id = "ConsumeOverview";
 const ConsumeOverview = () => {
@@ -18,7 +19,7 @@ const ConsumeOverview = () => {
   const areas: string[] = keysOf(AREAS).concat(['junk']);
   const WEAPONS = ["stinger", "iron_dagger", "skeleton_sword", "bone_amulet"]
   const COOKED_FISH = [
-    "shrimp", "anchovy", "sardine", "crab", "piranha", "salmon", "trout", "pike", "rainbow_fish", "eel", "tuna", "swordfish", "manta_ray", "shark", "whale", "small_stardust_fish", "medium_stardust_fish", "large_stardust_fish",
+    "shrimp", "anchovy", "sardine", "crab", "piranha", "salmon", "trout", "pike", "rainbow_fish", "eel", "tuna", "swordfish", "manta_ray", "whale", "small_stardust_fish", "medium_stardust_fish", "large_stardust_fish",
   ].map(fish => "cooked_" + fish)
   const COOKED_SHINY_FISH = COOKED_FISH.map(fish => fish + "_shiny")
   const COOKED_MEGA_SHINY_FISH = COOKED_FISH.map(fish => fish + "_mega_shiny")
@@ -107,7 +108,8 @@ const ConsumeOverview = () => {
     }
   }
 
-
+// COLLECT_BIRDHOUSE
+// PREPARE_BIRDHOUSE=10~1~1~7~3
   return (
     <OverviewBox
       skill={{
@@ -124,6 +126,7 @@ const ConsumeOverview = () => {
       >
         <RocketDisplay />
         <CookBook />
+        <CrystalBall />
         {ironBar >= 10 && <ObservedLabeledIPimg
           label={"cannonball_mould"}
           action={''}
@@ -335,7 +338,7 @@ const ConsumeOverview = () => {
           label={"banana"}
           size={30}
           action={"CONSUME"}
-          retain={20}
+          retain={30}
         />
         <ObservedLabeledIPimg
           label={"apple"}

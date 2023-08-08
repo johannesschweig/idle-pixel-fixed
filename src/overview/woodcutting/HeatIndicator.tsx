@@ -65,8 +65,6 @@ const HeatIndicator = ({
   return heat < HEAT_THRESHOLD ? (
     <span
       style={{
-        opacity: heat >= HEAT_THRESHOLD ? 1 : 0.5,
-        color: heat >= HEAT_THRESHOLD ? 'red' : 'black',
         fontSize: 14,
       }}>
       {label}
@@ -75,7 +73,7 @@ const HeatIndicator = ({
     <button
       style={{
         ...buttonStyle,
-        backgroundColor: heatPotion >= 1 ? 'red' : 'transparent',
+        backgroundColor: heatPotion >= 1 ? 'orangered' : 'transparent',
       }}
       onClick={() => fireUpOven()}
     >
