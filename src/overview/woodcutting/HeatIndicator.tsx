@@ -77,7 +77,7 @@ const HeatIndicator = ({
       }}
       onClick={() => fireUpOven()}
     >
-      Fire up oven
+      {`Fire up oven (${formatNumber(heat)})`}
     </button>
   );
 };

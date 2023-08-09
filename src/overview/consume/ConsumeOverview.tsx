@@ -12,6 +12,7 @@ import GatheringBagDisplay from "../gathering/GatheringBagDisplay";
 import RocketDisplay from "./RocketDisplay";
 import CookBook from "./CookBook";
 import CrystalBall from "./CrystalBall";
+import MerchantDisplay from "./MerchantDisplay";
 
 const id = "ConsumeOverview";
 const ConsumeOverview = () => {
@@ -108,8 +109,8 @@ const ConsumeOverview = () => {
     }
   }
 
-// COLLECT_BIRDHOUSE
-// PREPARE_BIRDHOUSE=10~1~1~7~3
+  // COLLECT_BIRDHOUSE
+  // PREPARE_BIRDHOUSE=10~1~1~7~3
   return (
     <OverviewBox
       skill={{
@@ -127,6 +128,7 @@ const ConsumeOverview = () => {
         <RocketDisplay />
         <CookBook />
         <CrystalBall />
+        <MerchantDisplay />
         {ironBar >= 10 && <ObservedLabeledIPimg
           label={"cannonball_mould"}
           action={''}
@@ -316,7 +318,7 @@ const ConsumeOverview = () => {
         <ObservedLabeledIPimg
           label={"super_bait"}
           action={""}
-          retain={3}
+          retain={5}
           size={30}
           action_override={["THROW_SUPER_BAIT"]}
         />

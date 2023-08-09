@@ -26,8 +26,8 @@ interface RocketData {
 const id = "RocketDisplay";
 const RocketDisplay = () => {
 
-  const BASE_SPEED = 255 * 2;
-  const BOOSTED_SPEED = BASE_SPEED * 10;
+  const BASE_SPEED_SUN = 255 * 2;
+  const BASE_SPEED_MOON = 3;
 
   const [rocketPotionTimer] = useNumberItemObserver("rocket_potion_timer", id)
   const [rocketDistanceRequired] = useNumberItemObserver("rocket_distance_required", id);
@@ -35,6 +35,9 @@ const RocketDisplay = () => {
   const [rocketStatus] = useItemObserver("rocket_status", id)
   const [sunDistance] = useRocketObserver("sun", id)
   const [rocketFuel] = useNumberItemObserver("rocket_fuel", id)
+
+  const BASE_SPEED = rocketStatus.includes("moon") ? BASE_SPEED_MOON : BASE_SPEED_SUN;
+  const BOOSTED_SPEED = BASE_SPEED * 10
 
   useEffect(() => {
     sendMessage('CLICKS_ROCKET', '0')

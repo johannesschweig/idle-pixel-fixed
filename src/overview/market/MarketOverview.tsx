@@ -26,12 +26,7 @@ const MarketOverview = () => {
 
   const [trackers, setTrackers] = useLocalStorage<TrackerData[]>(
     "trackers",
-    [
-      {
-        item: 'unbound_donor_coins',
-        threshold: 250000,
-      },
-    ],
+    [],
     id
   );
 

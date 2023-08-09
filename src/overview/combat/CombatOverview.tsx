@@ -26,6 +26,7 @@ const CombatOverview = () => {
   const [monsterHp] = useNumberItemObserver('monster_hp', id)
   const [bloodMoonActive] = useNumberItemObserver('blood_moon_active', id)
   const [robotWaveTimer] = useNumberItemObserver('robot_wave_timer', id)
+  const [rainPotion] = useNumberItemObserver('rain_potion', id)
 
   const formatAreaName = (str: string) => {
     var formattedStr = str.replace(/_/g, ' ');
@@ -98,11 +99,12 @@ const CombatOverview = () => {
         </button>
         {robotWaveTimer === 0 && <LabeledIPimg
           name={"robot_active"}
-          label={"Robot (warrior)"}
+          label={"Robot (master)"}
           size={30}
-          onClick={() => sendMessage('ROBOT_WAVES', 'warrior')} // novice, warrior, master, elite
+          onClick={() => sendMessage('ROBOT_WAVES', 'master')} // novice, warrior, master, elite
           style={{
             cursor: "pointer",
+            opacity: rainPotion >= 1 ? 1 : 0.5,
           }}
         />}
         {fightPoints >= 6000 && <ObservedLabeledIPimg
