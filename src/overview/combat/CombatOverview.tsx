@@ -4,10 +4,11 @@ import {
 import OverviewBox from "../OverviewBox";
 import { sendMessage } from "../../util/websocket/useWebsocket";
 import CombatAreaDisplay from "./CombatAreaDisplay";
-import { useState } from "react";
 import LabeledIPimg from "../../util/LabeledIPimg";
 import ObservedLabeledIPimg from "../../util/ObservedLabeledIPimg";
 import { formatNumber } from "../../util/numberUtils";
+import { useMemo, useState, useEffect } from "react";
+import { replaceWebSocketMessage, useWebsocket } from "../../util/websocket/useWebsocket";
 
 
 // START_FIGHT=blood_field
@@ -19,6 +20,7 @@ const id = "CombatOverview";
 const CombatOverview = () => {
   const AREAS = [{ name: "field", fightpoints: 300, energy: 50, }, { name: "forest", fightpoints: 600, energy: 200, }, { name: "cave", fightpoints: 900, energy: 500, }, { name: "volcano", fightpoints: 1500, energy: 1000, }, { name: "northern_field", fightpoints: 2000, energy: 3000, }, { name: "mansion", fightpoints: 3500, energy: 5000, }, { name: "beach", fightpoints: 5000, energy: 10000, }, { name: "blood_field", fightpoints: 1000, energy: 2000, }, { name: "blood_forest", fightpoints: 2000, energy: 4000, }, { name: "blood_cave", fightpoints: 3500, energy: 6000, }, { name: "blood_volcano", fightpoints: 5000, energy: 10000, }]
   const [selectedArea, setSelectedArea] = useState(AREAS[0].name);
+  const [purpleMonster, setPurpleMonster] = useState('');
 
   const [magicXp] = useNumberItemObserver('magic_xp', id)
   const [energy] = useNumberItemObserver('energy', id)
@@ -57,8 +59,35 @@ const CombatOverview = () => {
     //   }, 6000)
     // }
   }
+  const checkPurpleHint = useMemo(
+    () =>
+      replaceWebSocketMessage("OPEN_DIALOGUE", (data) => {
+        console.log('x', data)
+        if (data.split("~")[0] === "INGREDIENTS USED") {
+          return "";
+        }
+        if (data.split("~")[2].includes("purple guardian key")) {
+          const regex = /\/([^/]+)_icon\.png$/;
+          const monster = data.split("~")[1].match(regex)
+          if (monster != null) {
+            setPurpleMonster(monster[1])
+          }
+          return "";
+        }
+        return data;
+      }),
+    []
+  );
+
+  useWebsocket(checkPurpleHint, 1, id);
+
+  useEffect(() => {
+    sendMessage("CASTLE_MISC", "guardian_purple_key_hint")
+  }, [])
 
 
+  // CASTLE_MISC=guardian_purple_key_hint
+  // OPEN_DIALOGUE=MESSAGE~images/blood_fire_snake_icon.png~"I will keep the purple guardian key safe, master."<br /><br /><span class='color-grey'>The purple guardian key is being held by the monster shown.  The key will be held by another monster in: 11:32:37</span><br /><br />Loot chance: Common~false
   return (
     <OverviewBox
       skill={{
@@ -75,9 +104,9 @@ const CombatOverview = () => {
           gap: "12px",
         }}>
         <LabeledIPimg
-        name={"fight_points"}
-        label={fightPoints === 12000 ? "Full" : formatNumber(fightPoints)}
-        size={30}
+          name={"fight_points"}
+          label={fightPoints === 12000 ? "Full" : formatNumber(fightPoints)}
+          size={30}
         />
         {AREAS.map((a) => (
           <CombatAreaDisplay
@@ -113,6 +142,14 @@ const CombatOverview = () => {
           action_override={["FIGHT_EVIL_PIRATE"]}
           size={30}
         />}
+        <LabeledIPimg
+          name={purpleMonster}
+          label={"purple key"}
+          size={30}
+          style={{
+            fontSize: "12px",
+          }}
+        />
       </div>
     </OverviewBox>
   );

@@ -26,8 +26,6 @@ const ConsumeOverview = () => {
   const COOKED_MEGA_SHINY_FISH = COOKED_FISH.map(fish => fish + "_mega_shiny")
   const COOKED_FOOD = ['cooked_chicken', 'cooked_meat', 'cooked_bird_meat', "orange", "egg", "maple_syrup", "chocolate", "cheese", "honey", "coconut_stew", "banana_jello"].concat(COOKED_FISH, COOKED_SHINY_FISH, COOKED_MEGA_SHINY_FISH)
   const STARDUST_PRISMS = ["small", "medium", "large", "huge"].map(e => e + "_stardust_prism")
-  const GEODES = ["grey", "blue", "green", "red", "cyan", "ancient"].map(c => c + "_geode")
-  const MINERALS = ["blue_marble", "amethyst", "sea_crystal", "dense_marble", "fluorite", "clear_marble", "jade", "lime_quartz", "opal", "purple_quartz", "amber", "smooth_pearl", "topaz", "tanzanite", "sulfer"].map(c => c + "_mineral") // "frozen", "blood_crystal", "magnesium",
   const FRAGMENTS = ["sapphire", "emerald", "ruby", "diamond"].map(e => `gathering_${e}_fragments`)
 
   const [inventionXp] = useNumberItemObserver("invention_xp", id);
@@ -49,6 +47,7 @@ const ConsumeOverview = () => {
   const [treasureMap] = useNumberItemObserver("treasure_map", id)
   const [greenTreasureMap] = useNumberItemObserver("green_treasure_map", id)
   const [redTreasureMap] = useNumberItemObserver("red_treasure_map", id)
+  const [birdhouseTimer] = useNumberItemObserver("birdhouse_timer", id)
 
   const limbClick = (limb: string, amount: number) => {
     sendMessage("GRIND", limb, amount)
@@ -109,8 +108,7 @@ const ConsumeOverview = () => {
     }
   }
 
-  // COLLECT_BIRDHOUSE
-  // PREPARE_BIRDHOUSE=10~1~1~7~3
+  // PREPARE_BIRDHOUSE=10~1~1~7~3 (dotted, green, lime, red mushroom, stardust)
   return (
     <OverviewBox
       skill={{
@@ -129,6 +127,11 @@ const ConsumeOverview = () => {
         <CookBook />
         <CrystalBall />
         <MerchantDisplay />
+        { birdhouseTimer === 0 && <LabeledIPimg
+          name={"birdhouse"}
+          label={''}
+          onClick={() => sendMessage("COLLECT_BIRDHOUSE")}
+        /> }
         {ironBar >= 10 && <ObservedLabeledIPimg
           label={"cannonball_mould"}
           action={''}
@@ -139,18 +142,6 @@ const ConsumeOverview = () => {
           <ObservedLabeledIPimg
             label={prism}
             action={"SMASH_STARDUST_PRISM"}
-            size={30} />
-        ))}
-        {GEODES.map((geode) => (
-          <ObservedLabeledIPimg
-            label={geode}
-            action={"CRACK_GEODE"}
-            size={30} />
-        ))}
-        {MINERALS.map((mineral) => (
-          <ObservedLabeledIPimg
-            label={mineral}
-            action={"MINERAL_XP"}
             size={30} />
         ))}
         <ObservedLabeledIPimg
@@ -328,9 +319,9 @@ const ConsumeOverview = () => {
           size={30}
           action_override={["THROW_MEGA_BAIT"]}
         />
-        {areas.map((area) => (
+        {/* {areas.map((area) => (
           <GatheringBagDisplay area={area} key={area} />
-        ))}
+        ))} */}
         {/* <ObservedLabeledIPimg
           label={"machete_unclaimed"}
           action={""}

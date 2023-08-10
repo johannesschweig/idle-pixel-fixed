@@ -21,15 +21,7 @@ const MerchantDisplay = ({
   const [sellingItemTwo] = useItemObserver("merchant_selling_item_2", id)
   const [sellingItemThree] = useItemObserver("merchant_selling_item_3", id)
 
-  const imgStyle = {
-    display: "inline-block",
-  }
-
-  const spanStyle = {
-    marginRight: "12px",
-  }
-
-  return merchantTimer >= 0 ? (
+  return merchantTimer === 0 ? (
     <div
       onClick={() => sendMessage("ROTATE_MERCHANT")}
       style={{
@@ -43,57 +35,37 @@ const MerchantDisplay = ({
           fontWeight: "bold",
         }}
       >Merchant sells:</div>
-      <div>
-        <LabeledIPimg
-          name={sellingItemOne}
-          label={sellingAmountOne}
-          size={20}
-          style={imgStyle}
-        />
-        <span
-          style={spanStyle}
-        >for</span>
-        <LabeledIPimg
-          name={barterItemOne}
-          label={barterAmountOne}
-          size={20}
-          style={imgStyle}
-        />
-      </div>
-      <div>
-        <LabeledIPimg
-          name={sellingItemTwo}
-          label={sellingAmountTwo}
-          size={20}
-          style={imgStyle}
-        />
-        <span
-          style={spanStyle}
-        >for</span>
-        <LabeledIPimg
-          name={barterItemTwo}
-          label={barterAmountTwo}
-          size={20}
-          style={imgStyle}
-        />
-      </div>
-      <div>
-        <LabeledIPimg
-          name={sellingItemThree}
-          label={sellingAmountThree}
-          size={20}
-          style={imgStyle}
-        />
-        <span
-          style={spanStyle}
-        >for</span>
-        <LabeledIPimg
-          name={barterItemThree}
-          label={barterAmountThree}
-          size={20}
-          style={imgStyle}
-        />
-      </div>
+      {
+        [
+          [sellingItemOne, sellingAmountOne, barterItemOne, barterAmountOne],
+          [sellingItemTwo, sellingAmountTwo, barterItemTwo, barterAmountTwo],
+          [sellingItemThree, sellingAmountThree, barterItemThree, barterAmountThree]
+        ].map(offer => (
+          <div>
+            <LabeledIPimg
+              name={offer[0].toString()}
+              label={offer[1]}
+              size={20}
+              style={{
+                display: "inline-block",
+              }}
+            />
+            <span
+              style={{
+                marginRight: "12px",
+              }}
+            >for</span>
+            <LabeledIPimg
+              name={offer[2].toString()}
+              label={offer[3]}
+              size={20}
+              style={{
+                display: "inline-block",
+              }}
+            />
+          </div>
+        ))
+      }
     </div>
   ) : null;
 };

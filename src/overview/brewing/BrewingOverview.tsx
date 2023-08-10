@@ -53,19 +53,6 @@ const BrewingOverview = ({ }: Props) => {
     opacity: view === selectorView ? 1 : 0.3,
   });
 
-  const blockPopup = useMemo(
-    () =>
-      replaceWebSocketMessage("OPEN_DIALOGUE", (data) => {
-        if (data.split("~")[0] === "INGREDIENTS USED") {
-          return "";
-        }
-        return data;
-      }),
-    []
-  );
-
-  useWebsocket(blockPopup, 1, id);
-
   const [drinkProps, DrinkToolTip] = useTooltip(<span>Drink potions</span>);
   const [viewProps, ViewToolTip] = useTooltip(<span>Favorite potions</span>);
   const [mixerProps, MixerToolTip] = useTooltip(<span>Brewing XP Mixer</span>);
