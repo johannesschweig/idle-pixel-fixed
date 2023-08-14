@@ -32,7 +32,12 @@ const LabeledIPimg = ({
       {...rest}
     >
       <IPimg name={name} size={size} />
-      <span>{isNumber(label) ? formatNumber(label) : label}</span>
+      <span
+        style={{
+          fontSize: (size && size <= 20) ? "14px" : "inherit",
+        }}
+      >
+        {isNumber(label) ? formatNumber(label) : label}</span>
     </div>
   );
 };

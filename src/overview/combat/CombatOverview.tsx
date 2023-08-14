@@ -142,14 +142,14 @@ const CombatOverview = () => {
           action_override={["FIGHT_EVIL_PIRATE"]}
           size={30}
         />}
-        <LabeledIPimg
+        {purpleMonster && <LabeledIPimg
           name={purpleMonster}
           label={"purple key"}
           size={30}
           style={{
             fontSize: "12px",
           }}
-        />
+        /> }
       </div>
     </OverviewBox>
   );

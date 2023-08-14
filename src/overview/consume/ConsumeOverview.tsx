@@ -13,6 +13,8 @@ import RocketDisplay from "./RocketDisplay";
 import CookBook from "./CookBook";
 import CrystalBall from "./CrystalBall";
 import MerchantDisplay from "./MerchantDisplay";
+import { formatTime } from "../../util/timeUtils";
+import { formatNumber } from "../../util/numberUtils";
 
 const id = "ConsumeOverview";
 const ConsumeOverview = () => {
@@ -48,6 +50,11 @@ const ConsumeOverview = () => {
   const [greenTreasureMap] = useNumberItemObserver("green_treasure_map", id)
   const [redTreasureMap] = useNumberItemObserver("red_treasure_map", id)
   const [birdhouseTimer] = useNumberItemObserver("birdhouse_timer", id)
+  const [dottedGreenLeafSeeds] = useNumberItemObserver("dotted_green_leaf_seeds", id)
+  const [greenLeafSeeds] = useNumberItemObserver("green_leaf_seeds", id)
+  const [redMushroomSeeds] = useNumberItemObserver("red_mushroom_seeds", id)
+  const [limeLeafSeeds] = useNumberItemObserver("lime_leaf_seeds", id)
+  const [stardustSeeds] = useNumberItemObserver("stardust_seeds", id)
 
   const limbClick = (limb: string, amount: number) => {
     sendMessage("GRIND", limb, amount)
@@ -108,6 +115,20 @@ const ConsumeOverview = () => {
     }
   }
 
+  const clickBirdhouse = () => {
+    if (birdhouseTimer === 1) {
+      sendMessage("COLLECT_BIRDHOUSE")
+    } else if (birdhouseTimer === 0) {
+      const dotted = Math.min(Math.floor(dottedGreenLeafSeeds/2), 10)
+      const green = Math.min(Math.floor(greenLeafSeeds/2), 10)
+      const lime = 0
+      const redMushroom = 0
+      const stardust = Math.min(Math.floor(stardustSeeds/2), 10)
+      sendMessage("PREPARE_BIRDHOUSE", dotted, green, lime, redMushroom, stardust)
+    }
+  }
+
+
   // PREPARE_BIRDHOUSE=10~1~1~7~3 (dotted, green, lime, red mushroom, stardust)
   return (
     <OverviewBox
@@ -127,10 +148,14 @@ const ConsumeOverview = () => {
         <CookBook />
         <CrystalBall />
         <MerchantDisplay />
-        { birdhouseTimer === 0 && <LabeledIPimg
+        { birdhouseTimer <= 1 && <LabeledIPimg
           name={"birdhouse"}
-          label={''}
-          onClick={() => sendMessage("COLLECT_BIRDHOUSE")}
+          label={birdhouseTimer === 1 ? "Collect" : "Prepare"}
+          onClick={() => clickBirdhouse()}
+          size={30}
+          style={{
+            cursor: "pointer",
+          }}
         /> }
         {ironBar >= 10 && <ObservedLabeledIPimg
           label={"cannonball_mould"}
@@ -369,7 +394,7 @@ const ConsumeOverview = () => {
         >
           <LabeledIPimg
             name={"heat"}
-            label={heatPending > 0 ? "Heating" : heat}
+            label={heatPending > 0 ? `${formatTime(heatPending/10)} (${formatNumber(heat)})` : formatNumber(heat)}
             size={30}
             className={heatPending > 0 ? "shake" : ""}
           />
