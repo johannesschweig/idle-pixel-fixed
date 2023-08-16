@@ -344,9 +344,9 @@ const ConsumeOverview = () => {
           size={30}
           action_override={["THROW_MEGA_BAIT"]}
         />
-        {/* {areas.map((area) => (
+        {areas.map((area) => (
           <GatheringBagDisplay area={area} key={area} />
-        ))} */}
+        ))}
         {/* <ObservedLabeledIPimg
           label={"machete_unclaimed"}
           action={""}

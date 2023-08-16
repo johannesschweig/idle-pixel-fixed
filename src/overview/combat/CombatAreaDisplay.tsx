@@ -13,6 +13,7 @@ interface Props {
   isSelectedArea: boolean;
   selectArea: () => void;
   isDisabled: boolean;
+  purpleMonster?: string;
 }
 
 const CombatAreaDisplay = ({
@@ -24,7 +25,8 @@ const CombatAreaDisplay = ({
   availFightPoints,
   isSelectedArea,
   selectArea,
-  isDisabled
+  isDisabled,
+  purpleMonster = '',
 }: Props) => {
 
   const getBg = () => {
@@ -99,7 +101,7 @@ const CombatAreaDisplay = ({
       onClick={selectArea}
     >
       <IPimg
-        name={image}
+        name={purpleMonster ? purpleMonster : image}
         size={30}
         style={{
           boxSizing: "content-box",
