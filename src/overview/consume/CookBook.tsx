@@ -20,14 +20,14 @@ const CookBook = ({
     const dish =
       cooksBookTimer === 1
         ? "collect"
-        // : broccoli >= 50
-        //   ? "broccoli_shake"
-        //   : beet >= 50
-        //     ? "beet_shake"
-        //     : carrot >= 50
-        //       ? "carrot_shake"
-        //       : potato >= 50
-        //         ? "potato_shake"
+        : broccoli >= 50
+          ? "broccoli_shake"
+          : beet >= 50
+            ? "beet_shake"
+            : carrot >= 50
+              ? "carrot_shake"
+              : potato >= 50
+                ? "potato_shake"
                 : coconut >= 10
                   ? "coconut_stew"
                   : banana >= 10
@@ -43,14 +43,14 @@ const CookBook = ({
   const name =
     cooksBookTimer === 1
       ? cooksBookItem
-      // : broccoli >= 50
-      //   ? "broccoli"
-      //   : beet >= 50
-      //     ? "beet"
-      //     : carrot >= 50
-      //       ? "carrot"
-      //       : potato >= 50
-      //         ? "potato"
+      : broccoli >= 50
+        ? "broccoli"
+        : beet >= 50
+          ? "beet"
+          : carrot >= 50
+            ? "carrot"
+            : potato >= 50
+              ? "potato"
               : coconut >= 10
                 ? "coconut"
                 : banana >= 10

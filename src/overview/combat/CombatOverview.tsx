@@ -62,7 +62,6 @@ const CombatOverview = () => {
   const checkPurpleHint = useMemo(
     () =>
       replaceWebSocketMessage("OPEN_DIALOGUE", (data) => {
-        console.log('x', data)
         if (data.split("~")[0] === "INGREDIENTS USED") {
           return "";
         }

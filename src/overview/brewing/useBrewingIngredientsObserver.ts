@@ -50,6 +50,9 @@ export const useBrewingIngredientsObserver = (
   const [fruitSkin, setFruitSkin] = useNumberItemObserver(`fruit_skin`, hookId);
   const [superBait, setSuperBait] = useNumberItemObserver(`super_bait`, hookId);
   const [charcoal, setCharcoal] = useNumberItemObserver(`charcoal`, hookId);
+  const [feathers, setFeathers] = useNumberItemObserver('feathers', hookId)
+  const [fireFeathers, setFireFeathers] = useNumberItemObserver('fire_feathers', hookId)
+  const [iceFeathers, setIceFeathers] = useNumberItemObserver('ice_feathers', hookId)
 
   return {
     dotted_green_leaf: {
@@ -143,6 +146,18 @@ export const useBrewingIngredientsObserver = (
     charcoal: {
       value: charcoal,
       setValue: setCharcoal,
-    }
+    },
+    feathers: {
+      value: feathers,
+      setValue: setFeathers,
+    },
+    fire_feathers: {
+      value: fireFeathers,
+      setValue: setFireFeathers,
+    },
+    ice_feathers: {
+      value: iceFeathers,
+      setValue: setIceFeathers,
+    },
   };
 };
