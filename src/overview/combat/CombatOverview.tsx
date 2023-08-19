@@ -89,10 +89,6 @@ const CombatOverview = () => {
   // OPEN_DIALOGUE=MESSAGE~images/blood_fire_snake_icon.png~"I will keep the purple guardian key safe, master."<br /><br /><span class='color-grey'>The purple guardian key is being held by the monster shown.  The key will be held by another monster in: 11:32:37</span><br /><br />Loot chance: Common~false
   return (
     <OverviewBox
-      skill={{
-        name: "Magic",
-        xp: magicXp
-      }}
       display={'block'}
     >
       <div

@@ -11,7 +11,6 @@ import { keysOf } from "../../util/typeUtils";
 import GatheringBagDisplay from "../gathering/GatheringBagDisplay";
 import RocketDisplay from "./RocketDisplay";
 import CookBook from "./CookBook";
-import CrystalBall from "./CrystalBall";
 import MerchantDisplay from "./MerchantDisplay";
 import { formatTime } from "../../util/timeUtils";
 import { formatNumber } from "../../util/numberUtils";
@@ -55,6 +54,11 @@ const ConsumeOverview = () => {
   const [redMushroomSeeds] = useNumberItemObserver("red_mushroom_seeds", id)
   const [limeLeafSeeds] = useNumberItemObserver("lime_leaf_seeds", id)
   const [stardustSeeds] = useNumberItemObserver("stardust_seeds", id)
+  const [birdhousePotion] = useNumberItemObserver("birdhouse_potion", id)
+  const [poppy] = useNumberItemObserver("poppy", id)
+  const [rose] = useNumberItemObserver("rose", id)
+  const [tulip] = useNumberItemObserver("tulip", id)
+  const [beehiveTimer] = useNumberItemObserver("beehive_timer", id)
 
   const limbClick = (limb: string, amount: number) => {
     sendMessage("GRIND", limb, amount)
@@ -79,8 +83,6 @@ const ConsumeOverview = () => {
     }
   }
 
-  // CRAFT=gold_emerald_key~1
-  // OPEN_TREASURE_CHEST=gold_emerald_key
   const openTreasureChest = (color: string) => {
     let key = ''
     switch (color) {
@@ -119,17 +121,18 @@ const ConsumeOverview = () => {
     if (birdhouseTimer === 1) {
       sendMessage("COLLECT_BIRDHOUSE")
     } else if (birdhouseTimer === 0) {
-      const dotted = Math.min(Math.floor(dottedGreenLeafSeeds/2), 10)
-      const green = Math.min(Math.floor(greenLeafSeeds/2), 10)
+      // const dotted = Math.min(Math.floor(dottedGreenLeafSeeds/2), 10)
+      // const green = Math.min(Math.floor(greenLeafSeeds/2), 10)
+      const dotted = 1
+      const green = 0
       const lime = 0
       const redMushroom = 0
-      const stardust = Math.min(Math.floor(stardustSeeds/2), 10)
+      // const stardust = Math.min(Math.floor(stardustSeeds/2), 10)
+      const stardust = 0
       sendMessage("PREPARE_BIRDHOUSE", dotted, green, lime, redMushroom, stardust)
     }
   }
 
-
-  // PREPARE_BIRDHOUSE=10~1~1~7~3 (dotted, green, lime, red mushroom, stardust)
   return (
     <OverviewBox
       skill={{
@@ -146,17 +149,27 @@ const ConsumeOverview = () => {
       >
         <RocketDisplay />
         <CookBook />
-        <CrystalBall />
+        {(poppy > 0 || rose > 0 || tulip > 0) && beehiveTimer <= 1 &&
+          <LabeledIPimg
+            name={"beehive"}
+            label={beehiveTimer === 1 ? "Collect" : "Prepare"}
+            onClick={() => sendMessage("PREPARE_BEEHIVE", poppy, rose, tulip)}
+            style={{
+              cursor: "pointer",
+            }}
+          />
+        }
         <MerchantDisplay />
-        { birdhouseTimer <= 1 && <LabeledIPimg
+        {birdhouseTimer <= 1 && <LabeledIPimg
           name={"birdhouse"}
           label={birdhouseTimer === 1 ? "Collect" : "Prepare"}
           onClick={() => clickBirdhouse()}
           size={30}
           style={{
             cursor: "pointer",
+            opacity: (birdhouseTimer === 1 && birdhousePotion === 0) ? 0.5 : 1,
           }}
-        /> }
+        />}
         {ironBar >= 10 && <ObservedLabeledIPimg
           label={"cannonball_mould"}
           action={''}
@@ -370,11 +383,6 @@ const ConsumeOverview = () => {
           action={"CONSUME"}
           retain={50}
         />
-        <ObservedLabeledIPimg
-          label={"combat_xp_lamp"}
-          size={30}
-          action={""}
-          action_override={['COMBAT_XP_LAMP', 'magic']} />
         {COOKED_FOOD.map((food) => (
           <ObservedLabeledIPimg
             label={food}
@@ -394,7 +402,7 @@ const ConsumeOverview = () => {
         >
           <LabeledIPimg
             name={"heat"}
-            label={heatPending > 0 ? `${formatTime(heatPending/10)} (${formatNumber(heat)})` : formatNumber(heat)}
+            label={heatPending > 0 ? `${formatTime(heatPending / 10)} (${formatNumber(heat)})` : formatNumber(heat)}
             size={30}
             className={heatPending > 0 ? "shake" : ""}
           />

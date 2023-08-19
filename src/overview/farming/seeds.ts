@@ -54,6 +54,24 @@ export const SEEDS: Record<string, SeedData> = {
     time: 20,
     bonemealCost: 0,
   },
+  poppy_flower_seeds: {
+    level: 50,
+    stopsDying: 0,
+    time: 60,
+    bonemealCost: 0,
+  },
+  rose_flower_seeds: {
+    level: 50,
+    stopsDying: 0,
+    time: 60,
+    bonemealCost: 0,
+  },
+  tulip_flower_seeds: {
+    level: 50,
+    stopsDying: 0,
+    time: 60,
+    bonemealCost: 0,
+  },
   // tree_seeds: {
   //   level: 10,
   //   stopsDying: 25,
