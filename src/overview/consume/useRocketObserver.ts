@@ -89,7 +89,9 @@ export const useOpenRocketDialogueObserver = () => {
           data.forEach((d) => {
             switch (observer.item) {
               case "moon": observer.onChange(d.moonDistance)
+                break
               case "sun": observer.onChange(d.sunDistance)
+                break
             }
           })
         });

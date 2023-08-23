@@ -133,6 +133,14 @@ const ConsumeOverview = () => {
     }
   }
 
+  const clickBeehive = () => {
+    if (beehiveTimer === 1) {
+      sendMessage("COLLECT_BEEHIVE")
+    } else if (birdhouseTimer === 0) {
+      sendMessage("PREPARE_BEEHIVE", poppy, rose, tulip)
+    }
+  }
+
   return (
     <OverviewBox
       skill={{
@@ -149,16 +157,21 @@ const ConsumeOverview = () => {
       >
         <RocketDisplay />
         <CookBook />
-        {(poppy > 0 || rose > 0 || tulip > 0) && beehiveTimer <= 1 &&
+        {(beehiveTimer === 1 || ((poppy > 0 || rose > 0 || tulip > 0) && beehiveTimer === 0)) &&
           <LabeledIPimg
             name={"beehive"}
             label={beehiveTimer === 1 ? "Collect" : "Prepare"}
-            onClick={() => sendMessage("PREPARE_BEEHIVE", poppy, rose, tulip)}
+            onClick={() => clickBeehive()}
             style={{
               cursor: "pointer",
             }}
           />
         }
+        <ObservedLabeledIPimg
+          label={"beehive_potion"}
+          action={''}
+          action_override={["DRINK_BEEHIVE"]}
+        />
         <MerchantDisplay />
         {birdhouseTimer <= 1 && <LabeledIPimg
           name={"birdhouse"}

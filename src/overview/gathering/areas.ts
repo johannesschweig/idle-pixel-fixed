@@ -50,4 +50,10 @@ export const AREAS: Record<string, AreaData> = {
     items: "Stone, Gem Fragments",
     getUnlocked: getUnlockedFactory("crafting", "farming", "brewing", "woodcutting", "cooking", "fishing", "melee"),
   },
+  castle: {
+    image: "castle",
+    name: "Castle",
+    items: "Tainted coins, dragon's breath, dragon ore, dragon bars",
+    getUnlocked: getUnlockedFactory()
+  }
 };

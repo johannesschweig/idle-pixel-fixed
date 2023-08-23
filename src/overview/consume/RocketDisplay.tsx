@@ -34,10 +34,14 @@ const RocketDisplay = () => {
   const [rocketKm] = useNumberItemObserver("rocket_km", id);
   const [rocketStatus] = useItemObserver("rocket_status", id)
   const [sunDistance] = useRocketObserver("sun", id)
+  const [moonDistance] = useRocketObserver("moon", id)
   const [rocketFuel] = useNumberItemObserver("rocket_fuel", id)
 
   const BASE_SPEED = rocketStatus.includes("moon") ? BASE_SPEED_MOON : BASE_SPEED_SUN;
   const BOOSTED_SPEED = BASE_SPEED * 10
+  const MAX_DISTANCE_SUN = 122000000 // too far away (12h with one pot), > 110.160.000 (2 * 6 * 3600 * BOOSTED_SPEED)
+  const MAX_DISTANCE_MOON = 300000
+  const MOON_SUN = "moon"
 
   useEffect(() => {
     sendMessage('CLICKS_ROCKET', '0')
@@ -69,22 +73,41 @@ const RocketDisplay = () => {
           label: "No rocket fuel",
           style: activeStyle,
         }
-      } else if (sunDistance > 122000000) { // too far away (12h with one pot), > 110.160.000 (2 * 6 * 3600 * BOOSTED_SPEED)
-        return {
-          label: `Too far (${formatNumber(sunDistance)})`,
-          style: passiveStyle,
+      } else if (MOON_SUN === "moon") { // moon
+        if (moonDistance > MAX_DISTANCE_MOON) {
+          return {
+            label: `Too far (${formatNumber(moonDistance)})`,
+            style: passiveStyle,
+          }
+        } else { // <300k km
+          return {
+            label: `GO (${formatNumber(moonDistance)})`,
+            style: activeStyle,
+          }
         }
-      } else { // <110Mio km
-        if (rocketFuel >= 5) {
+      } else if (MOON_SUN === "sun") { // sun
+        if (sunDistance > MAX_DISTANCE_SUN) {
           return {
-            label: `GO (${formatNumber(sunDistance)})`,
-            style: activeStyle,
+            label: `Too far (${formatNumber(sunDistance)})`,
+            style: passiveStyle,
           }
-        } else {
-          return {
-            label: `<5 RF (${formatNumber(sunDistance)})`,
-            style: activeStyle,
+        } else { // <110Mio km
+          if (rocketFuel >= 5) {
+            return {
+              label: `GO (${formatNumber(sunDistance)})`,
+              style: activeStyle,
+            }
+          } else {
+            return {
+              label: `<5 RF (${formatNumber(sunDistance)})`,
+              style: activeStyle,
+            }
           }
+        }
+      } else {
+        return {
+          label: "error",
+          style: {}
         }
       }
     } else if (rocketKm === rocketDistanceRequired) {

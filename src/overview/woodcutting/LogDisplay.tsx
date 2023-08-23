@@ -1,5 +1,6 @@
 import IPimg from "../../util/IPimg";
 import { useNumberItemObserver } from "../setItems/useSetItemsObserver";
+import { formatNumber } from "../../util/numberUtils";
 
 interface Props {
   log: string;
@@ -36,7 +37,7 @@ const LogDisplay = ({
         title={Items.get_pretty_item_name(log)}
         onClick={onClick}
       />
-      <span>{amount}</span>
+      <span>{formatNumber(amount)}</span>
     </div>
   ) : null;
 };
