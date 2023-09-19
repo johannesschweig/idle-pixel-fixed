@@ -50,7 +50,8 @@ const RocketDisplay = () => {
 
   const clickRocket = () => {
     if (rocketKm === 0) { // home
-      sendMessage("CLICKS_ROCKET", 2)
+      const loc = MOON_SUN === "moon" ? 1 : 2
+      sendMessage("CLICKS_ROCKET", loc)
     } else if (rocketKm === rocketDistanceRequired) { // sun
       sendMessage("ROCKET_COLLECT")
     }

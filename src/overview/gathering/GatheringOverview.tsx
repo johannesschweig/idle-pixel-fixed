@@ -28,10 +28,6 @@ const GatheringOverview = () => {
   return (
     <OverviewBox
       justifyContent={"space-between"}
-      skill={{
-        name: "Gathering",
-        xp: gatheringXp
-      }}
     >
       <div
         style={{

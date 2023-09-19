@@ -96,15 +96,15 @@ const SeedDisplay = ({
         style={{
           display: farmingLevel >= level ? "flex" : "none",
           flexDirection: "column",
-          gap: "5px",
-          width: "50px",
+          gap: "3px",
+          width: "30px",
           alignItems: "center",
           opacity: canPlant ? 1 : 0.5,
         }}
       >
         <IPimg
           name={seed}
-          size={30}
+          size={20}
           onClick={onClick}
           role={"button"}
           style={{

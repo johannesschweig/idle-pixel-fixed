@@ -21,11 +21,11 @@ const ConsumeOverview = () => {
   const areas: string[] = keysOf(AREAS).concat(['junk']);
   const WEAPONS = ["stinger", "iron_dagger", "skeleton_sword", "bone_amulet"]
   const COOKED_FISH = [
-    "shrimp", "anchovy", "sardine", "crab", "piranha", "salmon", "trout", "pike", "rainbow_fish", "eel", "tuna", "swordfish", "manta_ray", "whale", "small_stardust_fish", "medium_stardust_fish", "large_stardust_fish",
+    "shrimp", "anchovy", "sardine", "crab", "piranha", "salmon", "trout", "pike", "rainbow_fish", "eel", "tuna", "swordfish", "manta_ray", "whale", "small_stardust_fish", "medium_stardust_fish", "large_stardust_fish", "shark",
   ].map(fish => "cooked_" + fish)
   const COOKED_SHINY_FISH = COOKED_FISH.map(fish => fish + "_shiny")
   const COOKED_MEGA_SHINY_FISH = COOKED_FISH.map(fish => fish + "_mega_shiny")
-  const COOKED_FOOD = ['cooked_chicken', 'cooked_meat', 'cooked_bird_meat', "orange", "egg", "maple_syrup", "chocolate", "cheese", "honey", "coconut_stew", "banana_jello"].concat(COOKED_FISH, COOKED_SHINY_FISH, COOKED_MEGA_SHINY_FISH)
+  const COOKED_FOOD = ['cooked_chicken', 'cooked_meat', 'cooked_bird_meat', "orange", "egg", "maple_syrup", "chocolate", "cheese", "honey", "coconut_stew", "banana_jello", "potato_shake", "carrot_shake", "beet_shake", "broccoli_shake"].concat(COOKED_FISH, COOKED_SHINY_FISH, COOKED_MEGA_SHINY_FISH)
   const STARDUST_PRISMS = ["small", "medium", "large", "huge"].map(e => e + "_stardust_prism")
   const FRAGMENTS = ["sapphire", "emerald", "ruby", "diamond"].map(e => `gathering_${e}_fragments`)
 
@@ -54,7 +54,6 @@ const ConsumeOverview = () => {
   const [redMushroomSeeds] = useNumberItemObserver("red_mushroom_seeds", id)
   const [limeLeafSeeds] = useNumberItemObserver("lime_leaf_seeds", id)
   const [stardustSeeds] = useNumberItemObserver("stardust_seeds", id)
-  const [birdhousePotion] = useNumberItemObserver("birdhouse_potion", id)
   const [poppy] = useNumberItemObserver("poppy", id)
   const [rose] = useNumberItemObserver("rose", id)
   const [tulip] = useNumberItemObserver("tulip", id)
@@ -121,14 +120,11 @@ const ConsumeOverview = () => {
     if (birdhouseTimer === 1) {
       sendMessage("COLLECT_BIRDHOUSE")
     } else if (birdhouseTimer === 0) {
-      // const dotted = Math.min(Math.floor(dottedGreenLeafSeeds/2), 10)
-      // const green = Math.min(Math.floor(greenLeafSeeds/2), 10)
-      const dotted = 1
-      const green = 0
+      const dotted = Math.min(Math.floor(dottedGreenLeafSeeds/2), 10)
+      const green = Math.min(Math.floor(greenLeafSeeds/2), 10)
       const lime = 0
       const redMushroom = 0
-      // const stardust = Math.min(Math.floor(stardustSeeds/2), 10)
-      const stardust = 0
+      const stardust = Math.min(Math.floor(stardustSeeds/2), 10)
       sendMessage("PREPARE_BIRDHOUSE", dotted, green, lime, redMushroom, stardust)
     }
   }
@@ -136,7 +132,7 @@ const ConsumeOverview = () => {
   const clickBeehive = () => {
     if (beehiveTimer === 1) {
       sendMessage("COLLECT_BEEHIVE")
-    } else if (birdhouseTimer === 0) {
+    } else if (beehiveTimer === 0) {
       sendMessage("PREPARE_BEEHIVE", poppy, rose, tulip)
     }
   }
@@ -157,7 +153,8 @@ const ConsumeOverview = () => {
       >
         <RocketDisplay />
         <CookBook />
-        {(beehiveTimer === 1 || ((poppy > 0 || rose > 0 || tulip > 0) && beehiveTimer === 0)) &&
+        {/* {(beehiveTimer === 1 || ((poppy > 0 || rose > 0 || tulip > 0) && beehiveTimer === 0)) && */}
+        {(beehiveTimer === 1 || ((poppy > 24 && rose > 24 && tulip > 24) && beehiveTimer === 0)) &&
           <LabeledIPimg
             name={"beehive"}
             label={beehiveTimer === 1 ? "Collect" : "Prepare"}
@@ -180,7 +177,7 @@ const ConsumeOverview = () => {
           size={30}
           style={{
             cursor: "pointer",
-            opacity: (birdhouseTimer === 1 && birdhousePotion === 0) ? 0.5 : 1,
+            opacity: birdhouseTimer === 1 ? 0.5 : 1,
           }}
         />}
         {ironBar >= 10 && <ObservedLabeledIPimg

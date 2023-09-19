@@ -53,6 +53,10 @@ export const useBrewingIngredientsObserver = (
   const [feathers, setFeathers] = useNumberItemObserver('feathers', hookId)
   const [fireFeathers, setFireFeathers] = useNumberItemObserver('fire_feathers', hookId)
   const [iceFeathers, setIceFeathers] = useNumberItemObserver('ice_feathers', hookId)
+  const [cooksDust, setCooksDust] = useNumberItemObserver('cooks_dust', hookId)
+  const [fightingDust, setFightingDust] = useNumberItemObserver('fighting_dust', hookId)
+  const [treeDust, setTreeDust] = useNumberItemObserver('tree_dust', hookId)
+  const [farmDust, setFarmDust] = useNumberItemObserver('farm_dust', hookId)
 
   return {
     dotted_green_leaf: {
@@ -158,6 +162,22 @@ export const useBrewingIngredientsObserver = (
     ice_feathers: {
       value: iceFeathers,
       setValue: setIceFeathers,
+    },
+    cooks_dust: {
+      value: cooksDust,
+      setValue: setCooksDust
+    },
+    fighting_dust: {
+      value: fightingDust,
+      setValue: setFightingDust
+    },
+    tree_dust: {
+      value: treeDust,
+      setValue: setTreeDust
+    },
+    farm_dust: {
+      value: farmDust,
+      setValue: setFarmDust
     },
   };
 };
