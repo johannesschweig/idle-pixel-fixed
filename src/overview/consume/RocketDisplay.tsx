@@ -23,6 +23,11 @@ interface RocketData {
   style: object;
 }
 
+enum Planet {
+  SUN,
+  MOON
+}
+
 const id = "RocketDisplay";
 const RocketDisplay = () => {
 
@@ -41,7 +46,7 @@ const RocketDisplay = () => {
   const BOOSTED_SPEED = BASE_SPEED * 10
   const MAX_DISTANCE_SUN = 122000000 // too far away (12h with one pot), > 110.160.000 (2 * 6 * 3600 * BOOSTED_SPEED)
   const MAX_DISTANCE_MOON = 300000
-  const MOON_SUN = "moon"
+  const MOON_SUN : Planet = Planet.SUN
 
   useEffect(() => {
     sendMessage('CLICKS_ROCKET', '0')
@@ -50,7 +55,7 @@ const RocketDisplay = () => {
 
   const clickRocket = () => {
     if (rocketKm === 0) { // home
-      const loc = MOON_SUN === "moon" ? 1 : 2
+      const loc = MOON_SUN === (Planet.MOON as Planet) ? 1 : 2
       sendMessage("CLICKS_ROCKET", loc)
     } else if (rocketKm === rocketDistanceRequired) { // sun
       sendMessage("ROCKET_COLLECT")
@@ -74,7 +79,7 @@ const RocketDisplay = () => {
           label: "No rocket fuel",
           style: activeStyle,
         }
-      } else if (MOON_SUN === "moon") { // moon
+      } else if (MOON_SUN === (Planet.MOON as Planet)) { // moon
         if (moonDistance > MAX_DISTANCE_MOON) {
           return {
             label: `Too far (${formatNumber(moonDistance)})`,
@@ -86,7 +91,7 @@ const RocketDisplay = () => {
             style: activeStyle,
           }
         }
-      } else if (MOON_SUN === "sun") { // sun
+      } else if (MOON_SUN === (Planet.MOON as Planet)) { // sun
         if (sunDistance > MAX_DISTANCE_SUN) {
           return {
             label: `Too far (${formatNumber(sunDistance)})`,

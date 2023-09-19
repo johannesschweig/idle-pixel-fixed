@@ -8,7 +8,6 @@ import IPimg from "../../util/IPimg";
 import { sendMessage } from "../../util/websocket/useWebsocket";
 import { useNumberItemObserver } from "../setItems/useSetItemsObserver";
 import { CSSProperties, useState } from "react";
-import HeatIndicator from "./HeatIndicator"
 
 export enum LogAction {
   OVEN = "OVEN",
@@ -90,7 +89,6 @@ const WoodcuttingOverview = () => {
             size={30}
             onClick={() => setAction(LogAction.FOUNDRY)}
             style={actionStyle(LogAction.FOUNDRY)} />
-          <HeatIndicator />
         </div>
         <div
           style={{

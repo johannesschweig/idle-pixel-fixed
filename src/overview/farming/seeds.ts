@@ -96,6 +96,12 @@ export const SEEDS: Record<string, SeedData> = {
   //   time: 12 * 60,
   //   bonemealCost: 120,
   // },
+  mixed_seeds: {
+    level: 50,
+    stopsDying: 0,
+    time: 3 * 60 * 60,
+    bonemealCost: 50,
+  },
   potato_seeds: {
     level: 60,
     stopsDying: 0,

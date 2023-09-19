@@ -123,7 +123,7 @@ const ConsumeOverview = () => {
       const dotted = Math.min(Math.floor(dottedGreenLeafSeeds/2), 10)
       const green = Math.min(Math.floor(greenLeafSeeds/2), 10)
       const lime = 0
-      const redMushroom = 0
+      const redMushroom = Math.min(Math.floor(redMushroomSeeds/2), 10)
       const stardust = Math.min(Math.floor(stardustSeeds/2), 10)
       sendMessage("PREPARE_BIRDHOUSE", dotted, green, lime, redMushroom, stardust)
     }
