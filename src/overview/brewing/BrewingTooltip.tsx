@@ -55,9 +55,8 @@ const BrewingTooltip = ({
                   ? undefined
                   : "red",
             }}
-            label={`${Math.max(amount, 1) * ingredient.amount}/${
-              brewingIngredients[ingredient.item].value
-            }`}
+            label={`${brewingIngredients[ingredient.item].value}/
+            ${Math.max(amount, 1) * ingredient.amount}`}
           />
         ))}
       </div>

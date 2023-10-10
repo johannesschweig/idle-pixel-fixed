@@ -34,8 +34,7 @@ const CombatAreaDisplay = ({
       return "none"
     }
     const progress = Math.round(availFightPoints/reqFightPoints * 100)
-    const rest = Math.round((1 - progress) * 100)
-    return `linear-gradient(0deg, rgba(114, 181, 192, 0.5) ${progress}%, transparent ${rest}%)`
+    return `linear-gradient(0deg, rgba(114, 181, 192, 0.5) ${100 - progress}%, transparent ${100 - progress}%)`
   }
 
   const [areaProps, AreaToolTip] = useTooltip(

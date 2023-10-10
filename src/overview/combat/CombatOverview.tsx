@@ -22,7 +22,6 @@ const CombatOverview = () => {
   const [selectedArea, setSelectedArea] = useState(AREAS[0].name);
   const [purpleMonster, setPurpleMonster] = useState('');
 
-  const [magicXp] = useNumberItemObserver('magic_xp', id)
   const [energy] = useNumberItemObserver('energy', id)
   const [fightPoints] = useNumberItemObserver('fight_points', id)
   const [monsterHp] = useNumberItemObserver('monster_hp', id)
@@ -44,21 +43,8 @@ const CombatOverview = () => {
       sendMessage('ACTIVATE_BLOODMOON')
     }
     sendMessage('START_FIGHT', selectedArea)
-    // if (zone === 'blood_field') {
-    //   setTimeout(() => {
-    //     sendMessage('PRESET_LOAD', 3, 1)
-    //   }, 1000)
-    //   setTimeout(() => {
-    //     sendMessage('SPELL', 'reflect')
-    //   }, 3000)
-    //   setTimeout(() => {
-    //     sendMessage('SPELL', 'fire')
-    //   }, 3000)
-    //   setTimeout(() => {
-    //     sendMessage('PRESET_LOAD', 1, 1)
-    //   }, 6000)
-    // }
   }
+
   const checkPurpleHint = useMemo(
     () =>
       replaceWebSocketMessage("OPEN_DIALOGUE", (data) => {
@@ -104,19 +90,19 @@ const CombatOverview = () => {
           size={30}
         />
         {AREAS.map((a) => (
-            <CombatAreaDisplay
-              name={formatAreaName(a.name)}
-              reqEnergy={a.energy}
-              availEnergy={energy}
-              reqFightPoints={a.fightpoints}
-              availFightPoints={fightPoints}
-              image={a.name === "field" ? "gathering_field" : a.name}
-              isSelectedArea={a.name === selectedArea}
-              selectArea={() => setSelectedArea(a.name)}
-              isDisabled={energy < a.energy || fightPoints < a.fightpoints}
-              purpleMonster={a.monsters.includes(purpleMonster) ? purpleMonster : ''}
-            />
-          ))}
+          <CombatAreaDisplay
+            name={formatAreaName(a.name)}
+            reqEnergy={a.energy}
+            availEnergy={energy}
+            reqFightPoints={a.fightpoints}
+            availFightPoints={fightPoints}
+            image={a.name === "field" ? "gathering_field" : a.name}
+            isSelectedArea={a.name === selectedArea}
+            selectArea={() => setSelectedArea(a.name)}
+            isDisabled={energy < a.energy || fightPoints < a.fightpoints}
+            purpleMonster={a.monsters.includes(purpleMonster) ? purpleMonster : ''}
+          />
+        ))}
         <button
           disabled={monsterHp > 0}
           onClick={() => startCombat()}>
@@ -132,12 +118,12 @@ const CombatOverview = () => {
             opacity: rainPotion >= 1 ? 1 : 0.5,
           }}
         />}
-        {fightPoints >= 6000 && <ObservedLabeledIPimg
+        {/* {fightPoints >= 6000 && <ObservedLabeledIPimg
           label={"evil_pirate"}
           action={"FIGHT_EVIL_PIRATE"}
           action_override={["FIGHT_EVIL_PIRATE"]}
           size={30}
-        />}
+        />} */}
       </div>
     </OverviewBox>
   );

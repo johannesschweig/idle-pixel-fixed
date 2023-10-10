@@ -122,7 +122,7 @@ const ConsumeOverview = () => {
     } else if (birdhouseTimer === 0) {
       const dotted = Math.min(Math.floor(dottedGreenLeafSeeds/2), 10)
       const green = Math.min(Math.floor(greenLeafSeeds/2), 10)
-      const lime = 0
+      const lime = Math.min(Math.floor(limeLeafSeeds/4), 10)
       const redMushroom = Math.min(Math.floor(redMushroomSeeds/2), 10)
       const stardust = Math.min(Math.floor(stardustSeeds/2), 10)
       sendMessage("PREPARE_BIRDHOUSE", dotted, green, lime, redMushroom, stardust)
@@ -177,7 +177,6 @@ const ConsumeOverview = () => {
           size={30}
           style={{
             cursor: "pointer",
-            opacity: birdhouseTimer === 1 ? 0.5 : 1,
           }}
         />}
         {ironBar >= 10 && <ObservedLabeledIPimg
@@ -219,7 +218,7 @@ const ConsumeOverview = () => {
         />
         <ObservedLabeledIPimg
           label={"emerald"}
-          action={"SHOP_SELL"}
+          action={""}
           size={30}
         />
         <ObservedLabeledIPimg

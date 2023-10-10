@@ -91,7 +91,7 @@ const RocketDisplay = () => {
             style: activeStyle,
           }
         }
-      } else if (MOON_SUN === (Planet.MOON as Planet)) { // sun
+      } else if (MOON_SUN === (Planet.SUN as Planet)) { // sun
         if (sunDistance > MAX_DISTANCE_SUN) {
           return {
             label: `Too far (${formatNumber(sunDistance)})`,

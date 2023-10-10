@@ -106,6 +106,10 @@ export const POTIONS: Record<string, PotionData> = {
     level: 50,
     ...getData("farm_dust_potion")
   },
+  magic_shiny_crystal_ball_potion: {
+    level: 52,
+    ...getData("magic_shiny_crystal_ball_potion")
+  },
   birdhouse_potion: {
     level: 53,
     ...getData("birdhouse_potion")
