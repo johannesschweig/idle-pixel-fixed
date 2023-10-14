@@ -14,6 +14,7 @@ import CookBook from "./CookBook";
 import MerchantDisplay from "./MerchantDisplay";
 import { formatTime } from "../../util/timeUtils";
 import { formatNumber } from "../../util/numberUtils";
+import CrystalBall from "./CrystalBall";
 
 const id = "ConsumeOverview";
 const ConsumeOverview = () => {
@@ -120,11 +121,11 @@ const ConsumeOverview = () => {
     if (birdhouseTimer === 1) {
       sendMessage("COLLECT_BIRDHOUSE")
     } else if (birdhouseTimer === 0) {
-      const dotted = Math.min(Math.floor(dottedGreenLeafSeeds/2), 10)
-      const green = Math.min(Math.floor(greenLeafSeeds/2), 10)
-      const lime = Math.min(Math.floor(limeLeafSeeds/4), 10)
-      const redMushroom = Math.min(Math.floor(redMushroomSeeds/2), 10)
-      const stardust = Math.min(Math.floor(stardustSeeds/2), 10)
+      const dotted = Math.min(Math.floor(dottedGreenLeafSeeds), 10)
+      const green = Math.min(Math.floor(greenLeafSeeds), 10)
+      const lime = Math.min(Math.floor(limeLeafSeeds), 10)
+      const redMushroom = Math.min(Math.floor(redMushroomSeeds), 10)
+      const stardust = Math.min(Math.floor(stardustSeeds), 10)
       sendMessage("PREPARE_BIRDHOUSE", dotted, green, lime, redMushroom, stardust)
     }
   }
@@ -399,6 +400,7 @@ const ConsumeOverview = () => {
             action={"CONSUME"}
           />
         ))}
+        {/* <CrystalBall /> */}
       </div>
       {heat > 50 &&
         <div

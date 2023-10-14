@@ -118,16 +118,16 @@ export const SEEDS: Record<string, SeedData> = {
     level: 70,
     stopsDying: 0,
     time: 45,
-    bonemealCost: 50
+    bonemealCost: 100
   },
   beet_seeds: {
-    level: 66,
+    level: 80,
     stopsDying: 0,
-    time: 45,
-    bonemealCost: 50
+    time: 60,
+    bonemealCost: 220
   },
   broccoli_seeds: {
-    level: 66,
+    level: 90,
     stopsDying: 0,
     time: 2 * 60,
     bonemealCost: 300
