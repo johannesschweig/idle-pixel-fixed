@@ -134,10 +134,14 @@ const ConsumeOverview = () => {
     if (beehiveTimer === 1) {
       sendMessage("COLLECT_BEEHIVE")
     } else if (beehiveTimer === 0) {
-      sendMessage("PREPARE_BEEHIVE", poppy, rose, tulip)
+      const pop = Math.max(0, poppy - 25)
+      const ros = Math.max(0, rose - 25)
+      const tul = Math.max(0, tulip - 25)
+      sendMessage("PREPARE_BEEHIVE", pop, ros, tul)
     }
   }
 
+//DONATE_TABLETTE_PIECES
   return (
     <OverviewBox
       skill={{
@@ -155,7 +159,7 @@ const ConsumeOverview = () => {
         <RocketDisplay />
         <CookBook />
         {/* {(beehiveTimer === 1 || ((poppy > 0 || rose > 0 || tulip > 0) && beehiveTimer === 0)) && */}
-        {(beehiveTimer === 1 || ((poppy > 24 && rose > 24 && tulip > 24) && beehiveTimer === 0)) &&
+        {(beehiveTimer === 1 || ((poppy > 25 || rose > 25 || tulip > 25) && beehiveTimer === 0)) &&
           <LabeledIPimg
             name={"beehive"}
             label={beehiveTimer === 1 ? "Collect" : "Prepare"}
