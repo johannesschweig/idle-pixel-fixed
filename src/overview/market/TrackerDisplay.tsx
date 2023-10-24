@@ -60,7 +60,7 @@ const TrackerDisplay = ({
         <span>{formatNumber(prices[0])}</span> :
         prices.length > 0 ?
           <span><i>{`${formatNumber(prices[0])} (+${formatNumber(prices[0] - threshold)})`}</i></span> :
-          <span><i>{` no offer (${formatNumber(threshold)})`}</i></span>
+          <span><i>{`no offer (${formatNumber(threshold)})`}</i></span>
       }
       <button
         style={buttonStyle}

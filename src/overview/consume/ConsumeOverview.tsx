@@ -170,6 +170,11 @@ const ConsumeOverview = () => {
           />
         }
         <ObservedLabeledIPimg
+          label={"gem_bag"}
+          action={""}
+          action_override={["OPEN_GEM_BAG"]}
+        />
+        <ObservedLabeledIPimg
           label={"beehive_potion"}
           action={''}
           action_override={["DRINK_BEEHIVE"]}
