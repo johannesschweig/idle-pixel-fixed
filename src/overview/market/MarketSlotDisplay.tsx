@@ -11,6 +11,16 @@ interface Props {
   index: number,
 }
 
+interface MarketItem {
+  market_id: number,
+  player_id: number,
+  market_item_name: string,
+  market_item_amount: number,
+  market_item_price_each: number,
+  market_item_category: string,
+  market_item_post_timestamp: number,
+}
+
 export const buttonStyle = {
   marginLeft: '4px',
   display: 'inline-block',
@@ -31,6 +41,7 @@ const MarketSlotDisplay = ({
   index,
 }: Props) => {
   const [prices, setPrices] = useState([]);
+  const [totalAmount, setTotalAmount] = useState(0);
   const [amount] = useNumberItemObserver(item.name, id + index);
 
   useEffect(() => {
@@ -44,6 +55,11 @@ const MarketSlotDisplay = ({
           return element !== item.price || index !== marketItemPrices.indexOf(item.price);
         });
         setPrices(marketItemPrices)
+        const totalA = data.reduce((total: number, item: MarketItem) => {
+          return total + item.market_item_amount
+        }, 0);
+        setTotalAmount(totalA)
+
       })
       .catch(error => {
         console.error('Error:', error);
@@ -94,7 +110,8 @@ const MarketSlotDisplay = ({
             marginBottom: "12px",
           }}
         />
-        {prices.length > 0 && <span
+        {/* Amount of all offers */}
+        {totalAmount > 0 && <span
           style={{
             position: "absolute",
             fontSize: "12px",
@@ -105,7 +122,7 @@ const MarketSlotDisplay = ({
             right: "-16px",
           }}
         >
-          {prices.length}
+          {totalAmount}
         </span>}
       </div>
       { /* Amount with plus button */}

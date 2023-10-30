@@ -108,7 +108,7 @@ const CombatOverview = () => {
           onClick={() => startCombat()}>
           Fight
         </button>
-        {robotWaveTimer === 0 && <LabeledIPimg
+        {/* {robotWaveTimer === 0 && <LabeledIPimg
           name={"robot_active"}
           label={"Robot (master)"}
           size={30}
@@ -117,7 +117,7 @@ const CombatOverview = () => {
             cursor: "pointer",
             opacity: rainPotion >= 1 ? 1 : 0.5,
           }}
-        />}
+        />} */}
         {fightPoints >= 6000 && <ObservedLabeledIPimg
           label={"evil_pirate"}
           action={"FIGHT_EVIL_PIRATE"}
