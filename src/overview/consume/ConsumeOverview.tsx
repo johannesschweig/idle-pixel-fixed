@@ -173,6 +173,7 @@ const ConsumeOverview = () => {
           label={"gem_bag"}
           action={""}
           action_override={["OPEN_GEM_BAG"]}
+          repeat={true}
         />
         <ObservedLabeledIPimg
           label={"beehive_potion"}
@@ -362,6 +363,7 @@ const ConsumeOverview = () => {
           action={""}
           size={30}
           action_override={["THROW_BAIT"]}
+          repeat={true}
         />
         <ObservedLabeledIPimg
           label={"super_bait"}
@@ -369,12 +371,14 @@ const ConsumeOverview = () => {
           retain={5}
           size={30}
           action_override={["THROW_SUPER_BAIT"]}
+          repeat={true}
         />
         <ObservedLabeledIPimg
           label={"mega_bait"}
           action={""}
           size={30}
           action_override={["THROW_MEGA_BAIT"]}
+          repeat={true}
         />
         {areas.map((area) => (
           <GatheringBagDisplay area={area} key={area} />

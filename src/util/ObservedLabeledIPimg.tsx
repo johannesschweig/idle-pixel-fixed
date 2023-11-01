@@ -14,6 +14,7 @@ interface Props {
   action_item?: string;
   action_override?: Array<string>;
   max_value?: number;
+  repeat?: boolean;
   tooltipText?: string;
   tooltipIcon?: string;
 }
@@ -27,6 +28,7 @@ const ObservedLabeledIPimg = ({
   action_item = "",
   action_override = [],
   max_value = 999999,
+  repeat = false,
   tooltipText = "",
   tooltipIcon = "",
   style,
@@ -37,7 +39,10 @@ const ObservedLabeledIPimg = ({
   const imgClick = () => {
     let v = value - retain
     if (action_override.length != 0) {
-      sendMessage(action_override[0], ...action_override.slice(1))
+      const rep = repeat ? value - retain : 1
+      for (let i = 0; i < rep; i++) {
+        sendMessage(action_override[0], ...action_override.slice(1))
+      }
     } else if (action_item) {
       sendMessage(action, action_item, Math.min(v, max_value));
     } else {

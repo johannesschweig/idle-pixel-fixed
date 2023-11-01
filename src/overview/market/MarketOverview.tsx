@@ -42,6 +42,8 @@ const MarketOverview = () => {
     })
   }
 
+  const buySell = ["ancient_bar / Buy at 200K / sell at 215K", "bone_amulet / Buy at 185K / sell at 196K", "diamond / Buy at 1.15M / sell at 1.25M", "emerald / Buy at 28K / sell at 30K", "gold_leaf_seeds / Buy at 35K / sell at 43K", "green_leaf_seeds / Buy at 28.4K / sell at 35K", "iron_dagger / Buy at 45K / sell at 48K", "lime_leaf_seeds / Buy at 34K / sell at 40K", "ruby / Buy at 300K / sell at 345K", "skeleton_sword / Buy at 29.5K / sell at 31K"]
+
   return (
     <OverviewBox
       gridColumn={"1/3"}
@@ -126,6 +128,20 @@ const MarketOverview = () => {
                 threshold={tracker.threshold}
                 removeTracker={removeTracker}
               />
+            ))}
+          </div>
+          <div
+            style={{
+              fontSize: "10px"
+            }}
+          >
+            {buySell.map(bs => (
+              <p
+                style={{
+                  marginBottom: "6px"
+                }}>
+                { bs }
+              </p>
             ))}
           </div>
         </div>
