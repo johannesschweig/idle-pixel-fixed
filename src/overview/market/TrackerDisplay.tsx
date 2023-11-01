@@ -3,20 +3,30 @@ import { TrackerData } from "./MarketOverview";
 import { useEffect, useState } from "react";
 import { buttonStyle } from "./MarketSlotDisplay";
 import { formatNumber } from "../../util/numberUtils";
+import { useNumberItemObserver } from "../setItems/useSetItemsObserver";
 
 interface Props {
   item: string;
-  threshold: number;
+  buyAt: number;
+  sellAt: number;
   removeTracker: (item: string) => void;
+}
+
+enum Action {
+  BUY,
+  SELL,
+  NOTHING
 }
 
 const id = "TrackerDisplay";
 const TrackerDisplay = ({
   item,
-  threshold,
+  buyAt,
+  sellAt,
   removeTracker,
 }: Props) => {
   const [prices, setPrices] = useState([]);
+  const [stock] = useNumberItemObserver(item, id)
 
   useEffect(() => {
     // fetch prices for item on load of component
@@ -34,18 +44,24 @@ const TrackerDisplay = ({
       });
   }, [])
 
-  const isActive = () => {
-    return prices[0] <= threshold
+  const action = () : Action => {
+    if (prices[0] <= buyAt) {
+      return Action.BUY
+    } else if (prices[0] >= sellAt && stock > 0) {
+      return Action.SELL
+    } else {
+      return Action.NOTHING
+    }
   }
 
   return (
     <div
       style={{
         padding: '4px 8px',
-        backgroundColor: isActive() ? "darkblue" : "transparent",
+        backgroundColor: action() === Action.NOTHING ? "transparent" : action() === Action.BUY ? "darkblue" : "darkred",
         borderRadius: "4px",
         marginBottom: '6px',
-        color: isActive() ? "white" : "grey",
+        color: action() === Action.NOTHING ? "grey" : "white",
       }}
     >
       <IPimg
@@ -53,14 +69,24 @@ const TrackerDisplay = ({
         size={20}
         style={{
           marginRight: '4px',
-          opacity: isActive() ? 1.0 : 0.5,
+          opacity: action() === Action.NOTHING ? 0.5 : 1.0,
         }}
       />
-      {isActive() ?
-        <span>{formatNumber(prices[0])}</span> :
-        prices.length > 0 ?
-          <span><i>{`${formatNumber(prices[0])} (+${formatNumber(prices[0] - threshold)})`}</i></span> :
-          <span><i>{`no offer (${formatNumber(threshold)})`}</i></span>
+      {action() === Action.BUY &&
+        // Buy more
+        <span>Buy {formatNumber(prices[0])}</span>
+      }
+      {action() === Action.SELL &&
+        // Sell
+        <span>Sell {stock}@{formatNumber(prices[0])}</span>
+      }
+      { // too expensive
+        (action() === Action.NOTHING && prices.length > 0) &&
+          <span><i>{`${formatNumber(prices[0])} (+${formatNumber(prices[0] - buyAt)})`}</i></span>
+      }
+      { // No offer
+        (action() === Action.NOTHING && prices.length < 0) &&
+          <span><i>{`no offer (${formatNumber(buyAt)})`}</i></span>
       }
       <button
         style={buttonStyle}

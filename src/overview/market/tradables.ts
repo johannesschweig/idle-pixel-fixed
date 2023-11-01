@@ -774,8 +774,8 @@ export const TRADABLES: TradableData[] = [
   {
     id: 21,
     item: "gold_leaf_seeds",
-    lower: 60000,
-    upper: 180000,
+    lower: 35000,
+    upper: 105000,
     category: "seeds",
     order: 40
   },
