@@ -85,7 +85,7 @@ const TrackerDisplay = ({
           <span><i>{`${formatNumber(prices[0])} (+${formatNumber(prices[0] - buyAt)})`}</i></span>
       }
       { // No offer
-        (action() === Action.NOTHING && prices.length < 0) &&
+        (action() === Action.NOTHING && prices.length === 0) &&
           <span><i>{`no offer (${formatNumber(buyAt)})`}</i></span>
       }
       <button

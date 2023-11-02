@@ -20,7 +20,7 @@ const id = "ConsumeOverview";
 const ConsumeOverview = () => {
   const limbs = Object.keys(LIMBS);
   const areas: string[] = keysOf(AREAS).concat(['junk']);
-  const WEAPONS = ["stinger", "iron_dagger", "skeleton_sword", "bone_amulet"]
+  const WEAPONS = ["stinger"]
   const COOKED_FISH = [
     "shrimp", "anchovy", "sardine", "crab", "piranha", "salmon", "trout", "pike", "rainbow_fish", "eel", "tuna", "swordfish", "manta_ray", "whale", "small_stardust_fish", "medium_stardust_fish", "large_stardust_fish", "shark",
   ].map(fish => "cooked_" + fish)
@@ -222,26 +222,6 @@ const ConsumeOverview = () => {
             size={30}
             retain={9} />
         ))}
-        <ObservedLabeledIPimg
-          label={"sapphire"}
-          action={"SHOP_SELL"}
-          size={30}
-        />
-        <ObservedLabeledIPimg
-          label={"emerald"}
-          action={""}
-          size={30}
-        />
-        <ObservedLabeledIPimg
-          label={"ruby"}
-          action={""}
-          size={30}
-        />
-        <ObservedLabeledIPimg
-          label={"diamond"}
-          action={""}
-          size={30}
-        />
         {limbs.map((limb) => (
           <LimbDisplay
             limb={limb}
@@ -341,12 +321,12 @@ const ConsumeOverview = () => {
           size={50}
           onClick={() => clickBoat("stardust_boat")}
           style={boatStyle(stardustBoatTimer)} />}
-        {pirateShipTimer <= 1 && boatsOut() < 2 && <LabeledIPimg
+        {/* {pirateShipTimer <= 1 && boatsOut() < 2 && <LabeledIPimg
           name="pirate_ship"
           label={pirateShipTimer === 1 ? "Collect" : "Send out"}
           size={50}
           onClick={() => clickBoat("pirate_ship")}
-          style={boatStyle(pirateShipTimer)} />}
+          style={boatStyle(pirateShipTimer)} />} */}
         {aquariumTimer === 0 &&
           <LabeledIPimg
             name="aquarium"
