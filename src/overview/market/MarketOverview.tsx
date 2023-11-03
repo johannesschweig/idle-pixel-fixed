@@ -43,6 +43,7 @@ const MarketOverview = () => {
     })
   }
 
+
   return (
     <OverviewBox
       gridColumn={"1/3"}
