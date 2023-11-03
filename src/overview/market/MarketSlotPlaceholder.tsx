@@ -30,7 +30,10 @@ const MarketSlotPlaceholder = ({
           marketItemPrices = marketItemPrices.filter((element: number, index: number) => {
             return element
           });
-          if (tradable.length) {
+          // if no other offers, set to highest
+          if (marketItemPrices.length === 0) {
+            setPrice(tradable[0].upper)
+          } else { // set to lower market price, but not lower than market limit
             setPrice(Math.max(marketItemPrices[0] - 1, tradable[0].lower))
           }
         })

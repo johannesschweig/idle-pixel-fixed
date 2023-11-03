@@ -9,6 +9,7 @@ import { TRADABLES } from "./tradables";
 interface Props {
   item: MarketData,
   index: number,
+  limit?: number,
 }
 
 interface MarketItem {
@@ -39,6 +40,7 @@ const id = "MarketSlotDisplay";
 const MarketSlotDisplay = ({
   item,
   index,
+  limit = 0, // limit from trackers
 }: Props) => {
   const [prices, setPrices] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
@@ -67,9 +69,10 @@ const MarketSlotDisplay = ({
   }, [])
 
   const adjustPrice = () => {
+    // lowest price per market
     const lower = TRADABLES.filter(t => t.item === item.name)[0].lower
     sendMessage('MARKET_REMOVE_OFFER', index)
-    sendMessage('MARKET_POST', index, item.name, item.amount, Math.max(prices[0] - 1, lower))
+    sendMessage('MARKET_POST', index, item.name, item.amount, Math.max(prices[0] - 1, lower, limit))
   }
 
   const adjustAmount = () => {
@@ -163,6 +166,20 @@ const MarketSlotDisplay = ({
             </div>
           </div>
         }
+        {item.price <= limit &&
+          <div
+            style={{
+              textTransform: 'uppercase',
+              color: 'yellow',
+              border: '1px solid yellow',
+              borderRadius: "4px",
+              padding: '0px 6px',
+              fontSize: "12px",
+              textAlign: "center",
+              width: "48px",
+              margin: "0 auto",
+            }}
+          >Limit</div>}
       </div>
       { /* Collect button (optional) */}
       {item.sold !== 0 &&

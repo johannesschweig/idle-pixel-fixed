@@ -53,7 +53,7 @@ const TrackerDisplay = ({
       return Action.NOTHING
     }
   }
-
+// MARKET_PURCHASE=648029~1 (market_id, market_item_amount)
   return (
     <div
       style={{
@@ -74,7 +74,7 @@ const TrackerDisplay = ({
       />
       {action() === Action.BUY &&
         // Buy more
-        <span>Buy {formatNumber(prices[0])}</span>
+        <span>Buy {formatNumber(prices[0])}-{formatNumber(buyAt)}</span>
       }
       {action() === Action.SELL &&
         // Sell
