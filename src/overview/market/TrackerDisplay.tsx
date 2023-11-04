@@ -5,12 +5,14 @@ import { buttonStyle } from "./MarketSlotDisplay";
 import { formatNumber } from "../../util/numberUtils";
 import { useNumberItemObserver } from "../setItems/useSetItemsObserver";
 import { sendMessage } from "../../util/websocket/useWebsocket";
+import { TRADABLES } from "./tradables";
 
 interface Props {
   item: string;
   buyAt: number;
   sellAt: number;
   removeTracker: (item: string) => void;
+  sell: (item: string, amount: number, price: number) => void;
 }
 
 interface Offer {
@@ -31,12 +33,14 @@ const TrackerDisplay = ({
   buyAt,
   sellAt,
   removeTracker,
+  sell,
 }: Props) => {
   const [stock] = useNumberItemObserver(item, id)
   const [coins] = useNumberItemObserver('coins', id)
   const [offers, setOffers] = useState<Offer[]>([])
+  const upper = TRADABLES.filter(t => t.item === item)[0].upper
 
-  useEffect(() => {
+  const fetchOffers = (): void => {
     // fetch prices for item on load of component
     fetch(`https://idle-pixel.com/market/browse/${item}/`)
       .then(response => response.json())
@@ -57,12 +61,20 @@ const TrackerDisplay = ({
       .catch(error => {
         console.error('Error:', error);
       });
+  }
+
+  useEffect(() => {
+    fetchOffers()
+    // check every 10 minutes
+    const interval = setInterval(() => fetchOffers(), 10 * 60 * 1000);
+
+    return () => clearInterval(interval);
   }, [])
 
   const action = (): Action => {
     if (prices[0] <= buyAt) {
       return Action.BUY
-    } else if (prices[0] >= sellAt && stock > 0) {
+    } else if ((prices.length === 0 || prices[0] >= sellAt) && stock > 0) {
       return Action.SELL
     } else {
       return Action.NOTHING
@@ -73,12 +85,15 @@ const TrackerDisplay = ({
     // how much pieces you can afford
     const maxAmount = coins / offers[0].price
     sendMessage("MARKET_PURCHASE", offers[0].market_id, Math.min(maxAmount, offers[0].amount))
+    fetchOffers()
   }
 
   const prices =
     offers.length === 0 ?
       [] :
       offers.map(offer => offer.price)
+
+  const sellPrice = prices.length > 0 ? prices[0] : upper
 
   // MARKET_PURCHASE=648029~1 (market_id, market_item_amount)
   return (
@@ -117,8 +132,19 @@ const TrackerDisplay = ({
       }
       {action() === Action.SELL &&
         // Sell
-        // TODO what if no offers
-        <span>Sell {stock}@{formatNumber(prices[0])}</span>
+        <div
+          style={{
+            display: "inline-block",
+          }}
+        >
+          <span>Sell {stock}@{formatNumber(sellPrice)}</span>
+          <button
+            style={buttonStyle}
+            onClick={() => sell(item, stock, sellPrice)}
+          >
+            Sell
+          </button>
+        </div>
       }
       { // too expensive
         (action() === Action.NOTHING && prices.length > 0) &&

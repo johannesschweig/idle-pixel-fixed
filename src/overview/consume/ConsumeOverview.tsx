@@ -78,6 +78,8 @@ const ConsumeOverview = () => {
     }
     if (timer === 1) {
       sendMessage("BOAT_COLLECT", boat)
+      // automatically also send it again
+      setTimeout(() => sendMessage("BOAT_SEND", boat), 1000)
     } else {
       sendMessage("BOAT_SEND", boat)
     }

@@ -43,6 +43,18 @@ const MarketOverview = () => {
     })
   }
 
+  const sell = (item: string, amount: number, price: number) => {
+    if (!one.name) {
+      sendMessage('MARKET_POST', 1, item, amount, price)
+      sendMessage("MARKET_REFRESH_SLOTS")
+    } else if (!two.name) {
+      sendMessage('MARKET_POST', 2, item, amount, price)
+      sendMessage("MARKET_REFRESH_SLOTS")
+    } else if (!three.name) {
+      sendMessage('MARKET_POST', 3, item, amount, price)
+      sendMessage("MARKET_REFRESH_SLOTS")
+    }
+  }
 
   return (
     <OverviewBox
@@ -131,6 +143,7 @@ const MarketOverview = () => {
                 buyAt={tracker.buyAt}
                 sellAt={tracker.sellAt}
                 removeTracker={removeTracker}
+                sell={sell}
               />
             ))}
           </div>
