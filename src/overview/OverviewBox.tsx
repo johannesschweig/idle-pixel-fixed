@@ -77,7 +77,7 @@ const OverviewBox = ({ skill, children, ...style }: PropsWithChildren<Props> & C
     <div
       style={{
         gap: "5px",
-        backgroundColor: "#b1d6dc",
+        backgroundColor: "rgb(240, 240, 240)",
         padding: skill ? "0 10px 10px 10px" : "10px",
         ...style
       }}

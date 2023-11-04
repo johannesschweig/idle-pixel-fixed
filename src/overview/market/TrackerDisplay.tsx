@@ -1,11 +1,11 @@
 import IPimg from "../../util/IPimg";
-import { TrackerData } from "./MarketOverview";
 import { useEffect, useState } from "react";
 import { buttonStyle } from "./MarketSlotDisplay";
 import { formatNumber } from "../../util/numberUtils";
 import { useNumberItemObserver } from "../setItems/useSetItemsObserver";
 import { sendMessage } from "../../util/websocket/useWebsocket";
 import { TRADABLES } from "./tradables";
+import { useTooltip } from "../../util/tooltip/useTooltip";
 
 interface Props {
   item: string;
@@ -38,7 +38,9 @@ const TrackerDisplay = ({
   const [stock] = useNumberItemObserver(item, id)
   const [coins] = useNumberItemObserver('coins', id)
   const [offers, setOffers] = useState<Offer[]>([])
-  const upper = TRADABLES.filter(t => t.item === item)[0].upper
+  const tradable = TRADABLES.filter(t => t.item === item)[0]
+  const upper = tradable.upper
+  const lower = tradable.lower
 
   const fetchOffers = (): void => {
     // fetch prices for item on load of component
@@ -95,6 +97,40 @@ const TrackerDisplay = ({
 
   const sellPrice = prices.length > 0 ? prices[0] : upper
 
+  const zoneStyle = {
+    display: "inline-block",
+    height: "12px",
+    zIndex: "2",
+  }
+
+  const zoneWidth = () => {
+    const range = upper - lower
+    return {
+      buy: Math.round((buyAt - lower) / range * 100),
+      center: Math.round((sellAt - buyAt) / range * 100),
+      sell: Math.round((upper - sellAt) / range * 100),
+      price: prices.length > 0 ? Math.round((prices[0] - lower) / range * 100) : null,
+    }
+  }
+
+  const [trackerProps, TrackerTooltip] = useTooltip(
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "left",
+        fontSize: "12px",
+      }}
+    >
+      {/* lower, buyAt, sellAt, upper */}
+      <span>Lower: {formatNumber(lower)} </span>
+      <span>Buy at: {formatNumber(buyAt)} </span>
+      <span>Sell at: {formatNumber(sellAt)} </span>
+      <span>Upper: {formatNumber(upper)} </span>
+
+    </div>
+  );
+
   // MARKET_PURCHASE=648029~1 (market_id, market_item_amount)
   return (
     <div
@@ -148,7 +184,58 @@ const TrackerDisplay = ({
       }
       { // too expensive
         (action() === Action.NOTHING && prices.length > 0) &&
-        <span><i>{`${formatNumber(prices[0])} (+${formatNumber(prices[0] - buyAt)})`}</i></span>
+        <div
+          style={{
+            display: "inline-block",
+          }}
+          {...trackerProps}
+        >
+          <div
+            style={{
+              display: "inline-block",
+              position: "relative",
+              marginRight: "8px",
+            }}
+          >
+            {/* buy zone */}
+            <div
+              style={{
+                ...zoneStyle,
+                backgroundColor: "rgba(0, 0, 255, 0.1)",
+                width: `${zoneWidth().buy}px`,
+              }}
+            />
+            {/* center zone */}
+            <div
+              style={{
+                ...zoneStyle,
+                backgroundColor: "rgba(0, 0, 0, 0.15)",
+                width: `${zoneWidth().center}px`,
+              }}
+            />
+            {/* sell zone */}
+            <div
+              style={{
+                ...zoneStyle,
+                backgroundColor: "rgba(255, 0, 0, 0.15)",
+                width: `${zoneWidth().sell}px`,
+              }}
+            />
+            <div
+              style={{
+                display: "inline-block",
+                zIndex: "10",
+                backgroundColor: "red",
+                position: "absolute",
+                width: "1px",
+                height: "12px",
+                left: `${zoneWidth().price}px`,
+              }}
+            />
+          </div>
+          <span>{formatNumber(prices[0])}</span>
+          <TrackerTooltip />
+        </div>
       }
       { // No offer
         (action() === Action.NOTHING && prices.length === 0) &&

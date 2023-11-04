@@ -93,7 +93,7 @@ const MarketSlotDisplay = ({
   return (
     <div
       style={{
-        backgroundColor: 'rgb(114, 181, 192)',
+        backgroundColor: item.sold === 0 ? 'rgb(114, 181, 192)' : 'gold',
         padding: "16px",
         display: "grid",
         justifyItems: "center",
@@ -170,8 +170,8 @@ const MarketSlotDisplay = ({
           <div
             style={{
               textTransform: 'uppercase',
-              color: 'yellow',
-              border: '1px solid yellow',
+              color: 'orangered',
+              border: '1px solid orangered',
               borderRadius: "4px",
               padding: '0px 6px',
               fontSize: "12px",
