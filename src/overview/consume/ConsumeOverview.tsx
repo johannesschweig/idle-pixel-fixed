@@ -207,14 +207,20 @@ const ConsumeOverview = () => {
         <ObservedLabeledIPimg
           label={"meteor"}
           action={"MINE_METEOR"}
+          action_override={["MINE_METEOR"]}
+          repeat={true}
           size={30} />
         <ObservedLabeledIPimg
           label={"tnt"}
           action={"USE_TNT"}
+          action_override={["USE_TNT"]}
+          repeat={true}
           size={30} />
         <ObservedLabeledIPimg
           label={"bomb"}
           action={"USE_BOMB"}
+          action_override={["USE_BOMB"]}
+          repeat={true}
           size={30} />
         {FRAGMENTS.map((fragment) => (
           <ObservedLabeledIPimg

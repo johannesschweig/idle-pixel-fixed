@@ -120,6 +120,7 @@ const TrackerDisplay = ({
         flexDirection: "column",
         alignItems: "left",
         fontSize: "12px",
+        minWidth: "80px",
       }}
     >
       {/* lower, buyAt, sellAt, upper */}
@@ -131,12 +132,36 @@ const TrackerDisplay = ({
     </div>
   );
 
-  // MARKET_PURCHASE=648029~1 (market_id, market_item_amount)
+  const getOpac = (p: number) => {
+    if (p <= 0.05) {
+      return 0.5
+    } else if (p <= 0.1) {
+      return 0.6
+    } else if (p <= 0.25) {
+      return 0.8
+    } else {
+      return 1.0
+    }
+  }
+
+  const getBg = () => {
+    // how cheap is the current price
+    const distBuyAt = (buyAt - prices[0])/buyAt
+    const distSellAt = (prices[0] - sellAt)/sellAt
+    switch(action()) {
+      case Action.NOTHING: return "transparent"
+      case Action.BUY:
+        return `rgba(0, 0, 139, ${getOpac(distBuyAt)})`
+      default:
+        return `rgba(139, 0, 0, ${getOpac(distSellAt)})`
+    }
+  }
+
   return (
     <div
       style={{
         padding: '4px 8px',
-        backgroundColor: action() === Action.NOTHING ? "transparent" : action() === Action.BUY ? "darkblue" : "darkred",
+        backgroundColor: getBg(),
         borderRadius: "4px",
         marginBottom: '6px',
         color: action() === Action.NOTHING ? "grey" : "white",
@@ -156,6 +181,7 @@ const TrackerDisplay = ({
           style={{
             display: "inline-block",
           }}
+          {...trackerProps}
         >
           <span>Buy {formatNumber(prices[0])}-{formatNumber(buyAt)}</span>
           <button
@@ -164,6 +190,7 @@ const TrackerDisplay = ({
           >
             Buy
           </button>
+          <TrackerTooltip />
         </div>
       }
       {action() === Action.SELL &&
@@ -172,6 +199,7 @@ const TrackerDisplay = ({
           style={{
             display: "inline-block",
           }}
+          {...trackerProps}
         >
           <span>Sell {stock}@{formatNumber(sellPrice)}</span>
           <button
@@ -180,6 +208,7 @@ const TrackerDisplay = ({
           >
             Sell
           </button>
+          <TrackerTooltip />
         </div>
       }
       { // too expensive

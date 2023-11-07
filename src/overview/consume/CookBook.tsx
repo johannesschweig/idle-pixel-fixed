@@ -26,8 +26,8 @@ const CookBook = ({
             ? "beet_shake"
             : carrot >= 50
               ? "carrot_shake"
-              : potato >= 50
-                ? "potato_shake"
+              // : potato >= 50
+                // ? "potato_shake"
                 : coconut >= 10
                   ? "coconut_stew"
                   : banana >= 10

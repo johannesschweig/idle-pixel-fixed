@@ -40,7 +40,7 @@ const id = "MarketSlotDisplay";
 const MarketSlotDisplay = ({
   item,
   index,
-  limit = 0, // limit from trackers
+  limit, // limit from trackers
 }: Props) => {
   const [prices, setPrices] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
@@ -72,7 +72,11 @@ const MarketSlotDisplay = ({
     // lowest price per market
     const lower = TRADABLES.filter(t => t.item === item.name)[0].lower
     sendMessage('MARKET_REMOVE_OFFER', index)
-    sendMessage('MARKET_POST', index, item.name, item.amount, Math.max(prices[0] - 1, lower, limit))
+    if (limit) {
+      sendMessage('MARKET_POST', index, item.name, item.amount, Math.max(prices[0] - 1, lower, limit))
+    } else {
+      sendMessage('MARKET_POST', index, item.name, item.amount, Math.max(prices[0] - 1, lower))
+    }
   }
 
   const adjustAmount = () => {
@@ -166,7 +170,7 @@ const MarketSlotDisplay = ({
             </div>
           </div>
         }
-        {item.price <= limit &&
+        {limit != undefined && item.price <= limit &&
           <div
             style={{
               textTransform: 'uppercase',

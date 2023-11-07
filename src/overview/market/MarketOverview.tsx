@@ -7,6 +7,7 @@ import MarketSlotPlaceholder from "./MarketSlotPlaceholder";
 import TrackerDisplay from './TrackerDisplay'
 import { useLocalStorage } from "../../util/localstorage/useLocalStorage";
 import TrackerDisplayPlaceholder from "./TrackerDisplayPlaceholder"
+import { MarketData } from "../setItems/useSetItemsObserver";
 
 export interface TrackerData {
   item: string;
@@ -56,6 +57,14 @@ const MarketOverview = () => {
     }
   }
 
+  const getLimit = (slot: MarketData) => {
+    const t = trackers.filter(tracker => tracker.item === slot.name)
+    if (t.length > 0) {
+      return t[0].sellAt
+    }
+    return undefined
+  }
+
   return (
     <OverviewBox
       gridColumn={"1/3"}
@@ -89,7 +98,7 @@ const MarketOverview = () => {
               <MarketSlotDisplay
                 item={one}
                 index={1}
-                limit={trackers.filter(tracker => tracker.item === one.name)[0].sellAt}
+                limit={getLimit(one)}
               /> :
               <MarketSlotPlaceholder
                 index={1} />
@@ -98,7 +107,7 @@ const MarketOverview = () => {
               <MarketSlotDisplay
                 item={two}
                 index={2}
-                limit={trackers.filter(tracker => tracker.item === two.name)[0].sellAt}
+                limit={getLimit(two)}
               /> :
               <MarketSlotPlaceholder
                 index={2} />
@@ -107,7 +116,7 @@ const MarketOverview = () => {
               <MarketSlotDisplay
                 item={three}
                 index={3}
-                limit={trackers.filter(tracker => tracker.item === three.name)[0].sellAt}
+                limit={getLimit(three)}
               /> :
               <MarketSlotPlaceholder
                 index={3} />
