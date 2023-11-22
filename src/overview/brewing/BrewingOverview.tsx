@@ -34,7 +34,7 @@ const BrewingOverview = ({ }: Props) => {
     id
   );
 
-  const [brewingXp] = useNumberItemObserver("brewing_xp", id);
+  const [brewingXp] = useNumberItemObserver('brewing_xp', id)
   const [brewingXpMixerSelected] = useItemObserver("brewing_xp_mixer_selected", id)
   const [brewingXpMixerUsed] = useNumberItemObserver("brewing_xp_mixer_used", id)
   const [brewingXpMixerTimer] = useNumberItemObserver("stardust_brewing_xp_mixer_timer", id)
@@ -81,12 +81,7 @@ const BrewingOverview = ({ }: Props) => {
   }
 
   return (
-    <OverviewBox
-      skill={{
-        name: "Brewing",
-        xp: brewingXp
-      }}
-    >
+    <OverviewBox>
       {/* Ingredients */}
       <div
         style={{
@@ -146,7 +141,7 @@ const BrewingOverview = ({ }: Props) => {
               style={viewSelectorStyle(BrewingView.FAVORITE)}
               {...viewProps}
             />
-            <div
+            {/* <div
               style={{
                 position: "relative",
               }}
@@ -172,9 +167,9 @@ const BrewingOverview = ({ }: Props) => {
                   display: mixerActionRequired() ? "block" : "none",
                 }}
               ></div>
-            </div>
+            </div> */}
           </div>
-          {view === BrewingView.MIXER &&
+          {/* {view === BrewingView.MIXER &&
             <div
               style={{
                 display: "grid",
@@ -207,7 +202,7 @@ const BrewingOverview = ({ }: Props) => {
                 {brewingXpMixerTimer === 0 ? 'Reroll' : formatTime(brewingXpMixerTimer)}
               </button>
             </div>
-          }
+          } */}
           {view !== BrewingView.MIXER &&
             <div
               style={{

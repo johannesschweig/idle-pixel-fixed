@@ -74,7 +74,8 @@ const TrackerDisplay = ({
   }, [])
 
   const action = (): Action => {
-    if (prices[0] <= buyAt) {
+    // buy only if maximum 3mio in stock
+    if (prices[0] <= buyAt && prices[0] * stock < 3000000) {
       return Action.BUY
     } else if ((prices.length === 0 || prices[0] >= sellAt) && stock > 0) {
       return Action.SELL
@@ -123,12 +124,12 @@ const TrackerDisplay = ({
         minWidth: "80px",
       }}
     >
-      {/* lower, buyAt, sellAt, upper */}
+      {/* stock, lower, buyAt, sellAt, upper */}
+      { stock > 0 && <span>Stock: {formatNumber(stock)} </span> }
       <span>Lower: {formatNumber(lower)} </span>
       <span>Buy at: {formatNumber(buyAt)} </span>
       <span>Sell at: {formatNumber(sellAt)} </span>
       <span>Upper: {formatNumber(upper)} </span>
-
     </div>
   );
 
@@ -183,7 +184,7 @@ const TrackerDisplay = ({
           }}
           {...trackerProps}
         >
-          <span>Buy {formatNumber(prices[0])}-{formatNumber(buyAt)}</span>
+          <span>Buy {formatNumber(prices[0])}</span>
           <button
             style={buttonStyle}
             onClick={() => buy()}

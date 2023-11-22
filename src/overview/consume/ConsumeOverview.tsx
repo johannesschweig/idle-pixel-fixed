@@ -35,6 +35,7 @@ const ConsumeOverview = () => {
   const [canoeBoatTimer] = useNumberItemObserver("canoe_boat_timer", id);
   const [stardustBoatTimer] = useNumberItemObserver("stardust_boat_timer", id);
   const [pirateShipTimer] = useNumberItemObserver("pirate_ship_timer", id);
+  const [submarineBoatTimer] = useNumberItemObserver("submarine_boat_timer", id);
   const [aquariumTimer] = useNumberItemObserver("aquarium_timer", id)
   const [heat] = useNumberItemObserver("heat", id)
   const [treasureChest] = useNumberItemObserver("treasure_chest", id)
@@ -75,11 +76,13 @@ const ConsumeOverview = () => {
         break
       case "pirate_ship": timer = pirateShipTimer
         break
+      case "submarine_boat": timer = submarineBoatTimer
+        break
     }
     if (timer === 1) {
       sendMessage("BOAT_COLLECT", boat)
       // automatically also send it again
-      setTimeout(() => sendMessage("BOAT_SEND", boat), 1000)
+      setTimeout(() => sendMessage("BOAT_SEND", boat), 300)
     } else {
       sendMessage("BOAT_SEND", boat)
     }
@@ -88,11 +91,11 @@ const ConsumeOverview = () => {
   const openTreasureChest = (color: string) => {
     let key = ''
     switch (color) {
-      case "brown": key = 'gold_sapphire_key'
+      case "brown": key = 'gold_emerald_key'
         break
-      case "green": key = 'promethium_emerald_key'
+      case "green": key = 'promethium_ruby_key'
         break
-      case "red": key = 'titanium_emerald_key'
+      case "red": key = 'titanium_diamond_key'
         break
     }
     sendMessage('CRAFT', key, '1')
@@ -101,7 +104,7 @@ const ConsumeOverview = () => {
 
   const boatsOut = () => {
     let sum = 0
-    let boats = [rowBoatTimer, canoeBoatTimer, stardustBoatTimer, pirateShipTimer]
+    let boats = [rowBoatTimer, canoeBoatTimer, stardustBoatTimer, pirateShipTimer, submarineBoatTimer]
     for (let i = 0; i < boats.length; i++) {
       if (boats[i] > 1) {
         sum = sum + 1
@@ -160,8 +163,7 @@ const ConsumeOverview = () => {
       >
         <RocketDisplay />
         <CookBook />
-        {/* {(beehiveTimer === 1 || ((poppy > 0 || rose > 0 || tulip > 0) && beehiveTimer === 0)) && */}
-        {(beehiveTimer === 1 || ((poppy > 25 || rose > 25 || tulip > 25) && beehiveTimer === 0)) &&
+        {/* {(beehiveTimer === 1 || ((poppy > 25 || rose > 25 || tulip > 25) && beehiveTimer === 0)) &&
           <LabeledIPimg
             name={"beehive"}
             label={beehiveTimer === 1 ? "Collect" : "Prepare"}
@@ -170,7 +172,11 @@ const ConsumeOverview = () => {
               cursor: "pointer",
             }}
           />
-        }
+        } */}
+        <ObservedLabeledIPimg
+          label={"shark_tooth"}
+          action={""}
+        />
         <ObservedLabeledIPimg
           label={"gem_bag"}
           action={""}
@@ -183,7 +189,7 @@ const ConsumeOverview = () => {
           action_override={["DRINK_BEEHIVE"]}
         />
         <MerchantDisplay />
-        {birdhouseTimer <= 1 && <LabeledIPimg
+        {/* {birdhouseTimer <= 1 && <LabeledIPimg
           name={"birdhouse"}
           label={birdhouseTimer === 1 ? "Collect" : "Prepare"}
           onClick={() => clickBirdhouse()}
@@ -191,7 +197,7 @@ const ConsumeOverview = () => {
           style={{
             cursor: "pointer",
           }}
-        />}
+        />} */}
         {ironBar >= 10 && <ObservedLabeledIPimg
           label={"cannonball_mould"}
           action={''}
@@ -317,12 +323,12 @@ const ConsumeOverview = () => {
           />
         }
         {/* Boats */}
-        {canoeBoatTimer <= 1 && boatsOut() < 2 && <LabeledIPimg
+        {/* {canoeBoatTimer <= 1 && boatsOut() < 2 && <LabeledIPimg
           name="canoe_boat"
           label={canoeBoatTimer === 1 ? "Collect" : "Send out"}
           size={50}
           onClick={() => clickBoat("canoe_boat")}
-          style={boatStyle(canoeBoatTimer)} />}
+          style={boatStyle(canoeBoatTimer)} />} */}
         {stardustBoatTimer <= 1 && boatsOut() < 2 && <LabeledIPimg
           name="stardust_boat"
           label={stardustBoatTimer === 1 ? "Collect" : "Send out"}
@@ -335,6 +341,12 @@ const ConsumeOverview = () => {
           size={50}
           onClick={() => clickBoat("pirate_ship")}
           style={boatStyle(pirateShipTimer)} />} */}
+        {submarineBoatTimer <= 1 && boatsOut() < 2 && <LabeledIPimg
+          name="submarine_boat"
+          label={submarineBoatTimer === 1 ? "Collect" : "Send out"}
+          size={50}
+          onClick={() => clickBoat("submarine_boat")}
+          style={boatStyle(submarineBoatTimer)} />}
         {aquariumTimer === 0 &&
           <LabeledIPimg
             name="aquarium"
@@ -365,8 +377,8 @@ const ConsumeOverview = () => {
           label={"mega_bait"}
           action={""}
           size={30}
-          action_override={["THROW_MEGA_BAIT"]}
-          repeat={true}
+          // action_override={["THROW_MEGA_BAIT"]}
+          // repeat={true}
         />
         {areas.map((area) => (
           <GatheringBagDisplay area={area} key={area} />
