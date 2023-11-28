@@ -75,7 +75,7 @@ const TrackerDisplay = ({
 
   const action = (): Action => {
     // buy only if maximum 3mio in stock
-    if (prices[0] <= buyAt && prices[0] * stock < 3000000) {
+    if (prices[0] <= buyAt && prices[0] * stock < 3000000 && coins > prices[0]) {
       return Action.BUY
     } else if ((prices.length === 0 || prices[0] >= sellAt) && stock > 0) {
       return Action.SELL
@@ -86,7 +86,7 @@ const TrackerDisplay = ({
 
   const buy = () => {
     // how much pieces you can afford
-    const maxAmount = coins / offers[0].price
+    const maxAmount = Math.floor(coins / offers[0].price)
     sendMessage("MARKET_PURCHASE", offers[0].market_id, Math.min(maxAmount, offers[0].amount))
     fetchOffers()
   }
@@ -95,6 +95,11 @@ const TrackerDisplay = ({
     offers.length === 0 ?
       [] :
       offers.map(offer => offer.price)
+
+  const amounts = 
+    offers.length === 0 ?
+      [] :
+      offers.map(offer => offer.amount)
 
   const sellPrice = prices.length > 0 ? prices[0] : upper
 
@@ -184,7 +189,7 @@ const TrackerDisplay = ({
           }}
           {...trackerProps}
         >
-          <span>Buy {formatNumber(prices[0])}</span>
+          <span>Buy {amounts[0]}@{formatNumber(prices[0])}</span>
           <button
             style={buttonStyle}
             onClick={() => buy()}

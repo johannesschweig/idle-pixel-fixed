@@ -15,6 +15,11 @@ import MerchantDisplay from "./MerchantDisplay";
 import { formatTime } from "../../util/timeUtils";
 import { formatNumber } from "../../util/numberUtils";
 import CrystalBall from "./CrystalBall";
+enum TreasureMap {
+  REGULAR,
+  GREEN,
+  RED
+}
 
 const id = "ConsumeOverview";
 const ConsumeOverview = () => {
@@ -146,7 +151,58 @@ const ConsumeOverview = () => {
     }
   }
 
-//DONATE_TABLETTE_PIECES
+  interface TreasureHint {
+    [key: number]: string;
+  }
+
+  const getTreasureMapLabel = (tm: TreasureMap) => {
+    const regular: TreasureHint = {
+      1: "tsevrah a: dees fael emil",
+      2: "Sell me: VII silver",
+      3: "Au to the shop",
+      4: "#4",
+      5: "One sip one star, another sip another star.",
+      6: "metal into xp",
+      7: "A shop, with green coins.",
+      8: "WILL you sell an item? OW! That hurt!",
+      9: "drilll drill crusher",
+      10: "Ii really wish my crops grew faster",
+      11: "Select a fighting area in a hot place."
+    }
+    const green: TreasureHint = {
+      1: "A source of energy to smelt ores, but it's not oil, and it's not lava. Produce me.",
+      2: "#2",
+      3: "Click me: A skull stuck in a shiny glass orb",
+      4: "#4",
+      5: "#5",
+      6: "#6",
+      7: "Broswing stonks",
+      8: "How do I get energy without food?",
+      9: "#9"
+    }
+    const red: TreasureHint = {
+      1: "I observe the universe but cannot see. All I rely on is the wavelengths that shall be!",
+      2: "Sell to npc shop: Au before Fe",
+      3: "01101001 01110010 01101111 01101110 00100000 01100010 01110101 01100011 01101011 01100101 01110100",
+      4: "#4",
+      5: "#5",
+      6: "#6",
+      7: "#7",
+      8: "Have you ever mined in the desert? No? I'm sure you've been there a few times.",
+      9: "#9",
+      10: "Let's eat! Not for energy but for something else!",
+      11: "#11"
+    }
+
+
+    switch (tm) {
+      case TreasureMap.REGULAR: return regular[treasureMap]
+      case TreasureMap.GREEN: return green[treasureMap]
+      case TreasureMap.RED: return red[treasureMap]
+    }
+  }
+
+  //DONATE_TABLETTE_PIECES
   return (
     <OverviewBox
       skill={{
@@ -175,6 +231,7 @@ const ConsumeOverview = () => {
         } */}
         <ObservedLabeledIPimg
           label={"shark_tooth"}
+          size={30}
           action={""}
         />
         <ObservedLabeledIPimg
@@ -268,21 +325,21 @@ const ConsumeOverview = () => {
         {treasureMap > 0 &&
           <LabeledIPimg
             name={"treasure_map"}
-            label={`#${treasureMap}`}
+            label={getTreasureMapLabel(TreasureMap.REGULAR)}
             size={30}
           />
         }
         {greenTreasureMap > 0 &&
           <LabeledIPimg
             name={"green_treasure_map"}
-            label={`#${greenTreasureMap}`}
+            label={getTreasureMapLabel(TreasureMap.GREEN)}
             size={30}
           />
         }
         {redTreasureMap > 0 &&
           <LabeledIPimg
             name={"red_treasure_map"}
-            label={`#${redTreasureMap}`}
+            label={getTreasureMapLabel(TreasureMap.RED)}
             size={30}
           />
         }
@@ -377,8 +434,8 @@ const ConsumeOverview = () => {
           label={"mega_bait"}
           action={""}
           size={30}
-          // action_override={["THROW_MEGA_BAIT"]}
-          // repeat={true}
+        // action_override={["THROW_MEGA_BAIT"]}
+        // repeat={true}
         />
         {areas.map((area) => (
           <GatheringBagDisplay area={area} key={area} />
