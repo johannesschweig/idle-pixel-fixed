@@ -54,96 +54,96 @@ export const TRADABLES: TradableData[] = [
   {
     id: 141,
     item: "dragon_shield_left_half",
-    lower: 1000000,
-    upper: 4000000,
+    lower: 400000,
+    upper: 1600000,
     category: "armour",
     order: 50
   },
   {
     id: 142,
     item: "dragon_shield_right_half",
-    lower: 1500000,
-    upper: 6000000,
+    lower: 700000,
+    upper: 2800000,
     category: "armour",
     order: 60
   },
   {
     id: 149,
     item: "gold_helmet",
-    lower: 100000000,
-    upper: 500000000,
+    lower: 15000000,
+    upper: 75000000,
     category: "armour",
     order: 100
   },
   {
     id: 150,
     item: "gold_body",
-    lower: 100000000,
-    upper: 500000000,
+    lower: 15000000,
+    upper: 75000000,
     category: "armour",
     order: 110
   },
   {
     id: 151,
     item: "gold_legs",
-    lower: 100000000,
-    upper: 500000000,
+    lower: 15000000,
+    upper: 75000000,
     category: "armour",
     order: 120
   },
   {
     id: 152,
     item: "gold_boots",
-    lower: 100000000,
-    upper: 500000000,
+    lower: 15000000,
+    upper: 75000000,
     category: "armour",
     order: 130
   },
   {
     id: 153,
     item: "gold_gloves",
-    lower: 100000000,
-    upper: 500000000,
+    lower: 15000000,
+    upper: 75000000,
     category: "armour",
     order: 140
   },
   {
     id: 154,
     item: "dragon_helmet_mould",
-    lower: 40000000,
-    upper: 240000000,
+    lower: 3000000,
+    upper: 15000000,
     category: "armour",
     order: 160
   },
   {
     id: 155,
     item: "dragon_body_mould",
-    lower: 40000000,
-    upper: 240000000,
+    lower: 3000000,
+    upper: 15000000,
     category: "armour",
     order: 170
   },
   {
     id: 156,
     item: "dragon_legs_mould",
-    lower: 40000000,
-    upper: 240000000,
+    lower: 3000000,
+    upper: 15000000,
     category: "armour",
     order: 180
   },
   {
     id: 157,
     item: "dragon_boots_mould",
-    lower: 40000000,
-    upper: 240000000,
+    lower: 3000000,
+    upper: 15000000,
     category: "armour",
     order: 190
   },
   {
     id: 158,
     item: "dragon_gloves_mould",
-    lower: 40000000,
-    upper: 240000000,
+    lower: 3000000,
+    upper: 15000000,
     category: "armour",
     order: 200
   },
@@ -190,24 +190,24 @@ export const TRADABLES: TradableData[] = [
   {
     id: 17,
     item: "titanium_bar",
-    lower: 10000,
-    upper: 30000,
+    lower: 5000,
+    upper: 15000,
     category: "bars",
     order: 60
   },
   {
     id: 127,
     item: "ancient_bar",
-    lower: 100000,
-    upper: 300000,
+    lower: 150000,
+    upper: 450000,
     category: "bars",
     order: 70
   },
   {
     id: 29,
     item: "bones",
-    lower: 175,
-    upper: 1050,
+    lower: 100,
+    upper: 600,
     category: "bones",
     order: 10
   },
@@ -246,8 +246,8 @@ export const TRADABLES: TradableData[] = [
   {
     id: 31,
     item: "dotted_green_leaf",
-    lower: 1400,
-    upper: 4200,
+    lower: 800,
+    upper: 2400,
     category: "brewing",
     order: 10
   },
@@ -270,8 +270,8 @@ export const TRADABLES: TradableData[] = [
   {
     id: 34,
     item: "gold_leaf",
-    lower: 5000,
-    upper: 15000,
+    lower: 4000,
+    upper: 12000,
     category: "brewing",
     order: 40
   },
@@ -294,8 +294,8 @@ export const TRADABLES: TradableData[] = [
   {
     id: 37,
     item: "strange_leaf",
-    lower: 6000,
-    upper: 18000,
+    lower: 5000,
+    upper: 15000,
     category: "brewing",
     order: 70
   },
@@ -446,96 +446,96 @@ export const TRADABLES: TradableData[] = [
   {
     id: 10,
     item: "ruby",
-    lower: 150000,
-    upper: 450000,
+    lower: 110000,
+    upper: 330000,
     category: "gems",
     order: 30
   },
   {
     id: 11,
     item: "diamond",
-    lower: 600000,
-    upper: 1800000,
+    lower: 500000,
+    upper: 1500000,
     category: "gems",
     order: 40
   },
   {
     id: 38,
     item: "logs",
-    lower: 55,
-    upper: 165,
+    lower: 40,
+    upper: 120,
     category: "logs",
     order: 10
   },
   {
     id: 39,
     item: "oak_logs",
-    lower: 110,
-    upper: 330,
+    lower: 80,
+    upper: 240,
     category: "logs",
     order: 20
   },
   {
     id: 40,
     item: "willow_logs",
-    lower: 130,
-    upper: 390,
+    lower: 100,
+    upper: 300,
     category: "logs",
     order: 30
   },
   {
     id: 41,
     item: "maple_logs",
-    lower: 200,
-    upper: 600,
+    lower: 180,
+    upper: 540,
     category: "logs",
     order: 40
   },
   {
     id: 87,
     item: "stardust_logs",
-    lower: 750,
-    upper: 2625,
+    lower: 500,
+    upper: 1750,
     category: "logs",
     order: 50
   },
   {
     id: 88,
     item: "pine_logs",
-    lower: 300,
-    upper: 900,
+    lower: 220,
+    upper: 660,
     category: "logs",
     order: 60
   },
   {
     id: 100,
     item: "redwood_logs",
-    lower: 600,
-    upper: 2000,
+    lower: 500,
+    upper: 1600,
     category: "logs",
     order: 70
   },
   {
     id: 93,
     item: "blue_pickaxe_orb",
-    lower: 1000000,
-    upper: 3000000,
+    lower: 700000,
+    upper: 2100000,
     category: "orbs",
     order: 10
   },
   {
     id: 94,
     item: "blue_hammer_orb",
-    lower: 1000000,
-    upper: 3000000,
+    lower: 800000,
+    upper: 2400000,
     category: "orbs",
     order: 20
   },
   {
     id: 95,
     item: "blue_oil_storage_orb",
-    lower: 1000000,
-    upper: 3000000,
+    lower: 800000,
+    upper: 2400000,
     category: "orbs",
     order: 30
   },
@@ -550,96 +550,96 @@ export const TRADABLES: TradableData[] = [
   {
     id: 97,
     item: "blue_farming_orb",
-    lower: 1000000,
-    upper: 3000000,
+    lower: 800000,
+    upper: 2400000,
     category: "orbs",
     order: 50
   },
   {
     id: 98,
     item: "blue_woodcutting_orb",
-    lower: 1250000,
-    upper: 3750000,
+    lower: 700000,
+    upper: 2100000,
     category: "orbs",
     order: 60
   },
   {
     id: 107,
     item: "green_charcoal_orb",
-    lower: 2000000,
-    upper: 6000000,
+    lower: 1400000,
+    upper: 4200000,
     category: "orbs",
     order: 500
   },
   {
     id: 108,
     item: "green_arrow_orb",
-    lower: 1000000,
-    upper: 3000000,
+    lower: 800000,
+    upper: 2400000,
     category: "orbs",
     order: 510
   },
   {
     id: 109,
     item: "green_bone_orb",
-    lower: 1500000,
-    upper: 4500000,
+    lower: 1200000,
+    upper: 3900000,
     category: "orbs",
     order: 520
   },
   {
     id: 110,
     item: "green_log_orb",
-    lower: 1500000,
-    upper: 4500000,
+    lower: 1000000,
+    upper: 3000000,
     category: "orbs",
     order: 540
   },
   {
     id: 111,
     item: "green_boat_orb",
-    lower: 1500000,
-    upper: 4500000,
+    lower: 1000000,
+    upper: 3000000,
     category: "orbs",
     order: 550
   },
   {
     id: 136,
     item: "red_farming_orb",
-    lower: 25000000,
-    upper: 75000000,
+    lower: 17000000,
+    upper: 51000000,
     category: "orbs",
     order: 560
   },
   {
     id: 137,
     item: "red_woodcutting_orb",
-    lower: 25000000,
-    upper: 75000000,
+    lower: 17000000,
+    upper: 51000000,
     category: "orbs",
     order: 570
   },
   {
     id: 138,
     item: "red_combat_orb",
-    lower: 25000000,
-    upper: 75000000,
+    lower: 17000000,
+    upper: 51000000,
     category: "orbs",
     order: 580
   },
   {
     id: 139,
     item: "red_oil_factory_orb",
-    lower: 25000000,
-    upper: 75000000,
+    lower: 17000000,
+    upper: 51000000,
     category: "orbs",
     order: 590
   },
   {
     id: 140,
     item: "red_stardust_watch_orb",
-    lower: 25000000,
-    upper: 75000000,
+    lower: 17000000,
+    upper: 51000000,
     category: "orbs",
     order: 600
   },
@@ -686,8 +686,8 @@ export const TRADABLES: TradableData[] = [
   {
     id: 6,
     item: "promethium",
-    lower: 200,
-    upper: 800,
+    lower: 300,
+    upper: 1200,
     category: "ores",
     order: 60
   },
@@ -718,8 +718,8 @@ export const TRADABLES: TradableData[] = [
   {
     id: 85,
     item: "bone_amulet",
-    lower: 90000,
-    upper: 270000,
+    lower: 70000,
+    upper: 210000,
     category: "other_equipment",
     order: 10
   },
@@ -846,8 +846,8 @@ export const TRADABLES: TradableData[] = [
   {
     id: 18,
     item: "dotted_green_leaf_seeds",
-    lower: 4000,
-    upper: 12000,
+    lower: 3000,
+    upper: 9000,
     category: "seeds",
     order: 10
   },
@@ -870,8 +870,8 @@ export const TRADABLES: TradableData[] = [
   {
     id: 21,
     item: "gold_leaf_seeds",
-    lower: 30000,
-    upper: 90000,
+    lower: 20000,
+    upper: 60000,
     category: "seeds",
     order: 40
   },
@@ -894,24 +894,24 @@ export const TRADABLES: TradableData[] = [
   {
     id: 24,
     item: "stardust_seeds",
-    lower: 4000,
-    upper: 12000,
+    lower: 3000,
+    upper: 9000,
     category: "seeds",
     order: 70
   },
   {
     id: 25,
     item: "tree_seeds",
-    lower: 2300,
-    upper: 6900,
+    lower: 2000,
+    upper: 6000,
     category: "seeds",
     order: 80
   },
   {
     id: 26,
     item: "oak_tree_seeds",
-    lower: 5000,
-    upper: 15000,
+    lower: 4000,
+    upper: 12000,
     category: "seeds",
     order: 90
   },
@@ -926,16 +926,16 @@ export const TRADABLES: TradableData[] = [
   {
     id: 28,
     item: "maple_tree_seeds",
-    lower: 12500,
-    upper: 37500,
+    lower: 10000,
+    upper: 30000,
     category: "seeds",
     order: 110
   },
   {
     id: 89,
     item: "stardust_tree_seeds",
-    lower: 70000,
-    upper: 210000,
+    lower: 40000,
+    upper: 120000,
     category: "seeds",
     order: 120
   },
@@ -950,8 +950,8 @@ export const TRADABLES: TradableData[] = [
   {
     id: 99,
     item: "redwood_tree_seeds",
-    lower: 80000,
-    upper: 240000,
+    lower: 50000,
+    upper: 150000,
     category: "seeds",
     order: 140
   },
@@ -1006,40 +1006,40 @@ export const TRADABLES: TradableData[] = [
   {
     id: 72,
     item: "stinger",
-    lower: 3500,
-    upper: 12000,
+    lower: 2500,
+    upper: 8750,
     category: "weapons",
     order: 10
   },
   {
     id: 73,
     item: "iron_dagger",
-    lower: 25000,
-    upper: 75000,
+    lower: 20000,
+    upper: 60000,
     category: "weapons",
     order: 20
   },
   {
     id: 74,
     item: "skeleton_sword",
-    lower: 16000,
-    upper: 48000,
+    lower: 13000,
+    upper: 39000,
     category: "weapons",
     order: 30
   },
   {
     id: 75,
     item: "club",
-    lower: 550000,
-    upper: 1650000,
+    lower: 450000,
+    upper: 1350000,
     category: "weapons",
     order: 40
   },
   {
     id: 76,
     item: "spiked_club",
-    lower: 600000,
-    upper: 1800000,
+    lower: 500000,
+    upper: 1500000,
     category: "weapons",
     order: 50
   },
@@ -1054,56 +1054,56 @@ export const TRADABLES: TradableData[] = [
   {
     id: 114,
     item: "trident",
-    lower: 600000,
-    upper: 1800000,
+    lower: 500000,
+    upper: 1500000,
     category: "weapons",
     order: 56
   },
   {
     id: 128,
     item: "rapier",
-    lower: 600000,
-    upper: 1800000,
+    lower: 400000,
+    upper: 1200000,
     category: "weapons",
     order: 57
   },
   {
     id: 77,
     item: "long_bow",
-    lower: 35000,
-    upper: 105000,
+    lower: 25000,
+    upper: 75000,
     category: "weapons",
     order: 60
   },
   {
     id: 78,
     item: "wooden_arrows",
-    lower: 25,
-    upper: 88,
+    lower: 20,
+    upper: 75,
     category: "weapons",
     order: 70
   },
   {
     id: 79,
     item: "fire_arrows",
-    lower: 550,
-    upper: 1650,
+    lower: 450,
+    upper: 1350,
     category: "weapons",
     order: 80
   },
   {
     id: 80,
     item: "ice_arrows",
-    lower: 1300,
-    upper: 3900,
+    lower: 1000,
+    upper: 3000,
     category: "weapons",
     order: 90
   },
   {
     id: 135,
     item: "cannon",
-    lower: 60000,
-    upper: 210000,
+    lower: 40000,
+    upper: 140000,
     category: "weapons",
     order: 110
   }

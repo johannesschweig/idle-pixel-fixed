@@ -267,12 +267,12 @@ const ConsumeOverview = () => {
             action={"SMASH_STARDUST_PRISM"}
             size={30} />
         ))}
-        <ObservedLabeledIPimg
+        {/* <ObservedLabeledIPimg
           label={"meteor"}
           action={"MINE_METEOR"}
           action_override={["MINE_METEOR"]}
           repeat={true}
-          size={30} />
+          size={30} /> */}
         <ObservedLabeledIPimg
           label={"tnt"}
           action={"USE_TNT"}
