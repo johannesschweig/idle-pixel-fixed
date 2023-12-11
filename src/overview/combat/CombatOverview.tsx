@@ -28,6 +28,7 @@ const CombatOverview = () => {
   const [bloodMoonActive] = useNumberItemObserver('blood_moon_active', id)
   const [robotWaveTimer] = useNumberItemObserver('robot_wave_timer', id)
   const [rainPotion] = useNumberItemObserver('rain_potion', id)
+  const [redCombatOrbTimer] = useNumberItemObserver("red_combat_orb_timer", id)
 
   const formatAreaName = (str: string) => {
     var formattedStr = str.replace(/_/g, ' ');
@@ -124,12 +125,19 @@ const CombatOverview = () => {
           action_override={["FIGHT_EVIL_PIRATE"]}
           size={30}
         />} */}
-        {fightPoints >= 10000 && energy > 50000 && <ObservedLabeledIPimg
-          label={"purple_guardian_key"}
+        {fightPoints >= 12000 && energy > 50000 && <ObservedLabeledIPimg
+          label={"purple_gaurdian_key"}
           action={""}
           action_override={["FIGHT_GUARDIAN", "3"]}
           size={30}
         />}
+        {redCombatOrbTimer > 2 &&
+          <LabeledIPimg
+            label={"red_combat_orb"}
+            name={"Shiny next monster"}
+            onClick={() => sendMessage("USE_RED_COMBAT_ORB")}
+            size={30} />
+        }
       </div>
     </OverviewBox>
   );

@@ -247,7 +247,7 @@ const ConsumeOverview = () => {
           action_override={["DRINK_BEEHIVE"]}
         />
         <MerchantDisplay />
-        {/* {birdhouseTimer <= 1 && <LabeledIPimg
+        {birdhouseTimer <= 1 && <LabeledIPimg
           name={"birdhouse"}
           label={birdhouseTimer === 1 ? "Collect" : "Prepare"}
           onClick={() => clickBirdhouse()}
@@ -255,7 +255,7 @@ const ConsumeOverview = () => {
           style={{
             cursor: "pointer",
           }}
-        />} */}
+        />}
         {ironBar >= 10 && <ObservedLabeledIPimg
           label={"cannonball_mould"}
           action={''}
