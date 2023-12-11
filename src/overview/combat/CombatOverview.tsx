@@ -118,10 +118,16 @@ const CombatOverview = () => {
             opacity: rainPotion >= 1 ? 1 : 0.5,
           }}
         />} */}
-        {fightPoints >= 6000 && <ObservedLabeledIPimg
+        {/* {fightPoints >= 6000 && <ObservedLabeledIPimg
           label={"evil_pirate"}
           action={"FIGHT_EVIL_PIRATE"}
           action_override={["FIGHT_EVIL_PIRATE"]}
+          size={30}
+        />} */}
+        {fightPoints >= 10000 && energy > 50000 && <ObservedLabeledIPimg
+          label={"purple_guardian_key"}
+          action={""}
+          action_override={["FIGHT_GUARDIAN", "3"]}
           size={30}
         />}
       </div>

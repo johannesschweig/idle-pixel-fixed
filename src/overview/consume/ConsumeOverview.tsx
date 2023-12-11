@@ -186,7 +186,7 @@ const ConsumeOverview = () => {
       3: "01101001 01110010 01101111 01101110 00100000 01100010 01110101 01100011 01101011 01100101 01110100",
       4: "#4",
       5: "#5",
-      6: "#6",
+      6: "Crack this clue and you will see, a great shiny item for mining XP.",
       7: "#7",
       8: "Have you ever mined in the desert? No? I'm sure you've been there a few times.",
       9: "#9",
@@ -194,11 +194,10 @@ const ConsumeOverview = () => {
       11: "#11"
     }
 
-
     switch (tm) {
       case TreasureMap.REGULAR: return regular[treasureMap]
-      case TreasureMap.GREEN: return green[treasureMap]
-      case TreasureMap.RED: return red[treasureMap]
+      case TreasureMap.GREEN: return green[greenTreasureMap]
+      case TreasureMap.RED: return red[redTreasureMap]
     }
   }
 
@@ -230,19 +229,21 @@ const ConsumeOverview = () => {
           />
         } */}
         <ObservedLabeledIPimg
-          label={"shark_tooth"}
-          size={30}
+          label={"tainted_coins"}
           action={""}
+          size={30}
         />
         <ObservedLabeledIPimg
           label={"gem_bag"}
           action={""}
           action_override={["OPEN_GEM_BAG"]}
+          size={30}
           repeat={true}
         />
         <ObservedLabeledIPimg
           label={"beehive_potion"}
           action={''}
+          size={30}
           action_override={["DRINK_BEEHIVE"]}
         />
         <MerchantDisplay />
@@ -415,7 +416,7 @@ const ConsumeOverview = () => {
             }}
           />
         }
-        <ObservedLabeledIPimg
+        {/* <ObservedLabeledIPimg
           label={"bait"}
           action={""}
           size={30}
@@ -434,9 +435,9 @@ const ConsumeOverview = () => {
           label={"mega_bait"}
           action={""}
           size={30}
-        // action_override={["THROW_MEGA_BAIT"]}
-        // repeat={true}
-        />
+          action_override={["THROW_MEGA_BAIT"]}
+          repeat={true}
+        /> */}
         {areas.map((area) => (
           <GatheringBagDisplay area={area} key={area} />
         ))}

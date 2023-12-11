@@ -268,13 +268,14 @@ const TrackerDisplay = ({
               }}
             />
           </div>
+          { stock > 0 && <span>{`${stock}@`}</span> }
           <span>{formatNumber(prices[0])}</span>
           <TrackerTooltip />
         </div>
       }
       { // No offer
         (action() === Action.NOTHING && prices.length === 0) &&
-        <span><i>{`no offer (${formatNumber(buyAt)})`}</i></span>
+        <span><i>{`no offer`}</i></span>
       }
       <button
         style={buttonStyle}
