@@ -60,7 +60,3 @@ export const AREAS: Area[] = [{
   energy: 10000,
   monsters: ["snake", "hawk", "golem", "witch"].map(e => `blood_fire_${e}`),
 }]
-
-const BLOOD_MONSTERS = {
-   
-}

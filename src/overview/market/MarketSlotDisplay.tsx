@@ -94,10 +94,15 @@ const MarketSlotDisplay = ({
     sendMessage("MARKET_REFRESH_SLOTS")
   }
 
+  const getBg =
+    item.sold === 0 ? 'rgb(114, 181, 192)' :
+      item.amount === 0 ? 'gold'
+        : 'rgba(255, 215, 0, 0.5)'
+
   return (
     <div
       style={{
-        backgroundColor: item.sold === 0 ? 'rgb(114, 181, 192)' : 'gold',
+        backgroundColor: getBg,
         padding: "16px",
         display: "grid",
         justifyItems: "center",

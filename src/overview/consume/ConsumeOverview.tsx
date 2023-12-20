@@ -65,6 +65,7 @@ const ConsumeOverview = () => {
   const [rose] = useNumberItemObserver("rose", id)
   const [tulip] = useNumberItemObserver("tulip", id)
   const [beehiveTimer] = useNumberItemObserver("beehive_timer", id)
+  const [taintedCoins] = useNumberItemObserver("tainted_coins", id)
 
   const limbClick = (limb: string, amount: number) => {
     sendMessage("GRIND", limb, amount)
@@ -160,7 +161,7 @@ const ConsumeOverview = () => {
       1: "tsevrah a: dees fael emil",
       2: "Sell me: VII silver",
       3: "Au to the shop",
-      4: "#4",
+      4: "A fruit a day keeps the doctor away.",
       5: "One sip one star, another sip another star.",
       6: "metal into xp",
       7: "A shop, with green coins.",
@@ -228,9 +229,9 @@ const ConsumeOverview = () => {
             }}
           />
         } */}
-        <ObservedLabeledIPimg
-          label={"tainted_coins"}
-          action={""}
+        <LabeledIPimg
+          label={`${formatNumber(taintedCoins)}/12M`}
+          name={"tainted_coins"}
           size={30}
         />
         <ObservedLabeledIPimg
@@ -247,7 +248,7 @@ const ConsumeOverview = () => {
           action_override={["DRINK_BEEHIVE"]}
         />
         <MerchantDisplay />
-        {birdhouseTimer <= 1 && <LabeledIPimg
+        {/* {birdhouseTimer <= 1 && <LabeledIPimg
           name={"birdhouse"}
           label={birdhouseTimer === 1 ? "Collect" : "Prepare"}
           onClick={() => clickBirdhouse()}
@@ -255,7 +256,7 @@ const ConsumeOverview = () => {
           style={{
             cursor: "pointer",
           }}
-        />}
+        />} */}
         {ironBar >= 10 && <ObservedLabeledIPimg
           label={"cannonball_mould"}
           action={''}

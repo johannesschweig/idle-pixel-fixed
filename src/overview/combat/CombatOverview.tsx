@@ -1,4 +1,5 @@
 import {
+  useItemObserver,
   useNumberItemObserver,
 } from "../setItems/useSetItemsObserver";
 import OverviewBox from "../OverviewBox";
@@ -20,7 +21,6 @@ import { AREAS } from "./areas";
 const id = "CombatOverview";
 const CombatOverview = () => {
   const [selectedArea, setSelectedArea] = useState(AREAS[0].name);
-  const [purpleMonster, setPurpleMonster] = useState('');
 
   const [energy] = useNumberItemObserver('energy', id)
   const [fightPoints] = useNumberItemObserver('fight_points', id)
@@ -29,6 +29,10 @@ const CombatOverview = () => {
   const [robotWaveTimer] = useNumberItemObserver('robot_wave_timer', id)
   const [rainPotion] = useNumberItemObserver('rain_potion', id)
   const [redCombatOrbTimer] = useNumberItemObserver("red_combat_orb_timer", id)
+  const [rareMonsterPotion] = useNumberItemObserver("rare_monster_potion", id)
+  const [rareMonsterPotionTimer] = useNumberItemObserver("rare_monster_potion_timer", id)
+  const [nadesPurpleKeyMonster] = useItemObserver("nades_purple_key_monster", id)
+  const [nadesPurpleKeyRarity] = useItemObserver("nades_purple_key_rarity", id)
 
   const formatAreaName = (str: string) => {
     var formattedStr = str.replace(/_/g, ' ');
@@ -45,34 +49,6 @@ const CombatOverview = () => {
     }
     sendMessage('START_FIGHT', selectedArea)
   }
-
-  const checkPurpleHint = useMemo(
-    () =>
-      replaceWebSocketMessage("OPEN_DIALOGUE", (data) => {
-        if (data.split("~")[0] === "INGREDIENTS USED") {
-          return "";
-        }
-        if (data.split("~")[2].includes("purple guardian key")) {
-          const regex = /\/([^/]+)_icon\.png$/;
-          const monster = data.split("~")[1].match(regex)
-          if (monster != null) {
-            setPurpleMonster(monster[1])
-          }
-          return "";
-        }
-        return data;
-      }),
-    []
-  );
-
-  useWebsocket(checkPurpleHint, 1, id);
-
-  useEffect(() => {
-    sendMessage("CASTLE_MISC", "guardian_purple_key_hint")
-  }, [])
-
-
-  // CASTLE_MISC=guardian_purple_key_hint
   // OPEN_DIALOGUE=MESSAGE~images/blood_fire_snake_icon.png~"I will keep the purple guardian key safe, master."<br /><br /><span class='color-grey'>The purple guardian key is being held by the monster shown.  The key will be held by another monster in: 11:32:37</span><br /><br />Loot chance: Common~false
   return (
     <OverviewBox
@@ -101,7 +77,7 @@ const CombatOverview = () => {
             isSelectedArea={a.name === selectedArea}
             selectArea={() => setSelectedArea(a.name)}
             isDisabled={energy < a.energy || fightPoints < a.fightpoints}
-            purpleMonster={a.monsters.includes(purpleMonster) ? purpleMonster : ''}
+            purpleMonster={a.monsters.includes(nadesPurpleKeyMonster) ? nadesPurpleKeyMonster : ''}
           />
         ))}
         <button
@@ -136,6 +112,13 @@ const CombatOverview = () => {
             label={"red_combat_orb"}
             name={"Shiny next monster"}
             onClick={() => sendMessage("USE_RED_COMBAT_ORB")}
+            size={30} />
+        }
+        {rareMonsterPotion > 0 && rareMonsterPotionTimer === 0 &&
+          <LabeledIPimg
+            label={`${nadesPurpleKeyMonster} (${nadesPurpleKeyRarity})`}
+            name={"rare_monster_potion"}
+            onClick={() => sendMessage("DRINK_SELECT_POTION", nadesPurpleKeyMonster.replace("blood_", ""))}
             size={30} />
         }
       </div>
