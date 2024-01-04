@@ -27,6 +27,7 @@ import {
 } from "../util/keyboard/modiferKeyReducer";
 import OverviewBox from "./OverviewBox";
 import { useOpenRocketDialogueObserver } from "./consume/useRocketObserver";
+import CriptoeOverview from "./criptoe/CriptoeOverview";
 
 const id = "OverviewPanel";
 const OverviewPanel = () => {
@@ -97,6 +98,7 @@ const OverviewPanel = () => {
         <MiningOverview />
         <MarketOverview />
         <GatheringOverview />
+        <CriptoeOverview />
       </div>
       <div>
         {settings.showInOverview && (

@@ -10,7 +10,7 @@ import {
   subscribeToKeyboardEvent,
   unsubscribeFromKeyboardEvent,
 } from "../util/keyboard/keyboardReducer";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ActivityLogSettingsWindow from "./settings/ActivityLogSettingsWindow";
 
 interface Props {}
