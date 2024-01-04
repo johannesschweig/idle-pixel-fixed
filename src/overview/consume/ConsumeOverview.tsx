@@ -66,6 +66,7 @@ const ConsumeOverview = () => {
   const [tulip] = useNumberItemObserver("tulip", id)
   const [beehiveTimer] = useNumberItemObserver("beehive_timer", id)
   const [taintedCoins] = useNumberItemObserver("tainted_coins", id)
+  const [flexibleLogs] = useNumberItemObserver("flexible_logs", id)
 
   const limbClick = (limb: string, amount: number) => {
     sendMessage("GRIND", limb, amount)
@@ -239,6 +240,11 @@ const ConsumeOverview = () => {
         <LabeledIPimg
           label={`${formatNumber(taintedCoins)}/12M`}
           name={"tainted_coins"}
+          size={30}
+        />
+        <LabeledIPimg
+          label={`${formatNumber(flexibleLogs)}/500`}
+          name={"flexible_logs"}
           size={30}
         />
         <ObservedLabeledIPimg
