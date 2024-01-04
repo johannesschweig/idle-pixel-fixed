@@ -28,7 +28,7 @@ const CombatOverview = () => {
   const [bloodMoonActive] = useNumberItemObserver('blood_moon_active', id)
   const [robotWaveTimer] = useNumberItemObserver('robot_wave_timer', id)
   const [rainPotion] = useNumberItemObserver('rain_potion', id)
-  const [redCombatOrbTimer] = useNumberItemObserver("red_combat_orb_timer", id)
+  const [redCombatOrbAbsorbedTimer] = useNumberItemObserver("red_combat_orb_absorbed_timer", id)
   const [rareMonsterPotion] = useNumberItemObserver("rare_monster_potion", id)
   const [rareMonsterPotionTimer] = useNumberItemObserver("rare_monster_potion_timer", id)
   const [nadesPurpleKeyMonster] = useItemObserver("nades_purple_key_monster", id)
@@ -107,10 +107,10 @@ const CombatOverview = () => {
           action_override={["FIGHT_GUARDIAN", "3"]}
           size={30}
         />}
-        {redCombatOrbTimer > 2 &&
+        {redCombatOrbAbsorbedTimer < 2 &&
           <LabeledIPimg
-            label={"red_combat_orb"}
-            name={"Shiny next monster"}
+            label={"Shiny next monster"}
+            name={"red_combat_orb"}
             onClick={() => sendMessage("USE_RED_COMBAT_ORB")}
             size={30} />
         }

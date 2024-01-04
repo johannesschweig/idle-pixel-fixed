@@ -17,7 +17,9 @@ export enum LogAction {
 const id = "WoodcuttingOverview";
 const WoodcuttingOverview = () => {
   const patches =
-    3 + Math.sign(Number(Items.getItem("donor_tree_patches_timestamp"))) * 2;
+    Number(Items.getItem("donor_tree_patches_timestamp")) > Math.floor(new Date().getTime() / 1000) ? // expiration of donor is higher than current epoch
+      5 :
+      3
 
   const wood: string[] = keysOf(Cooking.LOG_HEAT_MAP);
   const patchData = useTreePatchesObserver(id);
@@ -28,7 +30,7 @@ const WoodcuttingOverview = () => {
   );
 
   const [oil] = useNumberItemObserver("oil", id);
-  
+
   const [action, setAction] = useState(LogAction.OVEN);
   const [foundryAmount] = useNumberItemObserver('foundry_amount', id)
   const [treeSpeedPotiontimer] = useNumberItemObserver("tree_speed_potion_timer", id);
@@ -62,7 +64,7 @@ const WoodcuttingOverview = () => {
         break
     }
   };
-  
+
 
   return (
     <OverviewBox

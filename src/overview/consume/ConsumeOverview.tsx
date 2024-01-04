@@ -188,7 +188,7 @@ const ConsumeOverview = () => {
       4: "#4",
       5: "#5",
       6: "Crack this clue and you will see, a great shiny item for mining XP.",
-      7: "#7",
+      7: "Obtain some stardust. I don't need the charcoal anyways.",
       8: "Have you ever mined in the desert? No? I'm sure you've been there a few times.",
       9: "#9",
       10: "Let's eat! Not for energy but for something else!",
@@ -219,6 +219,13 @@ const ConsumeOverview = () => {
       >
         <RocketDisplay />
         <CookBook />
+        <ObservedLabeledIPimg
+          label={"random_treasure_chest"}
+          action={""}
+          action_override={["RANDOM_TREASURE_CHEST"]}
+          repeat={true}
+          size={30}
+        />
         {/* {(beehiveTimer === 1 || ((poppy > 25 || rose > 25 || tulip > 25) && beehiveTimer === 0)) &&
           <LabeledIPimg
             name={"beehive"}
