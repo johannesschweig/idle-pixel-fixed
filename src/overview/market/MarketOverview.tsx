@@ -77,7 +77,7 @@ const MarketOverview = () => {
           gap: "10px",
         }}
       >
-        {/* Offers */}
+        {/* Selling */}
         <div>
           <div
             style={{
