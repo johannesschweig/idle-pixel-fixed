@@ -1,9 +1,13 @@
 import IPimg from "../../util/IPimg";
+import { getFormattedToday, getWeekToday } from "../../util/timeUtils";
 import OverviewBox from "../OverviewBox";
 import { useNumberItemObserver } from "../setItems/useSetItemsObserver";
 import WalletDisplay from "./WalletDisplay";
 import { useWalletObserver } from "./useWalletObserver";
 import { useEffect, useState } from "react";
+import { buttonStyle } from "../market/MarketSlotDisplay";
+import { sendMessage } from "../../util/websocket/useWebsocket";
+import { splitNumber } from "../../util/numberUtils";
 
 interface CriptoeData {
   wallet: number;
@@ -16,6 +20,8 @@ const CriptoeOverview = () => {
   const walletData = useWalletObserver(id)
   const [prices, setPrices] = useState<number[]>([])
   const [criptoe] = useNumberItemObserver('criptoe', id)
+  const today = getFormattedToday()
+  const currentWeek = getWeekToday()
 
 
   const fetchPrices = (): void => {
@@ -23,12 +29,29 @@ const CriptoeOverview = () => {
     fetch('https://idle-pixel.com/criptoe/')
       .then(response => response.json())
       .then(data => {
-        const res = (data.data as CriptoeData[]).filter(e => e.date === "2024-01-04").sort((a, b) => a.wallet - b.wallet).map(e => e.percentage)
+        const res = (data.data as CriptoeData[]).filter(e => e.date === today).sort((a, b) => a.wallet - b.wallet).map(e => e.percentage)
         setPrices(res)
       })
       .catch(error => {
         console.error('Error:', error);
       });
+  }
+
+  const distributeCriptoe = () => {
+    // check which wallets can be distributed
+    var wallets = []
+    for (let i = 1; i <= 4; i++) {
+      // if not already withdrawn
+      if (walletData[i-1].withdrawWeek != currentWeek) {
+        wallets.push(i)
+      }
+    }
+
+    const parts = splitNumber(criptoe, wallets.length)
+    for (let i = 0; i < wallets.length; i++) {
+      // sendMessage("INVEST_WALLET", `wallet_${wallets[i]}`, parts[i]) // TODO
+      console.log(`xxx wallet${wallets[i]} amount ${parts[i]}`)
+    }
   }
 
   useEffect(() => {
@@ -95,6 +118,12 @@ const CriptoeOverview = () => {
           <IPimg
             name={"criptoe_coin"}
             size={10} />
+          <div
+            className="button"
+            style={buttonStyle}
+            onClick={() => distributeCriptoe()}>
+            Distribute
+          </div>
         </div>}
       {/* Wallets */}
       <div
@@ -107,8 +136,10 @@ const CriptoeOverview = () => {
       >
         {walletData.map((w, index) => (
           <WalletDisplay
-            amount={w.invested}
+            walletNum={index+1}
+            amount={w.investedAmount}
             price={prices[index]}
+            withdrawable={w.investedDate != today}
           />
         ))}
       </div>

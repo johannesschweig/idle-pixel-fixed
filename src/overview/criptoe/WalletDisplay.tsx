@@ -1,15 +1,20 @@
 import IPimg from "../../util/IPimg";
+import { sendMessage } from "../../util/websocket/useWebsocket";
 import { buttonStyle } from "../market/MarketSlotDisplay";
 
 interface Props {
   amount: number;
   price: number;
+  walletNum: number;
+  withdrawable: boolean;
 }
 
 const id = "WalletDisplay";
 const WalletDisplay = ({
   amount,
-  price
+  price,
+  walletNum,
+  withdrawable
 }: Props) => {
 
   const getBg = 'rgb(114, 181, 192)'
@@ -56,13 +61,12 @@ const WalletDisplay = ({
           size={10} />
       </div>
       {
-        price > 25 && amount > 0 &&
+        price > 25 && amount > 0 && withdrawable &&
         <div
           className="button"
           style={buttonStyle}
-          onClick={() => null}>
-          {/* TODO click */}
-          Cash out {Math.round(price/100*amount)}
+          onClick={() => sendMessage("CRIPTOE_WITHDRAWAL_WALLET", `wallet_${walletNum}`)}>
+          Cash out +{Math.round(price/100*amount)}
         </div>
       }
     </div>
