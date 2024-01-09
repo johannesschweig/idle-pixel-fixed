@@ -63,8 +63,10 @@ export const getFormattedToday = () => {
 }
 
 export const getWeekToday = () => {
-  const today = new Date();
-  const year = today.getFullYear();
-  const weekNumber = Math.floor((today.getTime() - new Date(year, 0, 4).getTime()) / (86400000 * 7)) + 1;
-  return weekNumber;
+  const currentDate = new Date();
+  const startDate = new Date(currentDate.getFullYear(), 0, 1);
+  const days = Math.floor((currentDate.getTime() - startDate.getTime()) /
+    (24 * 60 * 60 * 1000));
+
+  return Math.ceil(days / 7);;
 }

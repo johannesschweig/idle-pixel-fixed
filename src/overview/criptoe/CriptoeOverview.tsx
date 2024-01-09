@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { buttonStyle } from "../market/MarketSlotDisplay";
 import { sendMessage } from "../../util/websocket/useWebsocket";
 import { splitNumber } from "../../util/numberUtils";
+import { formatNumber } from "../../util/numberUtils";
 
 interface CriptoeData {
   wallet: number;
@@ -20,6 +21,7 @@ const CriptoeOverview = () => {
   const walletData = useWalletObserver(id)
   const [prices, setPrices] = useState<number[]>([])
   const [criptoe] = useNumberItemObserver('criptoe', id)
+  const [researcherPoints] = useNumberItemObserver('researcher_points', id)
   const today = getFormattedToday()
   const currentWeek = getWeekToday()
 
@@ -42,15 +44,14 @@ const CriptoeOverview = () => {
     var wallets = []
     for (let i = 1; i <= 4; i++) {
       // if not already withdrawn
-      if (walletData[i-1].withdrawWeek != currentWeek) {
+      if (walletData[i - 1].withdrawWeek != currentWeek) {
         wallets.push(i)
       }
     }
 
     const parts = splitNumber(criptoe, wallets.length)
     for (let i = 0; i < wallets.length; i++) {
-      // sendMessage("INVEST_WALLET", `wallet_${wallets[i]}`, parts[i]) // TODO
-      console.log(`xxx wallet${wallets[i]} amount ${parts[i]}`)
+      sendMessage("INVEST_WALLET", `wallet_${wallets[i]}`, parts[i])
     }
   }
 
@@ -106,6 +107,7 @@ const CriptoeOverview = () => {
           ))}
         </div>
       </div>
+      {/* Available criptoe */}
       {criptoe > 0 &&
         <div
           style={{
@@ -114,7 +116,7 @@ const CriptoeOverview = () => {
           }}
         >
           Available:
-          {criptoe}
+          {formatNumber(criptoe)}
           <IPimg
             name={"criptoe_coin"}
             size={10} />
@@ -125,6 +127,20 @@ const CriptoeOverview = () => {
             Distribute
           </div>
         </div>}
+      {/* Researcher points */}
+      <div
+        style={{
+          fontSize: "14px",
+          opacity: .8,
+        }}
+      >
+        Researcher points: 
+        {formatNumber(researcherPoints)}
+        <IPimg
+          name={"researcher_points"}
+          size={10} />
+        
+      </div>
       {/* Wallets */}
       <div
         style={{
@@ -136,7 +152,7 @@ const CriptoeOverview = () => {
       >
         {walletData.map((w, index) => (
           <WalletDisplay
-            walletNum={index+1}
+            walletNum={index + 1}
             amount={w.investedAmount}
             price={prices[index]}
             withdrawable={w.investedDate != today}
