@@ -1,6 +1,7 @@
 import IPimg from "../../util/IPimg";
 import { sendMessage } from "../../util/websocket/useWebsocket";
 import { buttonStyle } from "../market/MarketSlotDisplay";
+import { formatNumber } from "../../util/numberUtils";
 
 interface Props {
   amount: number;
@@ -55,7 +56,7 @@ const WalletDisplay = ({
         }}
       >{price}%</div>
       <div>
-        {amount}
+        {formatNumber(amount)}
         <IPimg
           name={"criptoe_coin"}
           size={10} />

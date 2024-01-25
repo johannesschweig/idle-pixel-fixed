@@ -175,12 +175,12 @@ const ConsumeOverview = () => {
       1: "A source of energy to smelt ores, but it's not oil, and it's not lava. Produce me.",
       2: "#2",
       3: "Click me: A skull stuck in a shiny glass orb",
-      4: "#4",
+      4: "What am I wearing today? Perhaps I'll check the closet.",
       5: "#5",
       6: "#6",
       7: "Broswing stonks",
       8: "How do I get energy without food?",
-      9: "#9"
+      9: "A cooks dish, anyone of them."
     }
     const red: TreasureHint = {
       1: "I observe the universe but cannot see. All I rely on is the wavelengths that shall be!",
@@ -237,11 +237,6 @@ const ConsumeOverview = () => {
             }}
           />
         } */}
-        <LabeledIPimg
-          label={`${formatNumber(taintedCoins)}/12M`}
-          name={"tainted_coins"}
-          size={30}
-        />
         <LabeledIPimg
           label={`${formatNumber(flexibleLogs)}/500`}
           name={"flexible_logs"}
@@ -419,17 +414,7 @@ const ConsumeOverview = () => {
           size={50}
           onClick={() => clickBoat("submarine_boat")}
           style={boatStyle(submarineBoatTimer)} />}
-        {aquariumTimer === 0 &&
-          <LabeledIPimg
-            name="aquarium"
-            label={"Feed"}
-            size={30}
-            onClick={() => sendMessage("FEED_FISH", "maggots")}
-            style={{
-              cursor: "pointer",
-            }}
-          />
-        }
+        
         {/* <ObservedLabeledIPimg
           label={"bait"}
           action={""}

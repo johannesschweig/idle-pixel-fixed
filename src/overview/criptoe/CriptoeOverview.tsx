@@ -24,6 +24,7 @@ const CriptoeOverview = () => {
   const [researcherPoints] = useNumberItemObserver('researcher_points', id)
   const today = getFormattedToday()
   const currentWeek = getWeekToday()
+  const isSunday = new Date().getDay() === 0
 
 
   const fetchPrices = (): void => {
@@ -44,6 +45,7 @@ const CriptoeOverview = () => {
     var wallets = []
     for (let i = 1; i <= 4; i++) {
       // if not already withdrawn
+      console.log('x', walletData[i - 1].withdrawWeek, currentWeek)
       if (walletData[i - 1].withdrawWeek != currentWeek) {
         wallets.push(i)
       }
@@ -55,22 +57,15 @@ const CriptoeOverview = () => {
     }
   }
 
-  useEffect(() => {
-    fetchPrices()
-  }, []);
+  const allWithdrawn = false
 
-  const getStyle = (index: number) =>
-    new Date().getDay() > index ?
-      { // past
-        bg: "lightgrey",
-        color: "grey",
-        fontSize: "12px",
-      } :
-      { // present and future
-        bg: "grey",
-        color: "white",
-        fontSize: "16px",
-      }
+  useEffect(() => {
+    if (isSunday) {
+      setPrices([0, 0, 0, 0])
+    } else {
+      fetchPrices()
+    }
+  }, []);
 
   return (
     <OverviewBox
@@ -82,33 +77,9 @@ const CriptoeOverview = () => {
         }}
       >
         Criptoe
-        {/* Mo-Fr TODO */}
-        <div
-          style={{
-            display: 'flex',
-            gap: '4px',
-            float: "right",
-          }}
-        >
-          {["S", "M", "T", "W", "T", "F", "S"].map((day, index) => (
-            <div
-              style={{
-                width: "20px",
-                height: "20px",
-                lineHeight: "20px",
-                backgroundColor: getStyle(index).bg,
-                color: getStyle(index).color,
-                fontSize: getStyle(index).fontSize,
-                textAlign: "center",
-              }}
-            >
-              {day}
-            </div>
-          ))}
-        </div>
       </div>
       {/* Available criptoe */}
-      {criptoe > 0 &&
+      {criptoe > 0 && isSunday === false &&
         <div
           style={{
             fontSize: "14px",
@@ -134,31 +105,43 @@ const CriptoeOverview = () => {
           opacity: .8,
         }}
       >
-        Researcher points: 
-        {formatNumber(researcherPoints)}
+        Researcher points: {formatNumber(researcherPoints)}/10M
         <IPimg
           name={"researcher_points"}
           size={10} />
-        
+        {/* Days left of the week */}
+        <div
+          style={{
+            display: 'flex',
+            gap: '4px',
+            float: "right",
+            fontSize: "14px",
+            opacity: .8,
+          }}
+        >
+          {6 - new Date().getDay()} days left
+        </div>
       </div>
       {/* Wallets */}
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(4, 1fr)",
-          marginTop: "10px",
-          gap: "32px",
-        }}
-      >
-        {walletData.map((w, index) => (
-          <WalletDisplay
-            walletNum={index + 1}
-            amount={w.investedAmount}
-            price={prices[index]}
-            withdrawable={w.investedDate != today}
-          />
-        ))}
-      </div>
+      {isSunday === false && allWithdrawn === false &&
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(4, 1fr)",
+            marginTop: "10px",
+            gap: "32px",
+          }}
+        >
+          {walletData.map((w, index) => (
+            <WalletDisplay
+              walletNum={index + 1}
+              amount={w.investedAmount}
+              price={prices[index]}
+              withdrawable={w.investedDate != today}
+            />
+          ))}
+        </div>
+      }
     </OverviewBox >
   );
 };

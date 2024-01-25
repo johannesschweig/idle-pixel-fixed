@@ -49,24 +49,23 @@ export const formatMinutes = (minutes: number) => {
     text += `${minutes % 60} min`
   }
 
-  return text;
+  return text
 }
 
 export const formatDate = (timestamp: Date | string) => new Date(timestamp).toLocaleString()
 
 export const getFormattedToday = () => {
-  const today = new Date();
-  const year = today.getFullYear();
-  const month = String(today.getMonth() + 1).padStart(2, '0');
-  const day = String(today.getDate()).padStart(2, '0');
-  return `${year}-${month}-${day}`;
+  const today = new Date()
+  const year = today.getFullYear()
+  const month = String(today.getMonth() + 1).padStart(2, '0')
+  const day = String(today.getDate()).padStart(2, '0')
+  return `${year}-${month}-${day}`
 }
 
 export const getWeekToday = () => {
-  const currentDate = new Date();
-  const startDate = new Date(currentDate.getFullYear(), 0, 1);
-  const days = Math.floor((currentDate.getTime() - startDate.getTime()) /
-    (24 * 60 * 60 * 1000));
-
-  return Math.ceil(days / 7);;
+  const d = new Date();
+  d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
+  const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+  const weekNo = Math.ceil((((d.getTime() - yearStart.getTime()) / 86400000) + 1) / 7);
+  return weekNo;
 }
