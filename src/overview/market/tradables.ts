@@ -711,7 +711,7 @@ export const TRADABLES: TradableData[] = [
     id: 134,
     item: "moonstone",
     lower: 50000,
-    upper: 175000,
+    upper: 250000,
     category: "ores",
     order: 90
   },
