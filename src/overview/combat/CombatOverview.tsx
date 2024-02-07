@@ -36,6 +36,7 @@ const CombatOverview = () => {
   const [greenGuardianKey] = useNumberItemObserver("green_gaurdian_key", id)
   const [blueGuardianKey] = useNumberItemObserver("blue_gaurdian_key", id)
   const [purpleGuardianKey] = useNumberItemObserver("purple_gaurdian_key", id)
+  const [monsterName] = useItemObserver("monster_name", id)
 
   const formatAreaName = (str: string) => {
     var formattedStr = str.replace(/_/g, ' ');
@@ -52,6 +53,33 @@ const CombatOverview = () => {
     }
     sendMessage('START_FIGHT', selectedArea)
   }
+
+  const autoFight = () => {
+    sendMessage('START_FIGHT', 'mansion')
+    setTimeout(() => {
+      sendMessage('PRESET_LOAD', 4, 1)
+    }, 3000)
+    setTimeout(() => {
+      sendMessage('PRESET_LOAD', 5, 1)
+    }, 3500)
+    setTimeout(() => {
+      sendMessage('SPELL', 'reflect')
+    }, 4000)
+    setTimeout(() => {
+      sendMessage('PRESET_LOAD', 4, 1)
+    }, 5000)
+  }
+
+  const autoCombat = () => {
+    const runs = Math.floor(Math.min(energy / 5000, fightPoints / 3500))
+    autoFight()
+    for (let i = 1; i < runs; i++) {
+      setTimeout(() => {
+        autoFight()
+      }, 20*1000*i)
+    }
+  }
+
   // OPEN_DIALOGUE=MESSAGE~images/blood_fire_snake_icon.png~"I will keep the purple guardian key safe, master."<br /><br /><span class='color-grey'>The purple guardian key is being held by the monster shown.  The key will be held by another monster in: 11:32:37</span><br /><br />Loot chance: Common~false
   return (
     <OverviewBox
@@ -118,7 +146,12 @@ const CombatOverview = () => {
           action_override={["FIGHT_EVIL_PIRATE"]}
           size={30}
         />} */}
-        { rainPotion > 0 && greenGuardianKey > 0 && blueGuardianKey > 0 && purpleGuardianKey > 0 && energy > 100000 && <LabeledIPimg
+        <button
+          disabled={monsterHp > 0 || energy < 5000 || fightPoints < 3500}
+          onClick={() => autoCombat()}>
+          Auto-Combat
+        </button>
+        {rainPotion > 0 && greenGuardianKey > 0 && blueGuardianKey > 0 && purpleGuardianKey > 0 && energy > 100000 && <LabeledIPimg
           name={"dungeon_castle_tomb"}
           label={"Dungeon Castle Tomb"}
           size={30}
