@@ -33,6 +33,9 @@ const CombatOverview = () => {
   const [rareMonsterPotionTimer] = useNumberItemObserver("rare_monster_potion_timer", id)
   const [nadesPurpleKeyMonster] = useItemObserver("nades_purple_key_monster", id)
   const [nadesPurpleKeyRarity] = useItemObserver("nades_purple_key_rarity", id)
+  const [greenGuardianKey] = useNumberItemObserver("green_gaurdian_key", id)
+  const [blueGuardianKey] = useNumberItemObserver("blue_gaurdian_key", id)
+  const [purpleGuardianKey] = useNumberItemObserver("purple_gaurdian_key", id)
 
   const formatAreaName = (str: string) => {
     var formattedStr = str.replace(/_/g, ' ');
@@ -54,6 +57,20 @@ const CombatOverview = () => {
     <OverviewBox
       display={'block'}
     >
+      <div
+        style={{
+          display: "flex",
+          margin: "12px 0",
+        }}
+      >
+        {["green", "blue", "purple"].map(col => col + "_gaurdian_key").map(key => (
+          <ObservedLabeledIPimg
+            label={key}
+            action={""}
+            size={20}
+          />
+        ))}
+      </div>
       <div
         style={{
           display: 'grid',
@@ -101,11 +118,11 @@ const CombatOverview = () => {
           action_override={["FIGHT_EVIL_PIRATE"]}
           size={30}
         />} */}
-        {fightPoints >= 12000 && energy > 50000 && <ObservedLabeledIPimg
-          label={"purple_gaurdian_key"}
-          action={""}
-          action_override={["FIGHT_GUARDIAN", "3"]}
+        { rainPotion > 0 && greenGuardianKey > 0 && blueGuardianKey > 0 && purpleGuardianKey > 0 && energy > 100000 && <LabeledIPimg
+          name={"dungeon_castle_tomb"}
+          label={"Dungeon Castle Tomb"}
           size={30}
+          onClick={() => sendMessage("FIGHT_GUARDIAN", "4")}
         />}
         {redCombatOrbAbsorbedTimer < 2 &&
           <LabeledIPimg

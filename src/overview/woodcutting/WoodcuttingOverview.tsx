@@ -17,7 +17,7 @@ export enum LogAction {
 const id = "WoodcuttingOverview";
 const WoodcuttingOverview = () => {
   const patches =
-    Number(Items.getItem("donor_tree_patches_timestamp")) > Math.floor(new Date().getTime() / 1000) ? // expiration of donor is higher than current epoch
+    Number(Items.getItem("donor_tree_patches_timestamp")) > new Date().getTime() ? // expiration of donor is higher than current epoch
       5 :
       3
 

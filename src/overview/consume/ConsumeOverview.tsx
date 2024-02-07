@@ -193,7 +193,7 @@ const ConsumeOverview = () => {
       8: "Have you ever mined in the desert? No? I'm sure you've been there a few times.",
       9: "#9",
       10: "Let's eat! Not for energy but for something else!",
-      11: "#11"
+      11: "RIP the combat instructor. I should pay him a visit sometime"
     }
 
     switch (tm) {
@@ -240,6 +240,11 @@ const ConsumeOverview = () => {
         <LabeledIPimg
           label={`${formatNumber(flexibleLogs)}/500`}
           name={"flexible_logs"}
+          size={30}
+        />
+        <ObservedLabeledIPimg
+          label={"guardian_combo_loot"}
+          action={"OPEN_GUARDIAN_COMBOT_LOOT"}
           size={30}
         />
         <ObservedLabeledIPimg
