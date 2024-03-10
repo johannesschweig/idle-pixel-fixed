@@ -173,7 +173,7 @@ const ConsumeOverview = () => {
     }
     const green: TreasureHint = {
       1: "A source of energy to smelt ores, but it's not oil, and it's not lava. Produce me.",
-      2: "#2",
+      2: "Sell one ore to the npc shop: A mix of magenta and yellow.",
       3: "Click me: A skull stuck in a shiny glass orb",
       4: "What am I wearing today? Perhaps I'll check the closet.",
       5: "#5",
@@ -203,6 +203,18 @@ const ConsumeOverview = () => {
     }
   }
 
+// var_yeti_boss_event_hp
+  const killBoss = () => {
+    for(let i = 0; i < 4000; i++) { // runs for 20 min
+      setTimeout(() => {
+        sendMessage("EVENT_INPUT", "YETI_BOSS", "attack") 
+        if (i%(3*5) === 0) {
+          console.log("Fight BOSS", i)
+        }
+      }, i*300)
+    }
+  }
+// CASTLE_BUY=frozen_crocodile_hide
   //DONATE_TABLETTE_PIECES
   return (
     <OverviewBox
@@ -220,6 +232,11 @@ const ConsumeOverview = () => {
       >
         <RocketDisplay />
         <CookBook />
+        {/* <button
+          onClick={() => killBoss()}
+        >
+          kill boss
+        </button> */}
         <ObservedLabeledIPimg
           label={"random_treasure_chest"}
           action={""}
@@ -237,11 +254,6 @@ const ConsumeOverview = () => {
             }}
           />
         } */}
-        <LabeledIPimg
-          label={`${formatNumber(flexibleLogs)}/500`}
-          name={"flexible_logs"}
-          size={30}
-        />
         <ObservedLabeledIPimg
           label={"guardian_combo_loot"}
           action={"OPEN_GUARDIAN_COMBOT_LOOT"}
@@ -454,7 +466,7 @@ const ConsumeOverview = () => {
           label={"banana"}
           size={30}
           action={"CONSUME"}
-          retain={30}
+          retain={60}
         />
         <ObservedLabeledIPimg
           label={"apple"}

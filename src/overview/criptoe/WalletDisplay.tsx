@@ -62,12 +62,12 @@ const WalletDisplay = ({
           size={10} />
       </div>
       {
-        price > 25 && amount > 0 && withdrawable &&
+        (price > 25 || new Date().getDay() >= 5) && amount > 0 && withdrawable &&
         <div
           className="button"
           style={buttonStyle}
           onClick={() => sendMessage("CRIPTOE_WITHDRAWAL_WALLET", `wallet_${walletNum}`)}>
-          Cash out +{Math.round(price/100*amount)}
+          Cash out {formatNumber((1 + price/100)*amount)}
         </div>
       }
     </div>

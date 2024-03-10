@@ -159,10 +159,10 @@ const CraftingOverview = () => {
           name={"rocket_fuel"}
           label={rocketFuel}
           size={30}
-          onClick={() => sendMessage("CRAFT", "rocket_fuel", "1")}
+          onClick={() => sendMessage("CRAFT", "rocket_fuel", "5")}
           style={{
             cursor: "pointer",
-            opacity: (oil >= 5000 && charcoal >= 20 && lava >= 1) ? 1 : 0.5,
+            opacity: (oil >= 5000*5 && charcoal >= 20*5 && lava >= 1*5) ? 1 : 0.5,
           }} />
         {/* BARS */}
         {BARS.map((bar) => (

@@ -26,7 +26,6 @@ const CombatOverview = () => {
   const [fightPoints] = useNumberItemObserver('fight_points', id)
   const [monsterHp] = useNumberItemObserver('monster_hp', id)
   const [bloodMoonActive] = useNumberItemObserver('blood_moon_active', id)
-  const [robotWaveTimer] = useNumberItemObserver('robot_wave_timer', id)
   const [rainPotion] = useNumberItemObserver('rain_potion', id)
   const [redCombatOrbAbsorbedTimer] = useNumberItemObserver("red_combat_orb_absorbed_timer", id)
   const [rareMonsterPotion] = useNumberItemObserver("rare_monster_potion", id)
@@ -36,7 +35,9 @@ const CombatOverview = () => {
   const [greenGuardianKey] = useNumberItemObserver("green_gaurdian_key", id)
   const [blueGuardianKey] = useNumberItemObserver("blue_gaurdian_key", id)
   const [purpleGuardianKey] = useNumberItemObserver("purple_gaurdian_key", id)
-  const [monsterName] = useItemObserver("monster_name", id)
+  const [combatLootPotionTimer] = useNumberItemObserver("combat_loot_potion_timer", id)
+
+  const mansionRuns = Math.floor(Math.min(energy / 5000, fightPoints / 3500))
 
   const formatAreaName = (str: string) => {
     var formattedStr = str.replace(/_/g, ' ');
@@ -59,24 +60,26 @@ const CombatOverview = () => {
     setTimeout(() => {
       sendMessage('PRESET_LOAD', 4, 1)
     }, 3000)
-    setTimeout(() => {
-      sendMessage('PRESET_LOAD', 5, 1)
-    }, 3500)
+    // setTimeout(() => {
+    //   sendMessage('PRESET_LOAD', 5, 1)
+    // }, 3500)
     setTimeout(() => {
       sendMessage('SPELL', 'reflect')
     }, 4000)
+    // setTimeout(() => {
+    //   sendMessage('PRESET_LOAD', 4, 1)
+    // }, 5000)
     setTimeout(() => {
-      sendMessage('PRESET_LOAD', 4, 1)
-    }, 5000)
+      sendMessage('SPELL', 'invisibility')
+    }, 10000)
   }
 
   const autoCombat = () => {
-    const runs = Math.floor(Math.min(energy / 5000, fightPoints / 3500))
     autoFight()
-    for (let i = 1; i < runs; i++) {
+    for (let i = 1; i < mansionRuns; i++) {
       setTimeout(() => {
         autoFight()
-      }, 20*1000*i)
+      }, 20 * 1000 * i)
     }
   }
 
@@ -97,6 +100,12 @@ const CombatOverview = () => {
             action={""}
             size={20}
           />
+        ))}
+        {["hood", "gloves", "boots"].map(item => (
+        <ObservedLabeledIPimg
+          label={`reaper_${item}`}
+          size={20}
+          action={''} />
         ))}
       </div>
       <div
@@ -130,28 +139,15 @@ const CombatOverview = () => {
           onClick={() => startCombat()}>
           Fight
         </button>
-        {/* {robotWaveTimer === 0 && <LabeledIPimg
-          name={"robot_active"}
-          label={"Robot (master)"}
-          size={30}
-          onClick={() => sendMessage('ROBOT_WAVES', 'master')} // novice, warrior, master, elite
-          style={{
-            cursor: "pointer",
-            opacity: rainPotion >= 1 ? 1 : 0.5,
-          }}
-        />} */}
-        {/* {fightPoints >= 6000 && <ObservedLabeledIPimg
-          label={"evil_pirate"}
-          action={"FIGHT_EVIL_PIRATE"}
-          action_override={["FIGHT_EVIL_PIRATE"]}
-          size={30}
-        />} */}
         <button
           disabled={monsterHp > 0 || energy < 5000 || fightPoints < 3500}
-          onClick={() => autoCombat()}>
-          Auto-Combat
+          onClick={() => autoCombat()}
+          style={{
+            backgroundColor: mansionRuns < 4 ? "transparent" : 'rgb(114, 181, 192)',
+          }}>
+          {mansionRuns < 4 ? `${mansionRuns}x Mansion` : `RUN MANSION`}
         </button>
-        {rainPotion > 0 && greenGuardianKey > 0 && blueGuardianKey > 0 && purpleGuardianKey > 0 && energy > 100000 && <LabeledIPimg
+        {combatLootPotionTimer < 2 && rainPotion > 0 && greenGuardianKey > 0 && blueGuardianKey > 0 && purpleGuardianKey > 0 && energy > 100000 && <LabeledIPimg
           name={"dungeon_castle_tomb"}
           label={"Dungeon Castle Tomb"}
           size={30}
@@ -164,7 +160,7 @@ const CombatOverview = () => {
             onClick={() => sendMessage("USE_RED_COMBAT_ORB")}
             size={30} />
         }
-        {rareMonsterPotion > 0 && rareMonsterPotionTimer === 0 &&
+        {redCombatOrbAbsorbedTimer < 2 && rareMonsterPotion > 0 && rareMonsterPotionTimer === 0 &&
           <LabeledIPimg
             label={`${nadesPurpleKeyMonster} (${nadesPurpleKeyRarity})`}
             name={"rare_monster_potion"}

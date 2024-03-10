@@ -95,9 +95,10 @@ const MarketSlotDisplay = ({
   }
 
   const getBg =
-    item.sold === 0 ? 'rgb(114, 181, 192)' :
-      item.amount === 0 ? 'gold'
-        : 'rgba(255, 215, 0, 0.5)'
+    limit != undefined && prices[0]*1.05 < limit ? "orange" :
+      item.sold === 0 ? 'rgb(114, 181, 192)' :
+        item.amount === 0 ? 'gold'
+          : 'rgba(255, 215, 0, 0.5)'
 
   return (
     <div

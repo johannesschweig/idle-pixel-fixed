@@ -105,7 +105,7 @@ const CriptoeOverview = () => {
           opacity: .8,
         }}
       >
-        Researcher points: {formatNumber(researcherPoints)}/10M
+        Researcher points: {formatNumber(researcherPoints)}/500M
         <IPimg
           name={"researcher_points"}
           size={10} />
