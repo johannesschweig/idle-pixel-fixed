@@ -67,6 +67,7 @@ const ConsumeOverview = () => {
   const [beehiveTimer] = useNumberItemObserver("beehive_timer", id)
   const [taintedCoins] = useNumberItemObserver("tainted_coins", id)
   const [flexibleLogs] = useNumberItemObserver("flexible_logs", id)
+  const [stardustWatchCharges] = useNumberItemObserver("stardust_watch_charges", id)
 
   const limbClick = (limb: string, amount: number) => {
     sendMessage("GRIND", limb, amount)
@@ -203,18 +204,18 @@ const ConsumeOverview = () => {
     }
   }
 
-// var_yeti_boss_event_hp
+  // var_yeti_boss_event_hp
   const killBoss = () => {
-    for(let i = 0; i < 4000; i++) { // runs for 20 min
+    for (let i = 0; i < 4000; i++) { // runs for 20 min
       setTimeout(() => {
-        sendMessage("EVENT_INPUT", "YETI_BOSS", "attack") 
-        if (i%(3*5) === 0) {
+        sendMessage("EVENT_INPUT", "YETI_BOSS", "attack")
+        if (i % (3 * 5) === 0) {
           console.log("Fight BOSS", i)
         }
-      }, i*300)
+      }, i * 300)
     }
   }
-// CASTLE_BUY=frozen_crocodile_hide
+  // CASTLE_BUY=frozen_crocodile_hide
   //DONATE_TABLETTE_PIECES
   return (
     <OverviewBox
@@ -431,7 +432,7 @@ const ConsumeOverview = () => {
           size={50}
           onClick={() => clickBoat("submarine_boat")}
           style={boatStyle(submarineBoatTimer)} />}
-        
+
         {/* <ObservedLabeledIPimg
           label={"bait"}
           action={""}
@@ -466,7 +467,7 @@ const ConsumeOverview = () => {
           label={"banana"}
           size={30}
           action={"CONSUME"}
-          retain={60}
+          retain={100}
         />
         <ObservedLabeledIPimg
           label={"apple"}
@@ -487,6 +488,15 @@ const ConsumeOverview = () => {
             action={"CONSUME"}
           />
         ))}
+        {stardustWatchCharges >= 40 && <LabeledIPimg
+          name={"stardust_watch"}
+          label={"FULL"}
+          size={30}
+          onClick={() => sendMessage("ACTIVATE_STARDUST_WATCH")}
+          style={{
+            cursor: "pointer",
+          }}
+        />}
         {/* <CrystalBall /> */}
       </div>
       {heat > 50 &&

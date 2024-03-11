@@ -49,7 +49,7 @@ const GatheringOverview = () => {
         ))}
         <LabeledIPimg
           name={"stardust_watch"}
-          label={stardustWatchCharges}
+          label={`${stardustWatchCharges}/40`}
           size={30}
           onClick={() => sendMessage("ACTIVATE_STARDUST_WATCH")}
           style={{

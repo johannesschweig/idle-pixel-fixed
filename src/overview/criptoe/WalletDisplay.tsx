@@ -62,7 +62,7 @@ const WalletDisplay = ({
           size={10} />
       </div>
       {
-        (price > 25 || new Date().getDay() >= 5) && amount > 0 && withdrawable &&
+        (price > 25 || (price > -20 && new Date().getDay() >= 5)) && amount > 0 && withdrawable &&
         <div
           className="button"
           style={buttonStyle}

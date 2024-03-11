@@ -34,7 +34,7 @@ export const TIME_TO_SMELT: TimeToSmelt = {
   "promethium": 100,
   "titanium": 500,
   "ancient_ore": 1800,
-  "dragon": 3600,
+  "dragon_ore": 3600,
 }
 export enum CraftingView {
   SMELTING = "SMELTING",

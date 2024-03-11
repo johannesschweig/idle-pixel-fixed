@@ -342,8 +342,8 @@ export const TRADABLES: TradableData[] = [
   {
     id: 62,
     item: "cooked_salmon",
-    lower: 500,
-    upper: 1500,
+    lower: 300,
+    upper: 900,
     category: "cooked_fish",
     order: 60
   },
@@ -644,6 +644,14 @@ export const TRADABLES: TradableData[] = [
     order: 600
   },
   {
+    id: 171,
+    item: "red_criptoe_orb",
+    lower: 50000000,
+    upper: 100000000,
+    category: "orbs",
+    order: 610
+  },
+  {
     id: 1,
     item: "stone",
     lower: 1,
@@ -710,7 +718,7 @@ export const TRADABLES: TradableData[] = [
   {
     id: 134,
     item: "moonstone",
-    lower: 50000,
+    lower: 150000,
     upper: 250000,
     category: "ores",
     order: 90
@@ -953,102 +961,6 @@ export const TRADABLES: TradableData[] = [
     lower: 50000,
     upper: 150000,
     category: "seeds",
-    order: 140
-  },
-  {
-    id: 159,
-    item: "santa_hat_sigil",
-    lower: 100000000,
-    upper: 300000000,
-    category: "sigils",
-    order: 10
-  },
-  {
-    id: 160,
-    item: "tree_sigil",
-    lower: 100000000,
-    upper: 300000000,
-    category: "sigils",
-    order: 20
-  },
-  {
-    id: 161,
-    item: "pink_party_hat_sigil",
-    lower: 100000000,
-    upper: 300000000,
-    category: "sigils",
-    order: 30
-  },
-  {
-    id: 162,
-    item: "green_party_hat_sigil",
-    lower: 100000000,
-    upper: 300000000,
-    category: "sigils",
-    order: 40
-  },
-  {
-    id: 163,
-    item: "white_party_hat_sigil",
-    lower: 100000000,
-    upper: 300000000,
-    category: "sigils",
-    order: 50
-  },
-  {
-    id: 164,
-    item: "red_party_hat_sigil",
-    lower: 100000000,
-    upper: 300000000,
-    category: "sigils",
-    order: 70
-  },
-  {
-    id: 165,
-    item: "yellow_party_hat_sigil",
-    lower: 100000000,
-    upper: 300000000,
-    category: "sigils",
-    order: 90
-  },
-  {
-    id: 166,
-    item: "blue_party_hat_sigil",
-    lower: 100000000,
-    upper: 300000000,
-    category: "sigils",
-    order: 100
-  },
-  {
-    id: 167,
-    item: "snowman_sigil",
-    lower: 100000000,
-    upper: 300000000,
-    category: "sigils",
-    order: 110
-  },
-  {
-    id: 168,
-    item: "candy_cane_sigil",
-    lower: 100000000,
-    upper: 300000000,
-    category: "sigils",
-    order: 120
-  },
-  {
-    id: 169,
-    item: "snowflake_sigil",
-    lower: 100000000,
-    upper: 300000000,
-    category: "sigils",
-    order: 130
-  },
-  {
-    id: 170,
-    item: "gift_sigil",
-    lower: 20000000,
-    upper: 100000000,
-    category: "sigils",
     order: 140
   },
   {
