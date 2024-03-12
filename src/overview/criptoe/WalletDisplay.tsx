@@ -8,6 +8,7 @@ interface Props {
   price: number;
   walletNum: number;
   withdrawable: boolean;
+  withdrawn: boolean;
 }
 
 const id = "WalletDisplay";
@@ -15,59 +16,66 @@ const WalletDisplay = ({
   amount,
   price,
   walletNum,
-  withdrawable
+  withdrawable,
+  withdrawn,
 }: Props) => {
 
-  const getBg = 'rgb(114, 181, 192)'
-  // item.sold === 0 ? 'rgb(114, 181, 192)' :
-  //   item.amount === 0 ? 'gold'
-  //     : 'rgba(255, 215, 0, 0.5)'
-
-  const getFontSize = () => {
-    const absPrice = Math.abs(price)
-    if (absPrice > 200) {
-      return 40
-    } else if (absPrice > 100) {
-      return 32
-    } else if (absPrice > 40) {
-      return 20
-    } else if (absPrice > 20) {
-      return 16
-    } else {
-      return 14
+  const takeOut = () => {
+    const day = new Date().getDay()
+    // if not withdrawable, amount is 0 or it is Sunday or Monday
+    if (!withdrawable || amount === 0 || day <= 1) {
+      return false
+    }
+    if (price > 25) {
+      return true
+    }
+    // if Friday and price positive
+    if (price > 0 && day === 5) {
+      return true
+    }
+    // if Saturday and price larger then -20
+    if (price > -20 && day === 6) {
+      return true
     }
   }
 
   return (
     <div
       style={{
-        backgroundColor: getBg,
-        padding: "16px",
-        display: "grid",
-        justifyItems: "center",
-        gap: "8px",
-        opacity: amount > 0 ? 1 : 0.5,
+        padding: '4px 8px',
+        backgroundColor: takeOut() ? "blue" : "white",
+        borderRadius: "4px",
+        marginBottom: '6px',
+        color: takeOut() ? "white" : "grey",
       }}
     >
-      <div
+      {/* <IPimg
+        name={item}
+        size={20}
         style={{
-          color: price > 0 ? "darkgreen" : "darkred",
-          fontSize: `${getFontSize()}px`
+          marginRight: '4px',
+          opacity: action() === Action.NOTHING ? 0.5 : 1.0,
         }}
-      >{price}%</div>
-      <div>
-        {formatNumber(amount)}
-        <IPimg
-          name={"criptoe_coin"}
-          size={10} />
-      </div>
-      {
-        (price > 25 || (price > -20 && new Date().getDay() >= 5)) && amount > 0 && withdrawable &&
+      />
+      {action() === Action.BUY && */}
+
+      { withdrawn && <span
+        style={{
+          color: "lightgrey",
+          fontStyle: "italic",
+        }}
+      >
+        Closed
+      </span> }
+      { !withdrawn && <span>
+        {`${formatNumber(amount)} @ ${price}%`}
+      </span> }
+      { takeOut() &&
         <div
           className="button"
           style={buttonStyle}
           onClick={() => sendMessage("CRIPTOE_WITHDRAWAL_WALLET", `wallet_${walletNum}`)}>
-          Cash out {formatNumber((1 + price/100)*amount)}
+          Take out
         </div>
       }
     </div>

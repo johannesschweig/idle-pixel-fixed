@@ -93,7 +93,11 @@ const CriptoeOverview = () => {
             size={10} />
           <div
             className="button"
-            style={buttonStyle}
+            style={{
+              ...buttonStyle,
+              backgroundColor: "blue",
+              color: "white",
+            }}
             onClick={() => distributeCriptoe()}>
             Distribute
           </div>
@@ -124,20 +128,14 @@ const CriptoeOverview = () => {
       </div>
       {/* Wallets */}
       {isSunday === false && allWithdrawn === false &&
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(4, 1fr)",
-            marginTop: "10px",
-            gap: "32px",
-          }}
-        >
+        <div>
           {walletData.map((w, index) => (
             <WalletDisplay
               walletNum={index + 1}
               amount={w.investedAmount}
               price={prices[index]}
               withdrawable={w.investedDate != today}
+              withdrawn={w.withdrawWeek === currentWeek}
             />
           ))}
         </div>

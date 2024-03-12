@@ -101,7 +101,7 @@ const CombatOverview = () => {
             size={20}
           />
         ))}
-        {["hood", "gloves", "boots"].map(item => (
+        {["hood", "gloves"].map(item => (
         <ObservedLabeledIPimg
           label={`reaper_${item}`}
           size={20}
