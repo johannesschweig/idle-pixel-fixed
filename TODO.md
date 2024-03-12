@@ -4,6 +4,7 @@
   - You successfully cash out
   - You solved the map
   - During your watercan you harvested...
+  - You combine fragments into a gem
 - Automatic market prices button
 - Automatic tradables button
 - Open keys for treasure

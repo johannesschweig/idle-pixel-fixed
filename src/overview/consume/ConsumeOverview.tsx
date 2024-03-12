@@ -14,8 +14,9 @@ import CookBook from "./CookBook";
 import MerchantDisplay from "./MerchantDisplay";
 import { formatTime } from "../../util/timeUtils";
 import { formatNumber } from "../../util/numberUtils";
-import CrystalBall from "./CrystalBall";
-enum TreasureMap {
+import OpenChests from "./OpenChests";
+
+export enum Treasure {
   REGULAR,
   GREEN,
   RED
@@ -43,13 +44,7 @@ const ConsumeOverview = () => {
   const [submarineBoatTimer] = useNumberItemObserver("submarine_boat_timer", id);
   const [aquariumTimer] = useNumberItemObserver("aquarium_timer", id)
   const [heat] = useNumberItemObserver("heat", id)
-  const [treasureChest] = useNumberItemObserver("treasure_chest", id)
-  const [greenTreasureChest] = useNumberItemObserver("green_treasure_chest", id)
-  const [redTreasureChest] = useNumberItemObserver("red_treasure_chest", id)
-  const [goldBar] = useNumberItemObserver("gold_bar", id)
-  const [emerald] = useNumberItemObserver("emerald", id)
-  const [promethiumBar] = useNumberItemObserver("promethium_bar", id)
-  const [titaniumBar] = useNumberItemObserver("titanium_bar", id)
+  
   const [heatPending] = useNumberItemObserver("heat_pending", id)
   const [ironBar] = useNumberItemObserver("iron_bar", id)
   const [treasureMap] = useNumberItemObserver("treasure_map", id)
@@ -96,19 +91,7 @@ const ConsumeOverview = () => {
     }
   }
 
-  const openTreasureChest = (color: string) => {
-    let key = ''
-    switch (color) {
-      case "brown": key = 'gold_emerald_key'
-        break
-      case "green": key = 'promethium_ruby_key'
-        break
-      case "red": key = 'titanium_diamond_key'
-        break
-    }
-    sendMessage('CRAFT', key, '1')
-    setTimeout(() => sendMessage('OPEN_TREASURE_CHEST', key), 500)
-  }
+  
 
   const boatsOut = () => {
     let sum = 0
@@ -158,7 +141,7 @@ const ConsumeOverview = () => {
     [key: number]: string;
   }
 
-  const getTreasureMapLabel = (tm: TreasureMap) => {
+  const getTreasureMapLabel = (tm: Treasure) => {
     const regular: TreasureHint = {
       1: "tsevrah a: dees fael emil",
       2: "Sell me: VII silver",
@@ -198,9 +181,9 @@ const ConsumeOverview = () => {
     }
 
     switch (tm) {
-      case TreasureMap.REGULAR: return regular[treasureMap]
-      case TreasureMap.GREEN: return green[greenTreasureMap]
-      case TreasureMap.RED: return red[redTreasureMap]
+      case Treasure.REGULAR: return regular[treasureMap]
+      case Treasure.GREEN: return green[greenTreasureMap]
+      case Treasure.RED: return red[redTreasureMap]
     }
   }
 
@@ -353,60 +336,25 @@ const ConsumeOverview = () => {
         {treasureMap > 0 &&
           <LabeledIPimg
             name={"treasure_map"}
-            label={getTreasureMapLabel(TreasureMap.REGULAR)}
+            label={getTreasureMapLabel(Treasure.REGULAR)}
             size={30}
           />
         }
         {greenTreasureMap > 0 &&
           <LabeledIPimg
             name={"green_treasure_map"}
-            label={getTreasureMapLabel(TreasureMap.GREEN)}
+            label={getTreasureMapLabel(Treasure.GREEN)}
             size={30}
           />
         }
         {redTreasureMap > 0 &&
           <LabeledIPimg
             name={"red_treasure_map"}
-            label={getTreasureMapLabel(TreasureMap.RED)}
+            label={getTreasureMapLabel(Treasure.RED)}
             size={30}
           />
         }
-        {treasureChest > 0 &&
-          <LabeledIPimg
-            name={"treasure_chest"}
-            label={treasureChest}
-            size={30}
-            onClick={() => openTreasureChest('brown')}
-            style={{
-              opacity: (goldBar >= 5 && emerald >= 1) ? 1 : 0.5,
-              cursor: "pointer",
-            }}
-          />
-        }
-        {greenTreasureChest > 0 &&
-          <LabeledIPimg
-            name={"green_treasure_chest"}
-            label={greenTreasureChest}
-            size={30}
-            onClick={() => openTreasureChest('green')}
-            style={{
-              opacity: (promethiumBar >= 5 && emerald >= 1) ? 1 : 0.5,
-              cursor: "pointer",
-            }}
-          />
-        }
-        {redTreasureChest > 0 &&
-          <LabeledIPimg
-            name={"red_treasure_chest"}
-            label={redTreasureChest}
-            size={30}
-            onClick={() => openTreasureChest('red')}
-            style={{
-              opacity: (titaniumBar >= 5 && emerald >= 1) ? 1 : 0.5,
-              cursor: "pointer",
-            }}
-          />
-        }
+        <OpenChests />
         {/* Boats */}
         {/* {canoeBoatTimer <= 1 && boatsOut() < 2 && <LabeledIPimg
           name="canoe_boat"

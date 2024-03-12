@@ -65,6 +65,15 @@ export const useActivityLogWebSocketListener = () => {
   );
   useWebsocket(onShowToastMessage, 1000, "useActivityLogWebSocketListener-Toast");
 
+  const onOpenDialogueMessage = useMemo(
+    () =>
+      consumeWebSocketMessage("OPEN_DIALOGUE", (data: string) => {
+        console.log("Dialogue blocked", data)
+      }),
+    [onMessageFactory]
+  );
+  useWebsocket(onOpenDialogueMessage, 1000, "useActivityLogWebSocketListener-Dialogue");
+
   return list;
 };
 

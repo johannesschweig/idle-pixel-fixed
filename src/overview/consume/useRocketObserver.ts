@@ -2,7 +2,6 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useIPFDispatch, useIPFSelector } from "../../redux/hooks";
 import {
   consumeWebSocketMessage,
-  observeWebSocketMessage,
   useWebsocket,
 } from "../../util/websocket/useWebsocket";
 import { reduceToRecord } from "../../util/arrayUtils";
