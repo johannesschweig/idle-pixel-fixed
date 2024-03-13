@@ -1,17 +1,17 @@
 # TODO
+- Automatic market prices button
+- Automatic tradables button
+- woodcutting regrow bug
+
+# DONE
+- game shop: buy single things
+- Open keys for treasure
 - Popups:
   - You start to prepare a meal
   - You successfully cash out
   - You solved the map
   - During your watercan you harvested...
   - You combine fragments into a gem
-- Automatic market prices button
-- Automatic tradables button
-- Open keys for treasure
-- game shop: buy single things
-- woodcutting regrow bug
-
-# DONE
 - Criptoe rework
   - Only distribute criptoe on first monday
   - Monday: Distribute

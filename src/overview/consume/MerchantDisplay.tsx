@@ -2,6 +2,7 @@ import { useNumberItemObserver } from "../setItems/useSetItemsObserver";
 import { useItemObserver } from "../setItems/useSetItemsObserver";
 import LabeledIPimg from "../../util/LabeledIPimg";
 import { sendMessage } from "../../util/websocket/useWebsocket";
+import { buttonStyle } from "../market/MarketSlotDisplay";
 
 
 const id = "MerchantDisplay";
@@ -22,14 +23,13 @@ const MerchantDisplay = ({
   const [sellingItemThree] = useItemObserver("merchant_selling_item_3", id)
 
   const OFFERS = [
-          [sellingItemOne, sellingAmountOne, barterItemOne, barterAmountOne],
-          [sellingItemTwo, sellingAmountTwo, barterItemTwo, barterAmountTwo],
-          [sellingItemThree, sellingAmountThree, barterItemThree, barterAmountThree]
-        ].filter(arr => arr[1] != 0)
+    [sellingItemOne, sellingAmountOne, barterItemOne, barterAmountOne],
+    [sellingItemTwo, sellingAmountTwo, barterItemTwo, barterAmountTwo],
+    [sellingItemThree, sellingAmountThree, barterItemThree, barterAmountThree]
+  ].filter(arr => arr[1] != 0)
 
   return merchantTimer === 0 ? (
     <div
-      onClick={() => sendMessage("ROTATE_MERCHANT")}
       style={{
         display: "flex",
         cursor: 'pointer',
@@ -42,7 +42,7 @@ const MerchantDisplay = ({
         }}
       >Merchant sells:</div>
       {
-        OFFERS.map(offer => (
+        OFFERS.map((offer, index) => (
           <div>
             <LabeledIPimg
               name={offer[0].toString()}
@@ -65,9 +65,24 @@ const MerchantDisplay = ({
                 display: "inline-block",
               }}
             />
+            <div
+              className={"button"}
+              style={buttonStyle}
+              onClick={() => sendMessage("MERCHANT_BARTER", index + 1)}
+            >
+              Trade
+            </div>
+
           </div>
         ))
       }
+      <div
+        className={"button"}
+        style={buttonStyle}
+        onClick={() => sendMessage("ROTATE_MERCHANT")}
+      >
+        Rotate
+      </div>
     </div>
   ) : null;
 };

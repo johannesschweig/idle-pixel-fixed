@@ -43,7 +43,13 @@ export enum CraftingView {
 }
 
 const oreToBar = (ore: string) =>
-  ore === "copper" ? "bronze_bar" : ore === "ancient_ore" ? "ancient_bar" : `${ore}_bar`;
+  ore === "copper"
+    ? "bronze_bar"
+    : ore === "ancient_ore"
+      ? "ancient_bar"
+      : ore === "dragon_ore"
+        ? "dragon_bar"
+        : `${ore}_bar`;
 
 export interface Smelting {
   type: string;
@@ -86,11 +92,11 @@ const CraftingOverview = () => {
         : "coins"
 
   const toggleAction = () => {
-    switch(view) {
+    switch (view) {
       case CraftingView.SMELTING: setView(CraftingView.SELLING)
-      break
+        break
       case CraftingView.SELLING: setView(CraftingView.SMELTING)
-      break
+        break
     }
   }
 
@@ -162,7 +168,7 @@ const CraftingOverview = () => {
           onClick={() => sendMessage("CRAFT", "rocket_fuel", "5")}
           style={{
             cursor: "pointer",
-            opacity: (oil >= 5000*5 && charcoal >= 20*5 && lava >= 1*5) ? 1 : 0.5,
+            opacity: (oil >= 5000 * 5 && charcoal >= 20 * 5 && lava >= 1 * 5) ? 1 : 0.5,
           }} />
         {/* BARS */}
         {BARS.map((bar) => (
