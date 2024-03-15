@@ -41,6 +41,13 @@ const TreasureChestDisplay = ({
     return (gemAmount > 0 && resource.amount >= 5) ? 1 : 0.5
   }
 
+  const getTreasureChestImage =
+    type === Treasure.REGULAR
+      ? "treasure_chest"
+      : type === Treasure.GREEN
+        ? "green_treasure_chest"
+        : "red_treasure_chest"
+
   return amount > 0 ? (
     <div
       style={{
@@ -62,7 +69,7 @@ const TreasureChestDisplay = ({
           {amount}
         </span>
         <IPimg
-          name={"treasure_chest"}
+          name={getTreasureChestImage}
           size={40}
         />
       </div>

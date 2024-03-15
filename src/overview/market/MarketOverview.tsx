@@ -2,7 +2,7 @@ import OverviewBox from "../OverviewBox";
 import { sendMessage } from "../../util/websocket/useWebsocket";
 import { useMarketSlotDataObserver } from "../setItems/useSetItemsObserver";
 import { useEffect } from "react";
-import MarketSlotDisplay from "./MarketSlotDisplay";
+import MarketSlotDisplay, { buttonStyle } from "./MarketSlotDisplay";
 import MarketSlotPlaceholder from "./MarketSlotPlaceholder";
 import TrackerDisplay from './TrackerDisplay'
 import { useLocalStorage } from "../../util/localstorage/useLocalStorage";
@@ -63,6 +63,11 @@ const MarketOverview = () => {
       return t[0].sellAt
     }
     return undefined
+  }
+
+  const importTrackers = async () => {
+    const text = await navigator.clipboard.readText();
+    localStorage.setItem("hoarseboltro.trackers", text)
   }
 
   return (
@@ -138,6 +143,13 @@ const MarketOverview = () => {
             </span>
             <TrackerDisplayPlaceholder
               addTracker={addTracker} />
+            <div
+              className="button"
+              style={buttonStyle}
+              onClick={() => importTrackers()}
+            >
+              Import
+            </div>
           </div>
           <div
             style={{

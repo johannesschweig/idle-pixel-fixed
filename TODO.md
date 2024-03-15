@@ -2,6 +2,11 @@
 - Automatic market prices button
 - Automatic tradables button
 - woodcutting regrow bug
+- one-click consume of
+  - apples, bananas, stardust prisms, gathering bags, cooking results
+- Criptoe: No distribute button when all closed
+- all special forms of bones -> consumeoverview
+- shiny next monster flow, does not work
 
 # DONE
 - game shop: buy single things
