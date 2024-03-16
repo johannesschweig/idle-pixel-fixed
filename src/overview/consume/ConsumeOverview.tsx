@@ -45,7 +45,7 @@ const ConsumeOverview = () => {
   const [submarineBoatTimer] = useNumberItemObserver("submarine_boat_timer", id);
   const [aquariumTimer] = useNumberItemObserver("aquarium_timer", id)
   const [heat] = useNumberItemObserver("heat", id)
-  
+
   const [heatPending] = useNumberItemObserver("heat_pending", id)
   const [ironBar] = useNumberItemObserver("iron_bar", id)
   const [treasureMap] = useNumberItemObserver("treasure_map", id)
@@ -92,7 +92,7 @@ const ConsumeOverview = () => {
     }
   }
 
-  
+
 
   const boatsOut = () => {
     let sum = 0
@@ -199,6 +199,17 @@ const ConsumeOverview = () => {
       }, i * 300)
     }
   }
+
+  const getConsumeItems = [
+    ...STARDUST_PRISMS.map(prism => ({
+      name: prism,
+      action: "SMASH_STARDUST_PRISM"
+    })),
+    ...COOKED_FOOD.map(food => ({
+      name: food,
+      action: "CONSUME"
+    }))
+  ]
   // CASTLE_BUY=frozen_crocodile_hide
   //DONATE_TABLETTE_PIECES
   return (
@@ -274,14 +285,8 @@ const ConsumeOverview = () => {
           action_override={["CRAFT", "iron_cannonball", '1']}
         />}
         <OneClickConsume
-          items={STARDUST_PRISMS}
-         />
-        {STARDUST_PRISMS.map((prism) => (
-          <ObservedLabeledIPimg
-            label={prism}
-            action={"SMASH_STARDUST_PRISM"}
-            size={30} />
-        ))}
+          items={getConsumeItems}
+        />
         {/* <ObservedLabeledIPimg
           label={"meteor"}
           action={"MINE_METEOR"}
@@ -433,13 +438,6 @@ const ConsumeOverview = () => {
           action={"CONSUME"}
           retain={50}
         />
-        {COOKED_FOOD.map((food) => (
-          <ObservedLabeledIPimg
-            label={food}
-            size={30}
-            action={"CONSUME"}
-          />
-        ))}
         {stardustWatchCharges >= 40 && <LabeledIPimg
           name={"stardust_watch"}
           label={"FULL"}

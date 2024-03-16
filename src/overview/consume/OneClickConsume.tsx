@@ -4,7 +4,17 @@ import { sendMessage } from "../../util/websocket/useWebsocket";
 import LabeledIPimg from "../../util/LabeledIPimg";
 
 interface Props {
-  items: string[],
+  items: ConsumeItem[],
+}
+
+export interface ConsumeItem {
+  name: string;
+  action: string;
+  retain?: number;
+  action_item?: string;
+  action_override?: Array<string>;
+  max_value?: number;
+  repeat?: boolean;
 }
 
 
@@ -14,14 +24,14 @@ const OneClickConsume = ({
 }: Props) => {
   var itemAmount: number[] = []
   for (let i = 0; i < items.length; i++) {
-    const [ia] = useNumberItemObserver(items[i], id)
+    const [ia] = useNumberItemObserver(items[i].name, id)
     itemAmount.push(ia)
   }
 
   const oneClickConsume = () => {
     for (let i = 0; i < items.length; i++) {
       setTimeout(() => {
-        sendMessage("SMASH_STARDUST_PRISM", items[i], itemAmount[i])
+        sendMessage(items[i].action, items[i].name, itemAmount[i])
       }, 200*i)
     }
   }
@@ -31,7 +41,11 @@ const OneClickConsume = ({
       onClick={() => oneClickConsume()}
     >
       {items.map((item, index) => (
-        <div>{item}:{itemAmount[index]}</div>
+        <LabeledIPimg
+          name={item.name}
+          label={itemAmount[index]}
+          size={15}
+          />
       ))}
     </div>
   ) : null;
