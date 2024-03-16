@@ -15,6 +15,7 @@ import MerchantDisplay from "./MerchantDisplay";
 import { formatTime } from "../../util/timeUtils";
 import { formatNumber } from "../../util/numberUtils";
 import OpenChests from "./OpenChests";
+import OneClickConsume from "./OneClickConsume";
 
 export enum Treasure {
   REGULAR,
@@ -272,6 +273,9 @@ const ConsumeOverview = () => {
           size={30}
           action_override={["CRAFT", "iron_cannonball", '1']}
         />}
+        <OneClickConsume
+          items={STARDUST_PRISMS}
+         />
         {STARDUST_PRISMS.map((prism) => (
           <ObservedLabeledIPimg
             label={prism}
