@@ -208,8 +208,30 @@ const ConsumeOverview = () => {
     ...COOKED_FOOD.map(food => ({
       name: food,
       action: "CONSUME"
-    }))
+    })),
+    {
+      name: "random_treasure_chest",
+      action: "",
+      repeat: true,
+      action_override: ["RANDOM_TREASURE_CHEST"],
+    },
+    {
+      name: "banana",
+      action: "CONSUME",
+      retain: 100,
+    },
+    {
+      name: "apple",
+      action: "CONSUME",
+      retain: 2,
+    },
+    {
+      name: "coconut",
+      action: "CONSUME",
+      retain: 50,
+    },
   ]
+
   // CASTLE_BUY=frozen_crocodile_hide
   //DONATE_TABLETTE_PIECES
   return (
@@ -233,13 +255,7 @@ const ConsumeOverview = () => {
         >
           kill boss
         </button> */}
-        <ObservedLabeledIPimg
-          label={"random_treasure_chest"}
-          action={""}
-          action_override={["RANDOM_TREASURE_CHEST"]}
-          repeat={true}
-          size={30}
-        />
+
         {/* {(beehiveTimer === 1 || ((poppy > 25 || rose > 25 || tulip > 25) && beehiveTimer === 0)) &&
           <LabeledIPimg
             name={"beehive"}
@@ -365,79 +381,22 @@ const ConsumeOverview = () => {
         }
         <OpenChests />
         {/* Boats */}
-        {/* {canoeBoatTimer <= 1 && boatsOut() < 2 && <LabeledIPimg
-          name="canoe_boat"
-          label={canoeBoatTimer === 1 ? "Collect" : "Send out"}
-          size={50}
-          onClick={() => clickBoat("canoe_boat")}
-          style={boatStyle(canoeBoatTimer)} />} */}
         {stardustBoatTimer <= 1 && boatsOut() < 2 && <LabeledIPimg
           name="stardust_boat"
           label={stardustBoatTimer === 1 ? "Collect" : "Send out"}
           size={50}
           onClick={() => clickBoat("stardust_boat")}
           style={boatStyle(stardustBoatTimer)} />}
-        {/* {pirateShipTimer <= 1 && boatsOut() < 2 && <LabeledIPimg
-          name="pirate_ship"
-          label={pirateShipTimer === 1 ? "Collect" : "Send out"}
-          size={50}
-          onClick={() => clickBoat("pirate_ship")}
-          style={boatStyle(pirateShipTimer)} />} */}
         {submarineBoatTimer <= 1 && boatsOut() < 2 && <LabeledIPimg
           name="submarine_boat"
           label={submarineBoatTimer === 1 ? "Collect" : "Send out"}
           size={50}
           onClick={() => clickBoat("submarine_boat")}
           style={boatStyle(submarineBoatTimer)} />}
-
-        {/* <ObservedLabeledIPimg
-          label={"bait"}
-          action={""}
-          size={30}
-          action_override={["THROW_BAIT"]}
-          repeat={true}
-        />
-        <ObservedLabeledIPimg
-          label={"super_bait"}
-          action={""}
-          retain={5}
-          size={30}
-          action_override={["THROW_SUPER_BAIT"]}
-          repeat={true}
-        />
-        <ObservedLabeledIPimg
-          label={"mega_bait"}
-          action={""}
-          size={30}
-          action_override={["THROW_MEGA_BAIT"]}
-          repeat={true}
-        /> */}
         {areas.map((area) => (
           <GatheringBagDisplay area={area} key={area} />
         ))}
-        {/* <ObservedLabeledIPimg
-          label={"machete_unclaimed"}
-          action={""}
-          size={30}
-        /> */}
-        <ObservedLabeledIPimg
-          label={"banana"}
-          size={30}
-          action={"CONSUME"}
-          retain={100}
-        />
-        <ObservedLabeledIPimg
-          label={"apple"}
-          size={30}
-          action={"CONSUME"}
-          retain={2}
-        />
-        <ObservedLabeledIPimg
-          label={"coconut"}
-          size={30}
-          action={"CONSUME"}
-          retain={50}
-        />
+
         {stardustWatchCharges >= 40 && <LabeledIPimg
           name={"stardust_watch"}
           label={"FULL"}
