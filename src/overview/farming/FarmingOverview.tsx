@@ -15,7 +15,6 @@ import { formatTime } from "../../util/timeUtils";
 const id = "FarmingOverview";
 const FarmingOverview = () => {
   const seeds = Object.keys(SEEDS);
-  const bones = keysOf(BONES);
 
   const [normalBones] = useNumberItemObserver("bones", id);
   const [bonemeal, setBonemeal] = useNumberItemObserver("bonemeal", id);
@@ -81,15 +80,13 @@ const FarmingOverview = () => {
             width: "100px",
           }}
         >
-          {bones.map((bone) => (
-            <BoneDisplay
-              bone={bone}
-              bonemealValue={BONES[bone].bonemeal}
-              bonemeal={bonemeal}
-              setBonemeal={setBonemeal}
-              key={bone}
-            />
-          ))}
+          <BoneDisplay
+            bone={"bones"}
+            bonemealValue={1}
+            bonemeal={bonemeal}
+            setBonemeal={setBonemeal}
+            key={"bones"}
+          />
         </div>
         <div
           style={{
@@ -142,7 +139,7 @@ const FarmingOverview = () => {
             name={"watering_can"}
             label={water}
             size={30}
-          className={wateringCanActive === 1 ? "shake" : ""}
+            className={wateringCanActive === 1 ? "shake" : ""}
             style={{
               justifyContent: "center",
               cursor: "pointer",

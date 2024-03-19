@@ -47,8 +47,8 @@ const WoodcuttingOverview = () => {
         hideElementById("notification-woodcutting");
       }
       Woodcutting.clicksPlot(index + 1);
-      setType("none");
-      setStage(0);
+      // setType("none");
+      // setStage(0);
     }
   };
   const logClick = (log: string, amount: number) => {

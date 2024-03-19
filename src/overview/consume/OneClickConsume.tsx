@@ -11,6 +11,7 @@ interface Props {
 export interface ConsumeItem {
   name: string;
   message: Message;
+  displayLimit?: number;
 }
 
 interface Message {
@@ -75,25 +76,34 @@ const OneClickConsume = ({
 
   const consumeAll = () => {
     let j = 0
-    const visItems = visibleItems()
-    for (let i = 0; i < visItems.length; i++) {
+    const visible = getVisible()
+    for (let i = 0; i < visible.items.length; i++) {
       setTimeout(() => {
-        consumeItem(visItems[i], visibleItemAmount[i])
+        consumeItem(visible.items[i], visible.amount[i])
       }, 200 * i)
     }
   }
 
-  const visibleItems = () => {
+  const getVisible = () => {
     var visItems: ConsumeItem[] = []
+    var visItemsAm = []
     for (let i = 0; i < items.length; i++) {
-      if (itemAmount[i] > 0) {
+      const retainOK =
+        !items[i].message.message3 && !items[i].message.message3num
+          ? true
+          : ((items[i].message.message3 === MessageOptions.RETAIN) && (itemAmount[i] > (items[i].message.message3num ?? 0)))
+            ? true
+            : false
+      if (itemAmount[i] > 0 && itemAmount[i] > (items[i].displayLimit ?? 0) && retainOK) {
         visItems.push(items[i])
+        visItemsAm.push(itemAmount[i])
       }
     }
-    return visItems
+    return {
+      items: visItems,
+      amount: visItemsAm
+    }
   }
-
-  const visibleItemAmount = itemAmount.filter(ia => ia > 0)
 
   return (itemAmount.reduce((a, b) => a + b, 0) > 0) ? (
     <div
@@ -104,10 +114,10 @@ const OneClickConsume = ({
       }}
       onClick={() => consumeAll()}
     >
-      {visibleItems().map((item: ConsumeItem, index: number) => (
+      {getVisible().items.map((item: ConsumeItem, index: number) => (
         <LabeledIPimg
           name={item.name}
-          label={visibleItemAmount[index]}
+          label={getVisible().amount[index]}
           size={15}
         />
       ))}

@@ -16,6 +16,7 @@ import { formatTime } from "../../util/timeUtils";
 import { formatNumber } from "../../util/numberUtils";
 import OpenChests from "./OpenChests";
 import OneClickConsume, { MessageOptions, getDefaultMessage } from "./OneClickConsume";
+import { BONES } from "../farming/bonemeal/bones";
 
 export enum Treasure {
   REGULAR,
@@ -251,8 +252,13 @@ const ConsumeOverview = () => {
         message1: "OPEN_GATHERING_LOOT",
         message2: area,
         message3: MessageOptions.MAX
-      }
-    }))
+      },
+      displayLimit: 5000,
+    })),
+    ...keysOf(BONES).map(bone => ({
+      name: bone,
+      message: getDefaultMessage("ADD_BONEMEAL")
+    })),
   ]
 
   // CASTLE_BUY=frozen_crocodile_hide

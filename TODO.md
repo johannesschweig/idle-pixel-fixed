@@ -2,16 +2,15 @@
 - Automatic market prices button
 - Automatic tradables button
 - woodcutting regrow bug
-- all special forms of bones -> consumeoverview
 - shiny next monster flow, does not work
-- one click consume
-  - hide items if only retained quantities
 
 # DONE
+- all special forms of bones -> consumeoverview
 - Criptoe: No distribute button when all closed
 - one-click consume of
   - apples, bananas, stardust prisms,  cooking results
   - gathering bags,
+  - hide items if only retained quantities
 - game shop: buy single things
 - Open keys for treasure
 - Popups:
