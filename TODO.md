@@ -1,10 +1,10 @@
 # TODO
 - Automatic market prices button
 - Automatic tradables button
-- woodcutting regrow bug
 - shiny next monster flow, does not work
 
 # DONE
+- woodcutting regrow bug
 - all special forms of bones -> consumeoverview
 - Criptoe: No distribute button when all closed
 - one-click consume of

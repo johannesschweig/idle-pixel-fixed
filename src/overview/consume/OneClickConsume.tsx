@@ -3,6 +3,7 @@ import { useItemObserver } from "../setItems/useSetItemsObserver";
 import { sendMessage } from "../../util/websocket/useWebsocket";
 import LabeledIPimg from "../../util/LabeledIPimg";
 import { buttonStyle } from "../market/MarketSlotDisplay";
+import { isVisible } from "./isVisible";
 
 interface Props {
   items: ConsumeItem[],
@@ -61,17 +62,6 @@ const OneClickConsume = ({
             : 0
       sendMessage(item.message.message1, item.message.message2, message3)
     }
-    // let v = amount - item.retain
-    // if (item.action_override) {
-    //   const rep = item.repeat ? amount - item.retain : 1
-    //   for (let i = 0; i < rep; i++) {
-    //     sendMessage(item.action_override[0], ...item.action_override.slice(1))
-    //   }
-    // } else if (item.action_item) {
-    //   sendMessage(item.action, item.action_item, Math.min(v, item.max_amount));
-    // } else {
-    //   sendMessage(item.action, item.name, Math.min(v, item.max_amount));
-    // }
   }
 
   const consumeAll = () => {
@@ -88,13 +78,7 @@ const OneClickConsume = ({
     var visItems: ConsumeItem[] = []
     var visItemsAm = []
     for (let i = 0; i < items.length; i++) {
-      const retainOK =
-        !items[i].message.message3 && !items[i].message.message3num
-          ? true
-          : ((items[i].message.message3 === MessageOptions.RETAIN) && (itemAmount[i] > (items[i].message.message3num ?? 0)))
-            ? true
-            : false
-      if (itemAmount[i] > 0 && itemAmount[i] > (items[i].displayLimit ?? 0) && retainOK) {
+      if (isVisible(items[i], itemAmount[i])) {
         visItems.push(items[i])
         visItemsAm.push(itemAmount[i])
       }
