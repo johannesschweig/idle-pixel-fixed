@@ -10,14 +10,29 @@ interface Props {
 
 export interface ConsumeItem {
   name: string;
-  action: string;
-  retain?: number;
-  action_item?: string;
-  action_override?: Array<string>;
-  max_amount?: number;
+  message: Message;
+}
+
+interface Message {
+  message1: string;
+  message2?: string | MessageOptions;
+  message3?: string | MessageOptions;
+  message3num?: number;
   repeat?: boolean;
 }
 
+export enum MessageOptions {
+  MAX = 'max',
+  RETAIN = 'retain'
+}
+
+export function getDefaultMessage(item: string) {
+  return {
+    message1: "SMASH_STARDUST_PRISM",
+    message2: item,
+    message3: MessageOptions.MAX
+  }
+}
 
 const id = "OneClickConsume";
 const OneClickConsume = ({
@@ -30,24 +45,32 @@ const OneClickConsume = ({
   }
 
   const consumeItem = (item: ConsumeItem, amount: number) => {
-    if (!item.retain) {
-      item.retain = 0
-    }
-    if (!item.max_amount) {
-      item.max_amount = Math. pow(10, 1000)
-    }
-
-    let v = amount - item.retain
-    if (item.action_override) {
-      const rep = item.repeat ? amount - item.retain : 1
-      for (let i = 0; i < rep; i++) {
-        sendMessage(item.action_override[0], ...item.action_override.slice(1))
+    const repeat = item.message.repeat ? amount : 1
+    if (!item.message.message2) {
+      for (let i = 0; i < repeat; i++) {
+        sendMessage(item.message.message1)
       }
-    } else if (item.action_item) {
-      sendMessage(item.action, item.action_item, Math.min(v, item.max_amount));
-    } else {
-      sendMessage(item.action, item.name, Math.min(v, item.max_amount));
+    } else if (item.message.message3) {
+      const message3 = typeof item.message.message3 === 'number'
+        ? item.message.message3
+        : item.message.message3 === MessageOptions.MAX
+          ? amount
+          : item.message.message3 === MessageOptions.RETAIN && item.message.message3num
+            ? amount - item.message.message3num
+            : 0
+      sendMessage(item.message.message1, item.message.message2, message3)
     }
+    // let v = amount - item.retain
+    // if (item.action_override) {
+    //   const rep = item.repeat ? amount - item.retain : 1
+    //   for (let i = 0; i < rep; i++) {
+    //     sendMessage(item.action_override[0], ...item.action_override.slice(1))
+    //   }
+    // } else if (item.action_item) {
+    //   sendMessage(item.action, item.action_item, Math.min(v, item.max_amount));
+    // } else {
+    //   sendMessage(item.action, item.name, Math.min(v, item.max_amount));
+    // }
   }
 
   const consumeAll = () => {
@@ -75,7 +98,9 @@ const OneClickConsume = ({
   return (itemAmount.reduce((a, b) => a + b, 0) > 0) ? (
     <div
       style={{
-        display: "flex",
+        display: "grid",
+        gridTemplateColumns: "repeat(6, 1fr)",
+        marginTop: "12px",
       }}
       onClick={() => consumeAll()}
     >

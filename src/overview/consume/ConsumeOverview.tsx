@@ -15,7 +15,7 @@ import MerchantDisplay from "./MerchantDisplay";
 import { formatTime } from "../../util/timeUtils";
 import { formatNumber } from "../../util/numberUtils";
 import OpenChests from "./OpenChests";
-import OneClickConsume from "./OneClickConsume";
+import OneClickConsume, { MessageOptions, getDefaultMessage } from "./OneClickConsume";
 
 export enum Treasure {
   REGULAR,
@@ -165,7 +165,9 @@ const ConsumeOverview = () => {
       6: "#6",
       7: "Broswing stonks",
       8: "How do I get energy without food?",
-      9: "A cooks dish, anyone of them."
+      9: "A cooks dish, anyone of them.",
+      10: "#10",
+      11: "Spooky spooky skeleton, in a dark place.",
     }
     const red: TreasureHint = {
       1: "I observe the universe but cannot see. All I rely on is the wavelengths that shall be!",
@@ -203,33 +205,54 @@ const ConsumeOverview = () => {
   const getConsumeItems = [
     ...STARDUST_PRISMS.map(prism => ({
       name: prism,
-      action: "SMASH_STARDUST_PRISM"
+      message: getDefaultMessage("SMASH_STARDUST_PRISM")
     })),
     ...COOKED_FOOD.map(food => ({
       name: food,
-      action: "CONSUME"
+      message: getDefaultMessage("CONSUME")
     })),
     {
       name: "random_treasure_chest",
-      action: "",
-      repeat: true,
-      action_override: ["RANDOM_TREASURE_CHEST"],
+      message: {
+        message1: "RANDOM_TREASURE_CHEST",
+        repeat: true
+      },
     },
     {
       name: "banana",
-      action: "CONSUME",
-      retain: 100,
+      message: {
+        message1: "CONSUME",
+        message2: "banana",
+        message3: MessageOptions.RETAIN,
+        message3num: 100
+      },
     },
     {
       name: "apple",
-      action: "CONSUME",
-      retain: 2,
+      message: {
+        message1: "CONSUME",
+        message2: "apple",
+        message3: MessageOptions.RETAIN,
+        message3num: 2,
+      },
     },
     {
       name: "coconut",
-      action: "CONSUME",
-      retain: 50,
+      message: {
+        message1: "CONSUME",
+        message2: "coconut",
+        message3: MessageOptions.RETAIN,
+        message3num: 100,
+      },
     },
+    ...areas.map(area => ({
+      name: `gathering_loot_bag_${area}`,
+      message: {
+        message1: "OPEN_GATHERING_LOOT",
+        message2: area,
+        message3: MessageOptions.MAX
+      }
+    }))
   ]
 
   // CASTLE_BUY=frozen_crocodile_hide
@@ -255,7 +278,6 @@ const ConsumeOverview = () => {
         >
           kill boss
         </button> */}
-
         {/* {(beehiveTimer === 1 || ((poppy > 25 || rose > 25 || tulip > 25) && beehiveTimer === 0)) &&
           <LabeledIPimg
             name={"beehive"}
@@ -393,10 +415,6 @@ const ConsumeOverview = () => {
           size={50}
           onClick={() => clickBoat("submarine_boat")}
           style={boatStyle(submarineBoatTimer)} />}
-        {areas.map((area) => (
-          <GatheringBagDisplay area={area} key={area} />
-        ))}
-
         {stardustWatchCharges >= 40 && <LabeledIPimg
           name={"stardust_watch"}
           label={"FULL"}

@@ -2,13 +2,16 @@
 - Automatic market prices button
 - Automatic tradables button
 - woodcutting regrow bug
-- one-click consume of
-  - apples, bananas, stardust prisms, gathering bags, cooking results
-- Criptoe: No distribute button when all closed
 - all special forms of bones -> consumeoverview
 - shiny next monster flow, does not work
+- one click consume
+  - hide items if only retained quantities
 
 # DONE
+- Criptoe: No distribute button when all closed
+- one-click consume of
+  - apples, bananas, stardust prisms,  cooking results
+  - gathering bags,
 - game shop: buy single things
 - Open keys for treasure
 - Popups:
@@ -33,3 +36,7 @@
 - correct smelting time for dragon ore
 - Update tradables OR automatic tradables button
 - Max charges starwatch
+
+# DROPPED
+- import: deactivate import if clipboard empty (or no json)
+  - requires async action

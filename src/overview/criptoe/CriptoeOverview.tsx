@@ -45,7 +45,6 @@ const CriptoeOverview = () => {
     var wallets = []
     for (let i = 1; i <= 4; i++) {
       // if not already withdrawn
-      console.log('x', walletData[i - 1].withdrawWeek, currentWeek)
       if (walletData[i - 1].withdrawWeek != currentWeek) {
         wallets.push(i)
       }
@@ -57,7 +56,7 @@ const CriptoeOverview = () => {
     }
   }
 
-  const allWithdrawn = false
+  const allWithdrawn = walletData.map(wd => wd.withdrawWeek === currentWeek).every(value => value === true)
 
   useEffect(() => {
     if (isSunday) {
@@ -91,7 +90,7 @@ const CriptoeOverview = () => {
           <IPimg
             name={"criptoe_coin"}
             size={10} />
-          <div
+          { !allWithdrawn && <div
             className="button"
             style={{
               ...buttonStyle,
@@ -100,31 +99,18 @@ const CriptoeOverview = () => {
             }}
             onClick={() => distributeCriptoe()}>
             Distribute
-          </div>
+          </div> }
         </div>}
-      {/* Researcher points */}
+      {/* Days left of the week */}
       <div
         style={{
+          display: 'flex',
+          gap: '4px',
           fontSize: "14px",
           opacity: .8,
         }}
       >
-        Researcher points: {formatNumber(researcherPoints)}/500M
-        <IPimg
-          name={"researcher_points"}
-          size={10} />
-        {/* Days left of the week */}
-        <div
-          style={{
-            display: 'flex',
-            gap: '4px',
-            float: "right",
-            fontSize: "14px",
-            opacity: .8,
-          }}
-        >
-          {6 - new Date().getDay()} days left
-        </div>
+        {6 - new Date().getDay()} days left
       </div>
       {/* Wallets */}
       {isSunday === false && allWithdrawn === false &&
