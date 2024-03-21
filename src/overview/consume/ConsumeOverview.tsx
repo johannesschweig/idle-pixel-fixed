@@ -206,11 +206,11 @@ const ConsumeOverview = () => {
   const getConsumeItems = [
     ...STARDUST_PRISMS.map(prism => ({
       name: prism,
-      message: getDefaultMessage("SMASH_STARDUST_PRISM")
+      message: getDefaultMessage("SMASH_STARDUST_PRISM", prism)
     })),
     ...COOKED_FOOD.map(food => ({
       name: food,
-      message: getDefaultMessage("CONSUME")
+      message: getDefaultMessage("CONSUME", food)
     })),
     {
       name: "random_treasure_chest",
@@ -257,7 +257,7 @@ const ConsumeOverview = () => {
     })),
     ...keysOf(BONES).map(bone => ({
       name: bone,
-      message: getDefaultMessage("ADD_BONEMEAL")
+      message: getDefaultMessage("ADD_BONEMEAL", bone)
     })),
   ]
 

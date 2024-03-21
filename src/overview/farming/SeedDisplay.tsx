@@ -4,6 +4,7 @@ import { useTooltip } from "../../util/tooltip/useTooltip";
 import React from "react";
 import LabeledIPimg from "../../util/LabeledIPimg";
 import { formatMinutes } from "../../util/timeUtils";
+import { formatNumber } from "../../util/numberUtils";
 
 interface Props {
   seed: string;
@@ -112,7 +113,7 @@ const SeedDisplay = ({
           }}
           {...seedProps}
         />
-        <span>{amount}</span>
+        <span>{formatNumber(amount)}</span>
       </div>
       <SeedTooltip />
     </>

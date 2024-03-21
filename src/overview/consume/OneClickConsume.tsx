@@ -28,9 +28,9 @@ export enum MessageOptions {
   RETAIN = 'retain'
 }
 
-export function getDefaultMessage(item: string) {
+export function getDefaultMessage(action: string, item: string) {
   return {
-    message1: "SMASH_STARDUST_PRISM",
+    message1: action,
     message2: item,
     message3: MessageOptions.MAX
   }
