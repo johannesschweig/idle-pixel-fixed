@@ -34,7 +34,8 @@ const ConsumeOverview = () => {
   ].map(fish => "cooked_" + fish)
   const COOKED_SHINY_FISH = COOKED_FISH.map(fish => fish + "_shiny")
   const COOKED_MEGA_SHINY_FISH = COOKED_FISH.map(fish => fish + "_mega_shiny")
-  const COOKED_FOOD = ['cooked_chicken', 'cooked_meat', 'cooked_bird_meat', "orange", "egg", "maple_syrup", "cheese", "honey", "coconut_stew", "banana_jello", "potato_shake", "carrot_shake", "beet_shake", "broccoli_shake"].concat(COOKED_FISH, COOKED_SHINY_FISH, COOKED_MEGA_SHINY_FISH)
+  const COOKED_FOOD = ['cooked_chicken', 'cooked_meat', 'cooked_bird_meat', "orange", "maple_syrup", "cheese", "honey", "coconut_stew", "banana_jello", "potato_shake", "carrot_shake", "beet_shake", "broccoli_shake"].concat(COOKED_FISH, COOKED_SHINY_FISH, COOKED_MEGA_SHINY_FISH)
+  // egg, chocolate
   const STARDUST_PRISMS = ["small", "medium", "large", "huge"].map(e => e + "_stardust_prism")
   const FRAGMENTS = ["sapphire", "emerald", "ruby", "diamond"].map(e => `gathering_${e}_fragments`)
 

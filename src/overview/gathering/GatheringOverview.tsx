@@ -15,8 +15,6 @@ const GatheringOverview = () => {
     "current_gathering_area",
     id
   );
-  const [gatheringXp] = useNumberItemObserver("gathering_xp", id)
-  const [stardustWatchCharges] = useNumberItemObserver("stardust_watch_charges", id)
 
   const selectArea = (area: string) => {
     setCurrentGatheringArea(area);
@@ -47,15 +45,6 @@ const GatheringOverview = () => {
             isSelectedArea={area === currentGatheringArea}
           />
         ))}
-        <LabeledIPimg
-          name={"stardust_watch"}
-          label={stardustWatchCharges === 40 ? 'FULL' : `${stardustWatchCharges}/40`}
-          size={30}
-          onClick={() => sendMessage("ACTIVATE_STARDUST_WATCH")}
-          style={{
-            cursor: "pointer",
-          }}
-        />
       </div>
     </OverviewBox>
   );

@@ -36,6 +36,7 @@ const CombatOverview = () => {
   const [blueGuardianKey] = useNumberItemObserver("blue_gaurdian_key", id)
   const [purpleGuardianKey] = useNumberItemObserver("purple_gaurdian_key", id)
   const [combatLootPotionTimer] = useNumberItemObserver("combat_loot_potion_timer", id)
+  const [stardustWatchCharges] = useNumberItemObserver("stardust_watch_charges", id)
 
   const mansionRuns = Math.floor(Math.min(energy / 5000, fightPoints / 3500))
 
@@ -75,12 +76,12 @@ const CombatOverview = () => {
   }
 
   const autoCombat = () => {
-    autoFight()
-    for (let i = 1; i < mansionRuns; i++) {
+    for (let j = 0; j < mansionRuns; j++) { // number of runs
       setTimeout(() => {
         autoFight()
-      }, 20 * 1000 * i)
+      }, 20 * 1000 * j)
     }
+    // sendMessage("ACTIVATE_STARDUST_WATCH") // one stardust watch = 7200 fightPoints
   }
 
   // OPEN_DIALOGUE=MESSAGE~images/blood_fire_snake_icon.png~"I will keep the purple guardian key safe, master."<br /><br /><span class='color-grey'>The purple guardian key is being held by the monster shown.  The key will be held by another monster in: 11:32:37</span><br /><br />Loot chance: Common~false
@@ -102,11 +103,20 @@ const CombatOverview = () => {
           />
         ))}
         {["hood"].map(item => (
-        <ObservedLabeledIPimg
-          label={`reaper_${item}`}
-          size={20}
-          action={''} />
+          <ObservedLabeledIPimg
+            label={`reaper_${item}`}
+            size={20}
+            action={''} />
         ))}
+        {stardustWatchCharges > 0 && <LabeledIPimg
+          name={"stardust_watch"}
+          label={stardustWatchCharges === 40 ? 'FULL' : `${stardustWatchCharges}/40`}
+          size={20}
+          onClick={() => sendMessage("ACTIVATE_STARDUST_WATCH")}
+          style={{
+            cursor: "pointer",
+          }}
+        /> }
       </div>
       <div
         style={{

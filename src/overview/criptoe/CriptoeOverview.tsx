@@ -132,6 +132,9 @@ const CriptoeOverview = () => {
         name={"tcg_back_50"}
         label={"BUY 3 Cards"}
         size={30}
+        style={{
+          display: "block",
+        }}
         onClick={() => sendMessage("BUY_TCG", "3")}
       />}
     </OverviewBox >

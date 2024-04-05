@@ -1,9 +1,9 @@
 # TODO
 - Automatic market prices button
 - Automatic tradables button
-- criptoe by cards
 
 # DONE
+- criptoe by cards
 - woodcutting regrow bug
 - all special forms of bones -> consumeoverview
 - Criptoe: No distribute button when all closed

@@ -24,8 +24,15 @@ const TreasureChestDisplay = ({
 
   const openTreasureChest = (gem: string) => {
     const key = `${resource.name}_${gem}_key`
+    const chest = type === Treasure.REGULAR
+      ? ""
+      : type === Treasure.GREEN
+        ? "GREEN_"
+        : type === Treasure.RED
+          ? "RED_"
+          : "ERROR_"
     sendMessage('CRAFT', key, '1')
-    setTimeout(() => sendMessage('OPEN_TREASURE_CHEST', key), 500)
+    setTimeout(() => sendMessage(`OPEN_${chest}TREASURE_CHEST`, key), 500)
   }
 
   const getOpac = (gem: string) => {
