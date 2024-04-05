@@ -1,7 +1,7 @@
 # TODO
 - Automatic market prices button
 - Automatic tradables button
-- shiny next monster flow, does not work
+- criptoe by cards
 
 # DONE
 - woodcutting regrow bug

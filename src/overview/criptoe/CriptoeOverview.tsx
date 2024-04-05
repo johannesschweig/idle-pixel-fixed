@@ -9,6 +9,7 @@ import { buttonStyle } from "../market/MarketSlotDisplay";
 import { sendMessage } from "../../util/websocket/useWebsocket";
 import { splitNumber } from "../../util/numberUtils";
 import { formatNumber } from "../../util/numberUtils";
+import LabeledIPimg from "../../util/LabeledIPimg";
 
 interface CriptoeData {
   wallet: number;
@@ -21,7 +22,8 @@ const CriptoeOverview = () => {
   const walletData = useWalletObserver(id)
   const [prices, setPrices] = useState<number[]>([])
   const [criptoe] = useNumberItemObserver('criptoe', id)
-  const [researcherPoints] = useNumberItemObserver('researcher_points', id)
+  const [tcgTimer] = useNumberItemObserver("tcg_timer", id)
+
   const today = getFormattedToday()
   const currentWeek = getWeekToday()
   const isSunday = new Date().getDay() === 0
@@ -90,7 +92,7 @@ const CriptoeOverview = () => {
           <IPimg
             name={"criptoe_coin"}
             size={10} />
-          { !allWithdrawn && <div
+          {!allWithdrawn && <div
             className="button"
             style={{
               ...buttonStyle,
@@ -99,7 +101,7 @@ const CriptoeOverview = () => {
             }}
             onClick={() => distributeCriptoe()}>
             Distribute
-          </div> }
+          </div>}
         </div>}
       {/* Days left of the week */}
       <div
@@ -126,8 +128,21 @@ const CriptoeOverview = () => {
           ))}
         </div>
       }
+      {criptoe >= 50000 && tcgTimer <= 2 && <LabeledIPimg
+        name={"tcg_back_50"}
+        label={"BUY 3 Cards"}
+        size={30}
+        onClick={() => sendMessage("BUY_TCG", "3")}
+      />}
     </OverviewBox >
   );
 };
+// 1: 5k, 2: 20k, 3: 50k every 8h
+// BUY_TCG=3
+// tcg_back_50
+// ash_50
+// tcg_timer
+// tcg_unknown
+// REVEAL_TCG_CARD
 
 export default CriptoeOverview;
