@@ -45,8 +45,8 @@ const ConsumeOverview = () => {
   const [stardustBoatTimer] = useNumberItemObserver("stardust_boat_timer", id);
   const [pirateShipTimer] = useNumberItemObserver("pirate_ship_timer", id);
   const [submarineBoatTimer] = useNumberItemObserver("submarine_boat_timer", id);
-  const [aquariumTimer] = useNumberItemObserver("aquarium_timer", id)
   const [heat] = useNumberItemObserver("heat", id)
+  const [criptoePathTimer] = useNumberItemObserver("criptoe_path_timer", id)
 
   const [heatPending] = useNumberItemObserver("heat_pending", id)
   const [ironBar] = useNumberItemObserver("iron_bar", id)
@@ -115,31 +115,6 @@ const ConsumeOverview = () => {
       backgroundColor: timer === 1 ? "deepskyblue" : "transparent",
     }
   }
-
-  const clickBirdhouse = () => {
-    if (birdhouseTimer === 1) {
-      sendMessage("COLLECT_BIRDHOUSE")
-    } else if (birdhouseTimer === 0) {
-      const dotted = Math.min(Math.floor(dottedGreenLeafSeeds), 10)
-      const green = Math.min(Math.floor(greenLeafSeeds), 10)
-      const lime = Math.min(Math.floor(limeLeafSeeds), 10)
-      const redMushroom = Math.min(Math.floor(redMushroomSeeds), 10)
-      const stardust = Math.min(Math.floor(stardustSeeds), 10)
-      sendMessage("PREPARE_BIRDHOUSE", dotted, green, lime, redMushroom, stardust)
-    }
-  }
-
-  const clickBeehive = () => {
-    if (beehiveTimer === 1) {
-      sendMessage("COLLECT_BEEHIVE")
-    } else if (beehiveTimer === 0) {
-      const pop = Math.max(0, poppy - 25)
-      const ros = Math.max(0, rose - 25)
-      const tul = Math.max(0, tulip - 25)
-      sendMessage("PREPARE_BEEHIVE", pop, ros, tul)
-    }
-  }
-
   interface TreasureHint {
     [key: number]: string;
   }
@@ -175,7 +150,7 @@ const ConsumeOverview = () => {
       1: "I observe the universe but cannot see. All I rely on is the wavelengths that shall be!",
       2: "Sell to npc shop: Au before Fe",
       3: "01101001 01110010 01101111 01101110 00100000 01100010 01110101 01100011 01101011 01100101 01110100",
-      4: "#4",
+      4: "Gain some XP: See you later, C you later, C u later, Cu later.",
       5: "#5",
       6: "Crack this clue and you will see, a great shiny item for mining XP.",
       7: "Obtain some stardust. I don't need the charcoal anyways.",
@@ -256,7 +231,7 @@ const ConsumeOverview = () => {
       },
       displayLimit: 5000,
     })),
-    ...keysOf(BONES).map(bone => ({
+    ...keysOf(BONES).slice(1).map(bone => ({
       name: bone,
       message: getDefaultMessage("ADD_BONEMEAL", bone)
     })),
@@ -280,10 +255,10 @@ const ConsumeOverview = () => {
       >
         <RocketDisplay />
         <CookBook />
-        <ObservedLabeledIPimg
-          label={"chocolate"}
-          action={""}
-          size={30}
+        <LabeledIPimg
+          name={"criptoe_sea_100"}
+          label={formatTime(criptoePathTimer)}
+          size={20}
         />
         {/* <button
           onClick={() => killBoss()}

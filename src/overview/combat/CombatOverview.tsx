@@ -59,7 +59,7 @@ const CombatOverview = () => {
   const autoFight = () => {
     sendMessage('START_FIGHT', 'mansion')
     setTimeout(() => {
-      sendMessage('PRESET_LOAD', 4, 1)
+      sendMessage('PRESET_LOAD', 3, 1)
     }, 3000)
     // setTimeout(() => {
     //   sendMessage('PRESET_LOAD', 5, 1)

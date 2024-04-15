@@ -52,7 +52,7 @@ const CriptoeOverview = () => {
       }
     }
 
-    const parts = splitNumber(criptoe, wallets.length)
+    const parts = splitNumber(criptoe-150000, wallets.length) // keep 150k for the cards
     for (let i = 0; i < wallets.length; i++) {
       sendMessage("INVEST_WALLET", `wallet_${wallets[i]}`, parts[i])
     }
@@ -87,12 +87,12 @@ const CriptoeOverview = () => {
             opacity: .8,
           }}
         >
-          Available:
+          Available: 
           {formatNumber(criptoe)}
           <IPimg
             name={"criptoe_coin"}
             size={10} />
-          {!allWithdrawn && <div
+          {criptoe > 150000 && !allWithdrawn && <div
             className="button"
             style={{
               ...buttonStyle,
@@ -134,6 +134,7 @@ const CriptoeOverview = () => {
         size={30}
         style={{
           display: "block",
+          cursor: "pointer",
         }}
         onClick={() => sendMessage("BUY_TCG", "3")}
       />}

@@ -96,7 +96,7 @@ const TrackerDisplay = ({
       [] :
       offers.map(offer => offer.price)
 
-  const amounts = 
+  const amounts =
     offers.length === 0 ?
       [] :
       offers.map(offer => offer.amount)
@@ -130,7 +130,7 @@ const TrackerDisplay = ({
       }}
     >
       {/* stock, lower, buyAt, sellAt, upper */}
-      { stock > 0 && <span>Stock: {formatNumber(stock)} </span> }
+      {stock > 0 && <span>Stock: {formatNumber(stock)} </span>}
       <span>Lower: {formatNumber(lower)} </span>
       <span>Buy at: {formatNumber(buyAt)} </span>
       <span>Sell at: {formatNumber(sellAt)} </span>
@@ -152,9 +152,9 @@ const TrackerDisplay = ({
 
   const getBg = () => {
     // how cheap is the current price
-    const distBuyAt = (buyAt - prices[0])/buyAt
-    const distSellAt = (prices[0] - sellAt)/sellAt
-    switch(action()) {
+    const distBuyAt = (buyAt - prices[0]) / buyAt
+    const distSellAt = (prices[0] - sellAt) / sellAt
+    switch (action()) {
       case Action.NOTHING: return "transparent"
       case Action.BUY:
         return `rgba(0, 0, 139, ${getOpac(distBuyAt)})`
@@ -172,6 +172,7 @@ const TrackerDisplay = ({
         marginBottom: '6px',
         color: action() === Action.NOTHING ? "grey" : "white",
       }}
+      {...trackerProps}
     >
       <IPimg
         name={item}
@@ -187,7 +188,6 @@ const TrackerDisplay = ({
           style={{
             display: "inline-block",
           }}
-          {...trackerProps}
         >
           <span>Buy {amounts[0]}@{formatNumber(prices[0])}</span>
           <button
@@ -196,7 +196,6 @@ const TrackerDisplay = ({
           >
             Buy
           </button>
-          <TrackerTooltip />
         </div>
       }
       {action() === Action.SELL &&
@@ -205,7 +204,6 @@ const TrackerDisplay = ({
           style={{
             display: "inline-block",
           }}
-          {...trackerProps}
         >
           <span>Sell {stock}@{formatNumber(sellPrice)}</span>
           <button
@@ -214,7 +212,6 @@ const TrackerDisplay = ({
           >
             Sell
           </button>
-          <TrackerTooltip />
         </div>
       }
       { // too expensive
@@ -223,7 +220,6 @@ const TrackerDisplay = ({
           style={{
             display: "inline-block",
           }}
-          {...trackerProps}
         >
           <div
             style={{
@@ -268,9 +264,8 @@ const TrackerDisplay = ({
               }}
             />
           </div>
-          { stock > 0 && <span>{`${stock}@`}</span> }
+          {stock > 0 && <span>{`${stock}@`}</span>}
           <span>{formatNumber(prices[0])}</span>
-          <TrackerTooltip />
         </div>
       }
       { // No offer
@@ -283,6 +278,7 @@ const TrackerDisplay = ({
       >
         x
       </button>
+      <TrackerTooltip />
     </div>
   )
 };

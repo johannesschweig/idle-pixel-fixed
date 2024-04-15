@@ -99,10 +99,10 @@ const lootDialogueParser = (data: string): ActivityLogItem => {
     timestamp: new Date(),
     content: {
       extraData: dataArray[0],
-      items: reduceToRecord<LootItem>(dataArray.slice(1), [
+      items: reduceToRecord<LootItem>(dataArray.slice(1, -1), [
+        value => ({ background: value }),
         value => ({ image: value }),
         value => ({ label: value }),
-        value => ({ background: value }),
       ])
     },
   };

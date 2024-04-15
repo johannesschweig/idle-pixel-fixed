@@ -10,8 +10,10 @@ import { resetModifierKeys } from "./util/keyboard/modiferKeyReducer";
 const init = () => {
   appendReact(<IPFMenuBar />, "menu-bar-buttons");
   appendReact(<ActivityLog />, "content");
-  appendReact(<OverviewButton />, "menu-bar-buttons", "game-menu-bar-skills");
-  appendReact(<OverviewPanel />, "panels", "panel-keyitems");
+  // appendReact(<OverviewButton />, "menu-bar-buttons", "game-menu-bar-skills");
+  appendReact(<OverviewButton />, "game-menu-bar-skills", "left-panel-item_panel-keyitems");
+
+  appendReact(<OverviewPanel />, "panels", "panel-idlepixelplus");
   window.onblur = () => {
     store.dispatch(resetModifierKeys());
   };
