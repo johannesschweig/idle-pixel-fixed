@@ -116,7 +116,7 @@ const CombatOverview = () => {
           style={{
             cursor: "pointer",
           }}
-        /> }
+        />}
       </div>
       <div
         style={{
@@ -129,6 +129,11 @@ const CombatOverview = () => {
           name={"fight_points"}
           label={fightPoints === 12000 ? "Full" : formatNumber(fightPoints)}
           size={30}
+          style={{
+            backgroundColor: fightPoints === 12000 ? "gold" :
+              fightPoints > 4800 ? "palegoldenrod" :
+                "none",
+          }}
         />
         {AREAS.map((a) => (
           <CombatAreaDisplay

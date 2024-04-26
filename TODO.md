@@ -1,8 +1,10 @@
 # TODO
 - Automatic market prices button
 - Automatic tradables button
+- rotate rocket if "from"
 
 # DONE
+- rocket fuel crafts enough rocket fuel for one sun trip
 - criptoe by cards
 - woodcutting regrow bug
 - all special forms of bones -> consumeoverview

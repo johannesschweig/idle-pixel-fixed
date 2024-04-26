@@ -139,7 +139,7 @@ const ConsumeOverview = () => {
       3: "Click me: A skull stuck in a shiny glass orb",
       4: "What am I wearing today? Perhaps I'll check the closet.",
       5: "#5",
-      6: "#6",
+      6: "Incinerate me.",
       7: "Browsing stonks",
       8: "How do I get energy without food?",
       9: "A cooks dish, anyone of them.",
@@ -155,7 +155,7 @@ const ConsumeOverview = () => {
       6: "Crack this clue and you will see, a great shiny item for mining XP.",
       7: "Obtain some stardust. I don't need the charcoal anyways.",
       8: "Have you ever mined in the desert? No? I'm sure you've been there a few times.",
-      9: "#9",
+      9: "Invention: It's pointy, it stings, and it's common.",
       10: "Let's eat! Not for energy but for something else!",
       11: "RIP the combat instructor. I should pay him a visit sometime"
     }
@@ -237,7 +237,7 @@ const ConsumeOverview = () => {
     })),
   ]
 
-  // CASTLE_BUY=frozen_crocodile_hide
+// EASTER2024=make, EASTER2024=reroll
   //DONATE_TABLETTE_PIECES
   return (
     <OverviewBox
