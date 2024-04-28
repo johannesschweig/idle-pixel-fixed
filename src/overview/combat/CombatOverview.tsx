@@ -20,7 +20,7 @@ import { AREAS } from "./areas";
 // PRESET_LOAD=2~1
 const id = "CombatOverview";
 const CombatOverview = () => {
-  const [selectedArea, setSelectedArea] = useState(AREAS[0].name);
+  const [selectedArea, setSelectedArea] = useState(AREAS[10].name);
 
   const [energy] = useNumberItemObserver('energy', id)
   const [fightPoints] = useNumberItemObserver('fight_points', id)
@@ -102,12 +102,6 @@ const CombatOverview = () => {
             size={20}
           />
         ))}
-        {["hood"].map(item => (
-          <ObservedLabeledIPimg
-            label={`reaper_${item}`}
-            size={20}
-            action={''} />
-        ))}
         {stardustWatchCharges > 0 && <LabeledIPimg
           name={"stardust_watch"}
           label={stardustWatchCharges === 40 ? 'FULL' : `${stardustWatchCharges}/40`}
@@ -130,9 +124,7 @@ const CombatOverview = () => {
           label={fightPoints === 12000 ? "Full" : formatNumber(fightPoints)}
           size={30}
           style={{
-            backgroundColor: fightPoints === 12000 ? "gold" :
-              fightPoints > 4800 ? "palegoldenrod" :
-                "none",
+            backgroundColor: fightPoints === 12000 ? "gold" : "none",
           }}
         />
         {AREAS.map((a) => (
@@ -153,14 +145,6 @@ const CombatOverview = () => {
           disabled={monsterHp > 0}
           onClick={() => startCombat()}>
           Fight
-        </button>
-        <button
-          disabled={monsterHp > 0 || energy < 5000 || fightPoints < 3500}
-          onClick={() => autoCombat()}
-          style={{
-            backgroundColor: mansionRuns < 4 ? "transparent" : 'rgb(114, 181, 192)',
-          }}>
-          {mansionRuns < 4 ? `${mansionRuns}x Mansion` : `RUN MANSION`}
         </button>
         {combatLootPotionTimer < 2 && rainPotion > 0 && greenGuardianKey > 0 && blueGuardianKey > 0 && purpleGuardianKey > 0 && energy > 100000 && <LabeledIPimg
           name={"dungeon_castle_tomb"}

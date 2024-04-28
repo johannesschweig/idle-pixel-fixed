@@ -47,29 +47,12 @@ const ConsumeOverview = () => {
   const [submarineBoatTimer] = useNumberItemObserver("submarine_boat_timer", id);
   const [heat] = useNumberItemObserver("heat", id)
   const [criptoePathTimer] = useNumberItemObserver("criptoe_path_timer", id)
-
   const [heatPending] = useNumberItemObserver("heat_pending", id)
   const [ironBar] = useNumberItemObserver("iron_bar", id)
   const [treasureMap] = useNumberItemObserver("treasure_map", id)
   const [greenTreasureMap] = useNumberItemObserver("green_treasure_map", id)
   const [redTreasureMap] = useNumberItemObserver("red_treasure_map", id)
-  const [birdhouseTimer] = useNumberItemObserver("birdhouse_timer", id)
-  const [dottedGreenLeafSeeds] = useNumberItemObserver("dotted_green_leaf_seeds", id)
-  const [greenLeafSeeds] = useNumberItemObserver("green_leaf_seeds", id)
-  const [redMushroomSeeds] = useNumberItemObserver("red_mushroom_seeds", id)
-  const [limeLeafSeeds] = useNumberItemObserver("lime_leaf_seeds", id)
-  const [stardustSeeds] = useNumberItemObserver("stardust_seeds", id)
-  const [poppy] = useNumberItemObserver("poppy", id)
-  const [rose] = useNumberItemObserver("rose", id)
-  const [tulip] = useNumberItemObserver("tulip", id)
-  const [beehiveTimer] = useNumberItemObserver("beehive_timer", id)
-  const [taintedCoins] = useNumberItemObserver("tainted_coins", id)
-  const [flexibleLogs] = useNumberItemObserver("flexible_logs", id)
   const [stardustWatchCharges] = useNumberItemObserver("stardust_watch_charges", id)
-
-  const limbClick = (limb: string, amount: number) => {
-    sendMessage("GRIND", limb, amount)
-  }
 
   const clickBoat = (boat: string) => {
     let timer
@@ -235,9 +218,32 @@ const ConsumeOverview = () => {
       name: bone,
       message: getDefaultMessage("ADD_BONEMEAL", bone)
     })),
+    {
+      name: "bomb",
+      message: {
+        message1: "USE_BOMB",
+        message3: MessageOptions.MAX,
+        repeat: true
+      }
+    },
+    {
+      name: "tnt",
+      message: {
+        message1: "USE_TNT",
+        message3: MessageOptions.MAX,
+        repeat: true
+      }
+    },
+    ...limbs.map(limb => ({
+      name: limb,
+      message: getDefaultMessage("GRIND", limb)
+    })),
+    {
+      name: "evil_blood",
+      message: getDefaultMessage("CLEANSE_EVIL_BLOOD", "evil_blood") 
+    },
   ]
 
-// EASTER2024=make, EASTER2024=reroll
   //DONATE_TABLETTE_PIECES
   return (
     <OverviewBox
@@ -294,15 +300,6 @@ const ConsumeOverview = () => {
           action_override={["DRINK_BEEHIVE"]}
         />
         <MerchantDisplay />
-        {/* {birdhouseTimer <= 1 && <LabeledIPimg
-          name={"birdhouse"}
-          label={birdhouseTimer === 1 ? "Collect" : "Prepare"}
-          onClick={() => clickBirdhouse()}
-          size={30}
-          style={{
-            cursor: "pointer",
-          }}
-        />} */}
         {ironBar >= 10 && <ObservedLabeledIPimg
           label={"cannonball_mould"}
           action={''}
@@ -312,24 +309,6 @@ const ConsumeOverview = () => {
         <OneClickConsume
           items={getConsumeItems}
         />
-        {/* <ObservedLabeledIPimg
-          label={"meteor"}
-          action={"MINE_METEOR"}
-          action_override={["MINE_METEOR"]}
-          repeat={true}
-          size={30} /> */}
-        <ObservedLabeledIPimg
-          label={"tnt"}
-          action={"USE_TNT"}
-          action_override={["USE_TNT"]}
-          repeat={true}
-          size={30} />
-        <ObservedLabeledIPimg
-          label={"bomb"}
-          action={"USE_BOMB"}
-          action_override={["USE_BOMB"]}
-          repeat={true}
-          size={30} />
         {FRAGMENTS.map((fragment) => (
           <ObservedLabeledIPimg
             label={fragment}
@@ -338,19 +317,7 @@ const ConsumeOverview = () => {
             size={30}
             retain={9} />
         ))}
-        {limbs.map((limb) => (
-          <LimbDisplay
-            limb={limb}
-            limbClick={(limb: string, amount: number) => limbClick(limb, amount)}
-            {...LIMBS[limb]}
-            key={limb}
-          />
-        ))}
-        <ObservedLabeledIPimg
-          label={"evil_blood"}
-          action={"CLEANSE_EVIL_BLOOD"}
-          size={30}
-        />
+        
         {WEAPONS.map((weapon) => (
           <ObservedLabeledIPimg
             label={weapon}
