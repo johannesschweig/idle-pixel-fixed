@@ -151,6 +151,7 @@ const FarmingOverview = () => {
           .fill(null)
           .map((v, i) => (
             <FarmingPatch
+              index={i}
               {...patchData[i]}
               plotClick={() => plotClick(i)}
               key={i + 1}

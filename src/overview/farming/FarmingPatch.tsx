@@ -1,12 +1,15 @@
 import IPimg from "../../util/IPimg";
 import { useTooltip } from "../../util/tooltip/useTooltip";
-import React from "react";
+import { useNumberItemObserver } from "../setItems/useSetItemsObserver";
+import { buttonStyle } from "../market/MarketSlotDisplay";
+import { sendMessage } from "../../util/websocket/useWebsocket";
 
 interface Props {
+  index: number;
   seed: string;
   stage: number;
   timer: number;
-  shiny: number;
+  shiny: number; // 0: not shiny, 1: shiny
   death: number;
   plotClick: () => void;
 }
@@ -15,10 +18,11 @@ const getDeathImage = (seed: string) =>
   seed.includes("leaf")
     ? "farming_dead_leaf"
     : seed.includes("tree")
-    ? "farming_dead_tree"
-    : "farming_dead_mushroom";
+      ? "farming_dead_tree"
+      : "farming_dead_mushroom";
 
 const FarmingPatch = ({
+  index,
   seed,
   stage,
   timer,
@@ -33,6 +37,8 @@ const FarmingPatch = ({
       {Items.get_pretty_item_name(seed)}
     </span>
   );
+  const id = `FarmingPatch-${index}`
+  const [redFarmingOrbTimer] = useNumberItemObserver("red_farming_orb_absorbed_timer", id);
 
   return (
     <div
@@ -90,6 +96,12 @@ const FarmingPatch = ({
           >
             {stage === 4 ? "READY" : timer > 0 ? format_time(timer) : ""}
           </span>
+          {redFarmingOrbTimer === 0 && shiny === 0 && <button
+            style={buttonStyle}
+            onClick={() => sendMessage("ACTIVATE_RED_FARMING_ORB", `${index + 1}`)}
+          >
+            Shiny
+          </button>}
           <PatchTooltip />
         </>
       ) : null}

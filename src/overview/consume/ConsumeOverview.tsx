@@ -271,16 +271,6 @@ const ConsumeOverview = () => {
         >
           kill boss
         </button> */}
-        {/* {(beehiveTimer === 1 || ((poppy > 25 || rose > 25 || tulip > 25) && beehiveTimer === 0)) &&
-          <LabeledIPimg
-            name={"beehive"}
-            label={beehiveTimer === 1 ? "Collect" : "Prepare"}
-            onClick={() => clickBeehive()}
-            style={{
-              cursor: "pointer",
-            }}
-          />
-        } */}
         <ObservedLabeledIPimg
           label={"guardian_combo_loot"}
           action={"OPEN_GUARDIAN_COMBOT_LOOT"}
@@ -378,39 +368,7 @@ const ConsumeOverview = () => {
             cursor: "pointer",
           }}
         />}
-        {/* <CrystalBall /> */}
       </div>
-      {heat > 50 &&
-        <div
-          style={{
-            display: "flex",
-            gap: "10px",
-            border: "1px solid #FBCBD9",
-            borderRadius: "4px",
-          }}
-        >
-          <LabeledIPimg
-            name={"heat"}
-            label={heatPending > 0 ? `${formatTime(heatPending / 10)} (${formatNumber(heat)})` : formatNumber(heat)}
-            size={30}
-            className={heatPending > 0 ? "shake" : ""}
-          />
-          {RAW_FOOD.sort((a, b) => (b.energy / b.heat) - (a.energy / a.heat)).map(f =>
-            <ObservedLabeledIPimg
-              label={f.name}
-              size={30}
-              action={'COOK'}
-              max_value={Math.floor(heat / f.heat)}
-              tooltipText={f.heat.toString()}
-              tooltipIcon={'heat'}
-            />)}
-        </div>
-      }
-      {/* <ObservedLabeledIPimg
-            label={"chefs_hat_unclaimed"}
-            action={''}
-            action_override={["GATHERING_OPEN_UNIQUE", "kitchen", "chefs_hat_unclaimed"]}
-          /> */}
     </OverviewBox>
   );
 };

@@ -2,6 +2,7 @@
 - Automatic market prices button
 - Automatic tradables button
 - rotate rocket if "from"
+- cook and eat bloated sharks
 
 # DONE
 - rocket fuel crafts enough rocket fuel for one sun trip

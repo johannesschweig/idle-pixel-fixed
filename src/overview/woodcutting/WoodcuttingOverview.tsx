@@ -129,6 +129,7 @@ const WoodcuttingOverview = () => {
           .fill(null)
           .map((v, i) => (
             <WoodcuttingPatch
+              index={i}
               {...patchData[i]}
               plotClick={() => plotClick(i)}
               key={i + 1}
