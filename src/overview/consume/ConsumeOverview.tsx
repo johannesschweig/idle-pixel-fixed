@@ -184,7 +184,7 @@ const ConsumeOverview = () => {
         message1: "CONSUME",
         message2: "banana",
         message3: MessageOptions.RETAIN,
-        message3num: 100
+        message3num: 1000
       },
     },
     {
@@ -202,7 +202,7 @@ const ConsumeOverview = () => {
         message1: "CONSUME",
         message2: "coconut",
         message3: MessageOptions.RETAIN,
-        message3num: 100,
+        message3num: 1000,
       },
     },
     ...areas.map(area => ({
@@ -242,6 +242,18 @@ const ConsumeOverview = () => {
       name: "evil_blood",
       message: getDefaultMessage("CLEANSE_EVIL_BLOOD", "evil_blood") 
     },
+    {
+      name: "guardian_combo_loot",
+      message: getDefaultMessage("OPEN_GUARDIAN_COMBOT_LOOT", "guardian_combo_loot") 
+    },
+    {
+      name: "gem_bag",
+      message: {
+        message1: "OPEN_GEM_BAG",
+        message3: MessageOptions.MAX,
+        repeat: true,
+      }
+    }
   ]
 
   //DONATE_TABLETTE_PIECES
@@ -271,18 +283,6 @@ const ConsumeOverview = () => {
         >
           kill boss
         </button> */}
-        <ObservedLabeledIPimg
-          label={"guardian_combo_loot"}
-          action={"OPEN_GUARDIAN_COMBOT_LOOT"}
-          size={30}
-        />
-        <ObservedLabeledIPimg
-          label={"gem_bag"}
-          action={""}
-          action_override={["OPEN_GEM_BAG"]}
-          size={30}
-          repeat={true}
-        />
         <ObservedLabeledIPimg
           label={"beehive_potion"}
           action={''}

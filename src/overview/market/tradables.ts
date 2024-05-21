@@ -11,10 +11,10 @@ interface TradableData {
 // 2) Network request getTradeables.php
 // 3) beautify json (no quotes on keys and numbers) on https://csvjson.com/json_beautifier
 // 4) Sort json by id: 
-// const d = x.sort((a, b) => b.id - a.id);
+// const d = x.sort((a, b) => a.id - b.id);
 // const fs = require('fs')
 // const json = JSON.stringify(d)
-// fs.writeFile('t.json', json)
+// fs.writeFileSync('t.json', json)
 export const TRADABLES: TradableData[] = [
   {
     "id": 1,
@@ -187,8 +187,8 @@ export const TRADABLES: TradableData[] = [
   {
     "id": 22,
     "item": "crystal_leaf_seeds",
-    "lower": 100000,
-    "upper": 350000,
+    "lower": 250000,
+    "upper": 800000,
     "category": "seeds",
     "order": 50
   },
@@ -637,7 +637,7 @@ export const TRADABLES: TradableData[] = [
     "item": "wooden_arrows",
     "lower": 20,
     "upper": 75,
-    "category": "weapons",
+    "category": "other_equipment",
     "order": 70
   },
   {
@@ -645,7 +645,7 @@ export const TRADABLES: TradableData[] = [
     "item": "fire_arrows",
     "lower": 450,
     "upper": 1350,
-    "category": "weapons",
+    "category": "other_equipment",
     "order": 80
   },
   {
@@ -653,7 +653,7 @@ export const TRADABLES: TradableData[] = [
     "item": "ice_arrows",
     "lower": 1000,
     "upper": 3000,
-    "category": "weapons",
+    "category": "other_equipment",
     "order": 90
   },
   {
@@ -931,40 +931,40 @@ export const TRADABLES: TradableData[] = [
   {
     "id": 136,
     "item": "red_farming_orb",
-    "lower": 17000000,
-    "upper": 51000000,
+    "lower": 12000000,
+    "upper": 36000000,
     "category": "orbs",
     "order": 560
   },
   {
     "id": 137,
     "item": "red_woodcutting_orb",
-    "lower": 17000000,
-    "upper": 51000000,
+    "lower": 12000000,
+    "upper": 36000000,
     "category": "orbs",
     "order": 570
   },
   {
     "id": 138,
     "item": "red_combat_orb",
-    "lower": 17000000,
-    "upper": 51000000,
+    "lower": 12000000,
+    "upper": 36000000,
     "category": "orbs",
     "order": 580
   },
   {
     "id": 139,
     "item": "red_oil_factory_orb",
-    "lower": 17000000,
-    "upper": 51000000,
+    "lower": 12000000,
+    "upper": 36000000,
     "category": "orbs",
     "order": 590
   },
   {
     "id": 140,
     "item": "red_stardust_watch_orb",
-    "lower": 17000000,
-    "upper": 51000000,
+    "lower": 12000000,
+    "upper": 36000000,
     "category": "orbs",
     "order": 600
   },
@@ -1067,9 +1067,57 @@ export const TRADABLES: TradableData[] = [
   {
     "id": 171,
     "item": "red_criptoe_orb",
-    "lower": 50000000,
-    "upper": 100000000,
+    "lower": 12000000,
+    "upper": 36000000,
     "category": "orbs",
     "order": 610
+  },
+  {
+    "id": 178,
+    "item": "undead_staff",
+    "lower": 50000000,
+    "upper": 200000000,
+    "category": "weapons",
+    "order": 1000
+  },
+  {
+    "id": 179,
+    "item": "hp_staff_spirit",
+    "lower": 100000000,
+    "upper": 300000000,
+    "category": "other_equipment",
+    "order": 1010
+  },
+  {
+    "id": 180,
+    "item": "mana_staff_spirit",
+    "lower": 100000000,
+    "upper": 300000000,
+    "category": "other_equipment",
+    "order": 1020
+  },
+  {
+    "id": 181,
+    "item": "defence_staff_spirit",
+    "lower": 100000000,
+    "upper": 300000000,
+    "category": "other_equipment",
+    "order": 1030
+  },
+  {
+    "id": 182,
+    "item": "stranger_leaf",
+    "lower": 15000,
+    "upper": 35000,
+    "category": "brewing",
+    "order": 80
+  },
+  {
+    "id": 183,
+    "item": "strangest_leaf",
+    "lower": 150000,
+    "upper": 800000,
+    "category": "brewing",
+    "order": 90
   }
 ]

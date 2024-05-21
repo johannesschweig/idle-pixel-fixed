@@ -3,6 +3,7 @@
 - Automatic tradables button
 - rotate rocket if "from"
 - cook and eat bloated sharks
+- automatic planting and harvesting of mushroom seeds (start the watering can -> farming speed potion -> plant -> harvest -> repeat)
 
 # DONE
 - rocket fuel crafts enough rocket fuel for one sun trip
